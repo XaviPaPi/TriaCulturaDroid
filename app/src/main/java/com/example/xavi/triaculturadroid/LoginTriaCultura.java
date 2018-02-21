@@ -67,7 +67,7 @@ public class LoginTriaCultura extends AppCompatActivity implements LoaderCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_tria_cultura);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.text_usuari);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
