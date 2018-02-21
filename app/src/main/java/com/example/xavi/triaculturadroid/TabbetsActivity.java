@@ -47,24 +47,40 @@ public class TabbetsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tabbets);
         List<FragmentPagerItem> list = new ArrayList<>();
         FragmentPagerItem fpi;
-        for (int i=0; i<2;i++) {
+
+        fpi = new FragmentPagerItem();
+        fpi.setTitle("???");
+        fpi.setEnabled(true);
+        fpi.setFragment( ProjectFragment.newInstance(0));
+
+        fpi = new FragmentPagerItem();
+        fpi.setTitle("Projects");
+        fpi.setEnabled(true);
+        fpi.setFragment( ProjectFragment.newInstance(1));
+
+        fpi = new FragmentPagerItem();
+        fpi.setTitle("Profile");
+        fpi.setEnabled(true);
+        fpi.setFragment( ProjectFragment.newInstance(2));
+
+        /*for (int i=0; i<3;i++) {
             fpi = new FragmentPagerItem();
-            fpi.setTitle("Pestanya "+i);
+            fpi.setTitle("Profile");
             fpi.setEnabled(true);
             if ( i == 0 )
                 fpi.setFragment( ProjectFragment.newInstance(0));
             else if ( i == 1 )
                 fpi.setFragment( TotalVotes.newInstance(1));
-            else
-                System.out.println();
+            else if (i == 2)
+                fpi.setFragment( TotalVotes.newInstance(2));
             list.add(fpi);
-        }
+        }*/
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), list);
         tabs=(TabHost)findViewById(android.R.id.tabhost);
         tabs.setup();
 
-        int[] tabsIDs = new int[] {R.id.tab0,R.id.tab1,R.id.tab2,R.id.tab3};
+        int[] tabsIDs = new int[] {R.id.tab0,R.id.tab1,R.id.tab2};
         TabHost.TabSpec spec;
         for (int i=0; i<list.size();i++)
         {
