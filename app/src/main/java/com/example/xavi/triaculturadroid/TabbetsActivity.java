@@ -49,17 +49,17 @@ public class TabbetsActivity extends AppCompatActivity {
         FragmentPagerItem fpi;
 
         fpi = new FragmentPagerItem();
-        fpi.setTitle("???");
+        fpi.setTitle("Historial");
         fpi.setEnabled(true);
         fpi.setFragment( ProjectFragment.newInstance(0));
 
         fpi = new FragmentPagerItem();
-        fpi.setTitle("Projects");
+        fpi.setTitle("Main");
         fpi.setEnabled(true);
         fpi.setFragment( ProjectFragment.newInstance(1));
 
         fpi = new FragmentPagerItem();
-        fpi.setTitle("Profile");
+        fpi.setTitle("Perfil");
         fpi.setEnabled(true);
         fpi.setFragment( ProjectFragment.newInstance(2));
 
