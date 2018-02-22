@@ -22,4 +22,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dni">dni</string>
     <string name="entrar">entrar</string>
+    <string name="literal_profile_picture">Profile Picture</string>
+    <string name="literal_dni">Dni:</string>
+    <string name="literal_nom">Nom:</string>
+    <string name="literal_correu_electr_nic">Correu Electrònic:</string>
+    <string name="btn_canvia_password">Canvia Password</string>
+    <string name="btn_canvia_correu">Canvia Correu</string>
+    <string name="btn_historial_de_vots">Historial de vots</string>
+    <string name="btn_valoracions">Valoracions</string>
 </resources>
