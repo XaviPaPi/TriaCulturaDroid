@@ -7,6 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import com.example.xavi.triaculturadroid.Adapters.AdapterProject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -18,7 +25,7 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class ProjectFragment extends Fragment {
-
+    private ListView listView;
     public ProjectFragment() {
         // Required empty public constructor
     }
@@ -42,12 +49,34 @@ public class ProjectFragment extends Fragment {
         if (getArguments() != null) {
 
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_project, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_project, container,
+                false);
+        listView =(ListView)getActivity().findViewById(R.id.ListProjects);
+        String[] values = new String[] { "Message1", "Message2", "Message3" };
+        ArrayList<ClassProjectProv> ad= new ArrayList<>();
+        ClassProjectProv c = new ClassProjectProv("Titol","???","Hola que tal");
+        ClassProjectProv c2 = new ClassProjectProv("Titol","???","Hola que tal");
+        ClassProjectProv c3 = new ClassProjectProv("Titol","???","Hola que tal");
+        ClassProjectProv c4 = new ClassProjectProv("Titol","???","Hola que tal");
+        ClassProjectProv c5 = new ClassProjectProv("Titol","???","Hola que tal");
+        ad.add(c);
+        ad.add(c2);
+        ad.add(c3);
+        ad.add(c4);
+        ad.add(c5);
+
+
+        AdapterProject adapter = new AdapterProject(getActivity(),ad);
+
+        listView.setAdapter(adapter);
+        return rootView;
     }
+
 }

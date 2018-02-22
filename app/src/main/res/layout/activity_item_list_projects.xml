@@ -20,14 +20,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="TextView" />
+            android:text="TITLE" />
 
         <TextView
             android:id="@+id/ILP_AuthorName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="TextView" />
+            android:text="AUTHOR NAME" />
 
         <TextView
             android:id="@+id/ILP_Description"
@@ -35,13 +35,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="3"
-            android:text="TextView" />
+            android:text="THIS THE DESCRIPTION PROJECT" />
 
         <Button
             android:id="@+id/ILP_Bnt_vote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="VOTE!" />
     </LinearLayout>
 
     <LinearLayout
