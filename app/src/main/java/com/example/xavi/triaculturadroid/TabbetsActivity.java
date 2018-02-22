@@ -92,6 +92,8 @@ public class TabbetsActivity extends AppCompatActivity {
             }
         }
 
+        tabs.setCurrentTab(1);
+        mViewPager.setCurrentItem(1);
 
         tabs.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
