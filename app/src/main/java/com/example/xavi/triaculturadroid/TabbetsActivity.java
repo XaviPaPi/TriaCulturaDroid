@@ -52,18 +52,18 @@ public class TabbetsActivity extends AppCompatActivity {
         fpi.setTitle("Historial");
         fpi.setEnabled(true);
         fpi.setFragment( ProjectFragment.newInstance(0));
-
+        list.add(fpi);
         fpi = new FragmentPagerItem();
         fpi.setTitle("Main");
         fpi.setEnabled(true);
         fpi.setFragment( ProjectFragment.newInstance(1));
-
+        list.add(fpi);
         fpi = new FragmentPagerItem();
         fpi.setTitle("Perfil");
         fpi.setEnabled(true);
         fpi.setFragment( ProjectFragment.newInstance(2));
-
-        /*for (int i=0; i<3;i++) {
+        list.add(fpi);
+        /* for (int i=0; i<3;i++) {
             fpi = new FragmentPagerItem();
             fpi.setTitle("Profile");
             fpi.setEnabled(true);
@@ -85,7 +85,7 @@ public class TabbetsActivity extends AppCompatActivity {
         for (int i=0; i<list.size();i++)
         {
             if (list.get(i).isEnabled()) {
-                spec = tabs.newTabSpec("mitab"+i);
+                spec = tabs.newTabSpec("tab"+i);
                 spec.setContent(tabsIDs[i]);
                 spec.setIndicator(list.get(i).getTitle());
                 tabs.addTab(spec);
