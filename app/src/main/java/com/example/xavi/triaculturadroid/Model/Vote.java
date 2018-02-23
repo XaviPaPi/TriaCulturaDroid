@@ -8,13 +8,17 @@ import java.text.DateFormat;
 
 public class Vote {
     private int id;
-    private DateFormat dateFormat;
+    private DateFormat dateVote;
     private int proj_id;
     private int user_id;
 
-    public Vote(int id, DateFormat dateFormat, int proj_id, int user_id) {
+    public Vote(){
+
+    }
+
+    public Vote(int id, DateFormat dateVote, int proj_id, int user_id) {
         this.id = id;
-        this.dateFormat = dateFormat;
+        this.dateVote = dateVote;
         this.proj_id = proj_id;
         this.user_id = user_id;
     }
@@ -27,12 +31,12 @@ public class Vote {
         this.id = id;
     }
 
-    public DateFormat getDateFormat() {
-        return dateFormat;
+    public DateFormat getDateVote() {
+        return dateVote;
     }
 
-    public void setDateFormat(DateFormat dateFormat) {
-        this.dateFormat = dateFormat;
+    public void setDateVote(DateFormat dateVote) {
+        this.dateVote = dateVote;
     }
 
     public int getProj_id() {
