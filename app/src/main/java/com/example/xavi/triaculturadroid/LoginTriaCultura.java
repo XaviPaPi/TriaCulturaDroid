@@ -3,6 +3,7 @@ package com.example.xavi.triaculturadroid;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -55,7 +56,7 @@ public class LoginTriaCultura extends AppCompatActivity implements LoaderCallbac
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
-
+    private Button btn_Acces;
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -82,11 +83,14 @@ public class LoginTriaCultura extends AppCompatActivity implements LoaderCallbac
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.tcLogin_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        btn_Acces = (Button) findViewById(R.id.tcLogin_button);
+        btn_Acces.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                //attemptLogin();
+                Intent intent = new Intent(getApplication(),TabbetsActivity.class);
+                startActivity(intent);
+
             }
         });
 
