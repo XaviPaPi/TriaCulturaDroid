@@ -5,14 +5,24 @@ package com.example.xavi.triaculturadroid;
  */
 
 public class ClassProjectProv {
+    private int id;
     private String title;
     private String descript;
     private String name;
 
-    public ClassProjectProv(String title, String descript, String name) {
+    public ClassProjectProv(int id,String title, String descript, String name) {
+        this.id=id;
         this.title = title;
         this.descript = descript;
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {

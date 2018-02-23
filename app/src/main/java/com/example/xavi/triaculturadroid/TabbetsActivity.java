@@ -51,7 +51,7 @@ public class TabbetsActivity extends AppCompatActivity {
         fpi = new FragmentPagerItem();
         fpi.setTitle("Historial");
         fpi.setEnabled(true);
-        fpi.setFragment( ProjectFragment.newInstance(0));
+        fpi.setFragment( TotalVotes.newInstance(0));
         list.add(fpi);
         fpi = new FragmentPagerItem();
         fpi.setTitle("Main");
@@ -61,7 +61,7 @@ public class TabbetsActivity extends AppCompatActivity {
         fpi = new FragmentPagerItem();
         fpi.setTitle("Perfil");
         fpi.setEnabled(true);
-        fpi.setFragment( ProjectFragment.newInstance(2));
+        fpi.setFragment( FragmentProfile.newInstance(2));
         list.add(fpi);
         /* for (int i=0; i<3;i++) {
             fpi = new FragmentPagerItem();

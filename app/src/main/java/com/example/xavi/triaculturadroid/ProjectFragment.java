@@ -58,23 +58,21 @@ public class ProjectFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_project, container,
                 false);
-        listView =(ListView)getActivity().findViewById(R.id.ListProjects);
+        listView =(ListView)rootView.findViewById(R.id.ListProjects);
         String[] values = new String[] { "Message1", "Message2", "Message3" };
         ArrayList<ClassProjectProv> ad= new ArrayList<>();
-        ClassProjectProv c = new ClassProjectProv("Titol","???","Hola que tal");
-        ClassProjectProv c2 = new ClassProjectProv("Titol","???","Hola que tal");
-        ClassProjectProv c3 = new ClassProjectProv("Titol","???","Hola que tal");
-        ClassProjectProv c4 = new ClassProjectProv("Titol","???","Hola que tal");
-        ClassProjectProv c5 = new ClassProjectProv("Titol","???","Hola que tal");
+        ClassProjectProv c = new ClassProjectProv(1,"Titol","???","Hola que tal");
+        ClassProjectProv c2 = new ClassProjectProv(2,"Titol","???","Hola que tal");
+        ClassProjectProv c3 = new ClassProjectProv(3,"Titol","???","Hola que tal");
+        ClassProjectProv c4 = new ClassProjectProv(4,"Titol","???","Hola que tal");
+        ClassProjectProv c5 = new ClassProjectProv(5,"Titol","???","Hola que tal");
         ad.add(c);
         ad.add(c2);
         ad.add(c3);
         ad.add(c4);
         ad.add(c5);
-
-
         AdapterProject adapter = new AdapterProject(getActivity(),ad);
-
+        //listView.setItemsCanFocus(true);
         listView.setAdapter(adapter);
         return rootView;
     }
