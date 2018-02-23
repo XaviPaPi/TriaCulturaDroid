@@ -6,17 +6,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.xavi.triaculturadroid.ClassProjectProv;
+import com.example.xavi.triaculturadroid.Model.Project;
 import com.example.xavi.triaculturadroid.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,9 +21,9 @@ import java.util.List;
 
 public class AdapterProject extends BaseAdapter {
     LayoutInflater inflater;
-    List<ClassProjectProv> model;
+    List<Project> model;
     Context context;
-    ClassProjectProv pers;
+    Project pers;
     int mode;
     EditText nameText;
     EditText surNameText;
@@ -35,13 +31,13 @@ public class AdapterProject extends BaseAdapter {
     TextView nameView;
     TextView surnameView;
     TextView descripcioView;
-    public AdapterProject(Context context, List<ClassProjectProv> model) {
+    public AdapterProject(Context context, List<Project> model) {
         this.model = model;
         mode = 1;
         this.context = context;
     }
 
-    public AdapterProject(Context context, ClassProjectProv pers) {
+    public AdapterProject(Context context, Project pers) {
         this.pers = pers;
         this.context = context;
         mode = 0;
@@ -56,7 +52,7 @@ public class AdapterProject extends BaseAdapter {
     }
 
     @Override
-    public ClassProjectProv getItem(int position) {
+    public Project getItem(int position) {
         if (mode == 1) {
             return model.get(position);
         } else {

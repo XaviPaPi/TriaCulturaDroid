@@ -90,7 +90,6 @@ public class LoginTriaCultura extends AppCompatActivity implements LoaderCallbac
                 //attemptLogin();
                 Intent intent = new Intent(getApplication(),TabbetsActivity.class);
                 startActivity(intent);
-
             }
         });
 

@@ -1,19 +1,16 @@
 package com.example.xavi.triaculturadroid;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.xavi.triaculturadroid.Adapters.AdapterProject;
+import com.example.xavi.triaculturadroid.Model.Project;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -60,12 +57,12 @@ public class ProjectFragment extends Fragment {
                 false);
         listView =(ListView)rootView.findViewById(R.id.ListProjects);
         String[] values = new String[] { "Message1", "Message2", "Message3" };
-        ArrayList<ClassProjectProv> ad= new ArrayList<>();
-        ClassProjectProv c = new ClassProjectProv(1,"Titol","???","Hola que tal");
-        ClassProjectProv c2 = new ClassProjectProv(2,"Titol","???","Hola que tal");
-        ClassProjectProv c3 = new ClassProjectProv(3,"Titol","???","Hola que tal");
-        ClassProjectProv c4 = new ClassProjectProv(4,"Titol","???","Hola que tal");
-        ClassProjectProv c5 = new ClassProjectProv(5,"Titol","???","Hola que tal");
+        ArrayList<Project> ad= new ArrayList<>();
+        Project c = new Project(1,"Titol","???","Hola que tal");
+        Project c2 = new Project(2,"Titol","???","Hola que tal");
+        Project c3 = new Project(3,"Titol","???","Hola que tal");
+        Project c4 = new Project(4,"Titol","???","Hola que tal");
+        Project c5 = new Project(5,"Titol","???","Hola que tal");
         ad.add(c);
         ad.add(c2);
         ad.add(c3);
