@@ -10,8 +10,10 @@ public class Rating {
     private int proj_id;
     private int rate;
     private String comment;
+    private Project project;
+    private User user;
 
-    public Rating(){
+    public Rating() {
 
     }
 
@@ -39,6 +41,14 @@ public class Rating {
         this.user_id = user_id;
     }
 
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
     public int getProj_id() {
         return proj_id;
     }
@@ -61,5 +71,13 @@ public class Rating {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
