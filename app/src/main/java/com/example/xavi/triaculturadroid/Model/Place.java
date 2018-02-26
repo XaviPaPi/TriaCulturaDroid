@@ -30,4 +30,35 @@ public class Place {
         this.place_has_capacity = new HashSet<Place_has_Capacity>();
     }
 
+    public int getId_place() {
+        return id_place;
+    }
+
+    public void setId_place(int id_place) {
+        this.id_place = id_place;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }
