@@ -26,9 +26,8 @@
         <activity
             android:name=".TabbetsActivity"
             android:label="@string/title_activity_tabbets"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ViewProject"></activity>
     </application>
 
 </manifest>

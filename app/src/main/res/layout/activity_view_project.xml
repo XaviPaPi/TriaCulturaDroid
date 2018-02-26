@@ -2,50 +2,39 @@
 <android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ILP_LinearGeneral"
+    android:id="@+id/P_LinearGeneral"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    tools:context="com.example.xavi.triaculturadroid.ViewProject">
 
     <TextView
-        android:id="@+id/ILP_Title"
+        android:id="@+id/P_Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:layout_weight="1"
         android:text="TITLE" />
 
     <TextView
-        android:id="@+id/ILP_AuthorName"
+        android:id="@+id/P_AuthorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:layout_weight="1"
         android:text="AUTHOR NAME" />
 
     <TextView
-        android:id="@+id/ILP_Description"
+        android:id="@+id/P_Description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_weight="1"
         android:text="THIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECT"
         android:textAlignment="center" />
 
-    <Button
-        android:id="@+id/ILP_Bnt_vote"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="VOTE!" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:layout_weight="1"
         android:gravity="center"
         android:orientation="horizontal">
 
