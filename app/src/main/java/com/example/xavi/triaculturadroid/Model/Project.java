@@ -1,5 +1,7 @@
 package com.example.xavi.triaculturadroid.Model;
 
+import java.util.HashSet;
+
 /**
  * Created by miquel on 2/22/2018.
  */
@@ -12,13 +14,24 @@ public class Project {
     private String type;
     private int author_id;
     private String name;
+    public HashSet<File> files;
+    public HashSet<Rating> ratings;
+    public HashSet<Request> requests;
+    public HashSet<Vote> votes;
 
-    public Project(){
-
+    public Project() {
+        this.files = new HashSet<>();
+        this.ratings = new HashSet<>();
+        this.requests = new HashSet<>();
+        this.votes = new HashSet<>();
     }
 
     public Project(int id, String title, String descript, String name) {
-        this.id=id;
+        this.files = new HashSet<>();
+        this.ratings = new HashSet<>();
+        this.requests = new HashSet<>();
+        this.votes = new HashSet<>();
+        this.id = id;
         this.title = title;
         this.descript = descript;
         this.name = name;

@@ -1,5 +1,7 @@
 package com.example.xavi.triaculturadroid.Model;
 
+import java.util.HashSet;
+
 /**
  * Created by miquel on 2/23/2018.
  */
@@ -9,11 +11,14 @@ public class Author {
     private String name;
     private String surname;
     private String address;
+    public HashSet<Project> projects;
 
     public Author() {
+        this.projects = new HashSet<>();
     }
 
     public Author(String dni, String name, String surname, String address) {
+        this.projects = new HashSet<>();
         this.dni = dni;
         this.name = name;
         this.surname = surname;

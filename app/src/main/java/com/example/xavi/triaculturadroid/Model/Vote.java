@@ -11,8 +11,10 @@ public class Vote {
     private DateFormat dateVote;
     private int proj_id;
     private int user_id;
+    public Project project;
+    public User user;
 
-    public Vote(){
+    public Vote() {
 
     }
 
@@ -53,5 +55,21 @@ public class Vote {
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

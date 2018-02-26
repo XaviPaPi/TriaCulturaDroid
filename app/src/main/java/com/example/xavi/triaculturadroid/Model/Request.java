@@ -12,6 +12,7 @@ public class Request {
     private boolean esGuanyador;
     private int proj_id;
     private int place_id;
+    private Place place;
 
     public Request() {
     }
@@ -62,5 +63,13 @@ public class Request {
 
     public void setPlace_id(int place_id) {
         this.place_id = place_id;
+    }
+
+    public Place getPlace() {
+        return place;
+    }
+
+    public void setPlace(Place place) {
+        this.place = place;
     }
 }

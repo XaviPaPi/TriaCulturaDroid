@@ -11,6 +11,7 @@ private String name;
 private String extension;
 private String path;
 private int proj_id;
+public Project project;
 
     public File() {
     }
@@ -61,5 +62,13 @@ private int proj_id;
 
     public void setProj_id(int proj_id) {
         this.proj_id = proj_id;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }
