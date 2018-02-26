@@ -27,24 +27,32 @@ public class LoginTriaCultura extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
-                    verificarUsuari();
+                    verificarUsuariBuit();
                 }
             }
         });
-
 
         btn_Acces = (Button) findViewById(R.id.tcLogin_button);
         btn_Acces.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(getApplication(),TabbetsActivity.class);
-                startActivity(intent);
+                if(verificarUsuariAndPass()) {
+                    Intent intent = new Intent(getApplication(), TabbetsActivity.class);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(getApplication(), R.string.errorPassOrUsrInvalid, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    private void verificarUsuari(){
+    private boolean verificarUsuariAndPass(){
+
+
+        return true;
+    }
+
+    private void verificarUsuariBuit(){
         if(mUserView.getText().toString().isEmpty()){
             Toast.makeText(this, R.string.userField, Toast.LENGTH_SHORT).show();
         }
