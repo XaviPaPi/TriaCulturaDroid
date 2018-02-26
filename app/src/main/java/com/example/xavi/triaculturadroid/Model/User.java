@@ -11,8 +11,8 @@ public class User {
     public int id;
     private String dni;
     private String password;
-    private HashSet<Rating> ratings;
-    private HashSet<Vote> votes;
+    public HashSet<Rating> ratings;
+    public HashSet<Vote> votes;
 
     public User() {
         this.ratings = new HashSet<Rating>();

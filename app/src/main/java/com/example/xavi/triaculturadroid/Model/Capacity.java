@@ -10,7 +10,7 @@ import java.util.HashSet;
 public class Capacity {
     public Capacity()
     {
-        this.place_has_capacity = new HashSet<Place_has_Capacity>();
+        this.place_has_capacity = new HashSet<>();
     }
 
     private int id_capacity;
