@@ -1,5 +1,8 @@
 package com.example.xavi.triaculturadroid.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashSet;
 
 /**
@@ -7,13 +10,26 @@ import java.util.HashSet;
  */
 
 public class Project {
+
+    @SerializedName("id_project")
+    @Expose
     private int id;
+    @SerializedName("title")
+    @Expose
     private String title;
+    @SerializedName("description")
+    @Expose
     private String descript;
+    @SerializedName("topic")
+    @Expose
     private String topic;
+    @SerializedName("type")
+    @Expose
     private String type;
+    @SerializedName("author_id")
+    @Expose
     private int author_id;
-    private String name;
+
     public HashSet<File> files;
     public HashSet<Rating> ratings;
     public HashSet<Request> requests;
@@ -26,7 +42,7 @@ public class Project {
         this.votes = new HashSet<>();
     }
 
-    public Project(int id, String title, String descript, String name) {
+    public Project(int id, String title, String descript) {
         this.files = new HashSet<>();
         this.ratings = new HashSet<>();
         this.requests = new HashSet<>();
@@ -34,7 +50,6 @@ public class Project {
         this.id = id;
         this.title = title;
         this.descript = descript;
-        this.name = name;
     }
 
     public Project(int id, String title, String descript, String topic, String type, int author_id) {
@@ -44,6 +59,10 @@ public class Project {
         this.topic = topic;
         this.type = type;
         this.author_id = author_id;
+        this.files = new HashSet<>();
+        this.ratings = new HashSet<>();
+        this.requests = new HashSet<>();
+        this.votes = new HashSet<>();
     }
 
     public String getTopic() {
@@ -94,11 +113,4 @@ public class Project {
         this.descript = descript;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

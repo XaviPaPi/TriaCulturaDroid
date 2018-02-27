@@ -1,5 +1,8 @@
 package com.example.xavi.triaculturadroid.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.text.DateFormat;
 
 /**
@@ -7,17 +10,29 @@ import java.text.DateFormat;
  */
 
 public class Request {
+
+    @SerializedName("id_request")
+    @Expose
     private int id;
+    @SerializedName("proposed_date")
+    @Expose
     private DateFormat data_proposta;
-    private boolean esGuanyador;
+    @SerializedName("is_winner")
+    @Expose
+    private int esGuanyador;
+    @SerializedName("project_id")
+    @Expose
     private int proj_id;
+    @SerializedName("place_id")
+    @Expose
     private int place_id;
+
     private Place place;
 
     public Request() {
     }
 
-    public Request(int id, DateFormat data_proposta, boolean esGuanyador, int proj_id, int place_id) {
+    public Request(int id, DateFormat data_proposta, int esGuanyador, int proj_id, int place_id) {
         this.id = id;
         this.data_proposta = data_proposta;
         this.esGuanyador = esGuanyador;
@@ -41,11 +56,11 @@ public class Request {
         this.data_proposta = data_proposta;
     }
 
-    public boolean isEsGuanyador() {
+    public int isEsGuanyador() {
         return esGuanyador;
     }
 
-    public void setEsGuanyador(boolean esGuanyador) {
+    public void setEsGuanyador(int esGuanyador) {
         this.esGuanyador = esGuanyador;
     }
 

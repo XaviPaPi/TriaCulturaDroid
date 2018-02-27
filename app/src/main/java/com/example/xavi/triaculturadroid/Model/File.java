@@ -1,17 +1,31 @@
 package com.example.xavi.triaculturadroid.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by miquel on 2/23/2018.
  */
 
-public class File{
+public class File {
 
-private int id;
-private String name;
-private String extension;
-private String path;
-private int proj_id;
-public Project project;
+    @SerializedName("id_file")
+    @Expose
+    private int id;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("extension")
+    @Expose
+    private String extension;
+    @SerializedName("path")
+    @Expose
+    private String path;
+    @SerializedName("project_id")
+    @Expose
+    private int proj_id;
+
+    public Project project;
 
     public File() {
     }

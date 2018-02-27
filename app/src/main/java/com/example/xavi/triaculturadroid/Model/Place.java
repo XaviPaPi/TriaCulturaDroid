@@ -1,5 +1,8 @@
 package com.example.xavi.triaculturadroid.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashSet;
 
 /**
@@ -9,9 +12,17 @@ import java.util.HashSet;
 
 public class Place {
 
+    @SerializedName("id_place")
+    @Expose
     private int id_place;
+    @SerializedName("name")
+    @Expose
     private String name;
+    @SerializedName("capacity")
+    @Expose
     private int capacity;
+    @SerializedName("address")
+    @Expose
     private String address;
 
     public HashSet<Request> requests;

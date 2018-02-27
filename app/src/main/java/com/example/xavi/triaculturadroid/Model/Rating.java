@@ -1,15 +1,29 @@
 package com.example.xavi.triaculturadroid.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by miquel on 2/23/2018.
  */
 
 public class Rating {
+    @SerializedName("id_rating")
+    @Expose
     private int id;
+    @SerializedName("user_id")
+    @Expose
     private int user_id;
+    @SerializedName("project_id")
+    @Expose
     private int proj_id;
+    @SerializedName("rate")
+    @Expose
     private int rate;
+    @SerializedName("comment")
+    @Expose
     private String comment;
+
     private Project project;
     private User user;
 

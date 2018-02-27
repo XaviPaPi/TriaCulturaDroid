@@ -1,5 +1,8 @@
 package com.example.xavi.triaculturadroid.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.text.DateFormat;
 
 /**
@@ -7,10 +10,20 @@ import java.text.DateFormat;
  */
 
 public class Vote {
+
+    @SerializedName("id_vote")
+    @Expose
     private int id;
+    @SerializedName("date")
+    @Expose
     private DateFormat dateVote;
+    @SerializedName("project_id")
+    @Expose
     private int proj_id;
+    @SerializedName("user_id")
+    @Expose
     private int user_id;
+
     public Project project;
     public User user;
 

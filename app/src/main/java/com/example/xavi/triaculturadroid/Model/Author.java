@@ -1,5 +1,8 @@
 package com.example.xavi.triaculturadroid.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashSet;
 
 /**
@@ -7,10 +10,19 @@ import java.util.HashSet;
  */
 
 public class Author {
+    @SerializedName("dni")
+    @Expose
     private String dni;
+    @SerializedName("name")
+    @Expose
     private String name;
+    @SerializedName("surname")
+    @Expose
     private String surname;
+    @SerializedName("address")
+    @Expose
     private String address;
+
     public HashSet<Project> projects;
 
     public Author() {

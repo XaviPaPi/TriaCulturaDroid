@@ -1,14 +1,25 @@
 package com.example.xavi.triaculturadroid.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by demian ${EMAIL}
  * 02/26/18.
  */
 
 public class Place_has_Capacity {
+    @SerializedName("capacity_id")
+    @Expose
     private int capacity_id ;
+    @SerializedName("place_id")
+    @Expose
     private int place_id ;
+    @SerializedName("vol_capacity")
+    @Expose
     private int vol_capacity ;
+    @SerializedName("fee")
+    @Expose
     private double fee ;
 
     public Capacity capacity ;

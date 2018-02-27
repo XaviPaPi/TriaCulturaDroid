@@ -1,5 +1,8 @@
 package com.example.xavi.triaculturadroid.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashSet;
 
 /**
@@ -8,9 +11,16 @@ import java.util.HashSet;
  */
 
 public class User {
+    @SerializedName("id")
+    @Expose
     public int id;
+    @SerializedName("id")
+    @Expose
     private String dni;
+    @SerializedName("password")
+    @Expose
     private String password;
+
     public HashSet<Rating> ratings;
     public HashSet<Vote> votes;
 
