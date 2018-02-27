@@ -1,4 +1,4 @@
-package com.example.xavi.triaculturadroid.Model;
+package com.example.xavi.triaculturadroid.Data.Model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

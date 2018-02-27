@@ -1,4 +1,4 @@
-package com.example.xavi.triaculturadroid.Model;
+package com.example.xavi.triaculturadroid.Data.Model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -14,7 +14,7 @@ public class User {
     @SerializedName("id")
     @Expose
     public int id;
-    @SerializedName("id")
+    @SerializedName("dni")
     @Expose
     private String dni;
     @SerializedName("password")

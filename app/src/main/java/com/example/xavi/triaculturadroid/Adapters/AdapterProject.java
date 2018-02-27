@@ -8,12 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.xavi.triaculturadroid.Model.Project;
+import com.example.xavi.triaculturadroid.Data.Model.Project;
 import com.example.xavi.triaculturadroid.R;
 
 import java.util.List;
@@ -75,7 +73,7 @@ public class AdapterProject extends BaseAdapter {
             convertView = inflator.inflate(R.layout.activity_item_list_projects, parent, false);
         }
         //Project item = model.get(position);
-        final LinearLayout LIP_LayoutPrincip = (LinearLayout) convertView.findViewById(R.id.ILP_LinearGeneral);
+        final LinearLayout LIP_LayoutPrincip = (LinearLayout) convertView.findViewById(R.id.P_LinearGeneral);
         LIP_textTitle = (TextView) convertView.findViewById(R.id.ILP_Title);
         LIP_textDescript = (TextView) convertView.findViewById(R.id.ILP_Description);
         LIP_textAuthor= (TextView) convertView.findViewById(R.id.ILP_AuthorName);

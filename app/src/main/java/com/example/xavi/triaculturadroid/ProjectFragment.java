@@ -1,20 +1,14 @@
 package com.example.xavi.triaculturadroid;
 
-import android.app.Activity;
-import android.app.Application;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.xavi.triaculturadroid.Adapters.AdapterProject;
-import com.example.xavi.triaculturadroid.Model.Project;
+import com.example.xavi.triaculturadroid.Data.Model.Project;
 
 import java.util.ArrayList;
 
@@ -62,11 +56,11 @@ public class ProjectFragment extends Fragment {
 
         listView =(ListView) rootView.findViewById(R.id.ListProjects);
         ArrayList<Project> ad= new ArrayList<>();
-        Project c = new Project(1,"Titol","???","Hola que tal");
-        Project c2 = new Project(2,"Titol","???","Hola que tal");
-        Project c3 = new Project(3,"Titol","???","Hola que tal");
-        Project c4 = new Project(4,"Titol","???","Hola que tal");
-        Project c5 = new Project(5,"Titol","???","Hola que tal");
+        Project c = new Project(1,"Titol","???","Hola que tal","Fals",3);
+        Project c2 = new Project(2,"Titol","???","Hola que tal","Fals",3);
+        Project c3 = new Project(3,"Titol","???","Hola que tal","Fals",3);
+        Project c4 = new Project(4,"Titol","???","Hola que tal","Fals",3);
+        Project c5 = new Project(5,"Titol","???","Hola que tal","Fals",3);
         ad.add(c);
         ad.add(c2);
         ad.add(c3);
