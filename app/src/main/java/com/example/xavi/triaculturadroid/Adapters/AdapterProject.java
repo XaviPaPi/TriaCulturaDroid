@@ -3,6 +3,7 @@ package com.example.xavi.triaculturadroid.Adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import com.example.xavi.triaculturadroid.R;
 
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * Created by miquel on 2/22/2018.
  */
@@ -28,14 +31,16 @@ public class AdapterProject extends BaseAdapter {
     TextView LIP_textAuthor,LIP_textDescript,LIP_textTitle;
     Button LIP_btnVote;
 
+
     public AdapterProject(Context context, List<Project> model) {
         this.model = model;
         mode = 1;
         this.context = context;
+        Log.d(TAG, "ADAPTER COUNT: "+model.size());
     }
 
-    public AdapterProject(Context context, Project projct) {
-        this.projct = projct;
+    public AdapterProject(Context context, Project project) {
+        this.projct = project;
         this.context = context;
         mode = 0;
     }
@@ -67,11 +72,12 @@ public class AdapterProject extends BaseAdapter {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflator = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflator.inflate(R.layout.activity_item_list_projects, parent, false);
         }
+
         //Project item = model.get(position);
         final LinearLayout LIP_LayoutPrincip = (LinearLayout) convertView.findViewById(R.id.P_LinearGeneral);
         LIP_textTitle = (TextView) convertView.findViewById(R.id.ILP_Title);
@@ -79,14 +85,25 @@ public class AdapterProject extends BaseAdapter {
         LIP_textAuthor= (TextView) convertView.findViewById(R.id.ILP_AuthorName);
         LIP_btnVote = (Button) convertView.findViewById(R.id.ILP_Bnt_vote);
 
-        LIP_btnVote.setOnClickListener(new View.OnClickListener() {
+
+            LIP_textTitle.setText(model.get(position).getTitle());
+            LIP_textDescript.setText(model.get(position).getDescript());
+//            LIP_textAuthor.setText(p.getAuthor_id()); // canviar a author.getName() quan ho tinguem bé.
+
+
+        LIP_textDescript.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LIP_textTitle.setVisibility(View.GONE);
+                on_click_add_vote(position,v);
             }
         });
 
         return convertView;
+    }
+
+    private void on_click_add_vote(int pos, View v) {
+        Log.d(TAG, "onClick: "+pos);
+        v.setVisibility(View.GONE);
     }
     @Override
     public boolean hasStableIds() {
