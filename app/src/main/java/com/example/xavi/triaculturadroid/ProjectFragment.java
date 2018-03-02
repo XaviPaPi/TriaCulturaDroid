@@ -83,7 +83,7 @@ public class ProjectFragment extends Fragment {
         }
 
         AdapterProject adapter = new AdapterProject(getActivity(), ad);
-        ArrayAdapter<Project> adapterlol= new ArrayAdapter<Project>(getActivity(),android.R.layout.simple_list_item_1, ad);
+
         listView.setItemsCanFocus(true);
         listView.setAdapter(adapter);
 
