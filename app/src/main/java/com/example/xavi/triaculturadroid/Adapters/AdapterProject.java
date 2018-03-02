@@ -28,7 +28,7 @@ public class AdapterProject extends BaseAdapter {
     Context context;
     Project projct;
     int mode;
-    TextView LIP_textAuthor,LIP_textDescript,LIP_textTitle;
+    TextView LIP_textAuthor, LIP_textDescript, LIP_textTitle;
     Button LIP_btnVote;
 
 
@@ -36,7 +36,7 @@ public class AdapterProject extends BaseAdapter {
         this.model = model;
         mode = 1;
         this.context = context;
-        Log.d(TAG, "ADAPTER COUNT: "+model.size());
+        Log.d(TAG, "ADAPTER COUNT: " + model.size());
     }
 
     public AdapterProject(Context context, Project project) {
@@ -64,7 +64,7 @@ public class AdapterProject extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        if (mode ==1)
+        if (mode == 1)
             return getItem(position).getId();
         else
             return 0;
@@ -82,19 +82,20 @@ public class AdapterProject extends BaseAdapter {
         final LinearLayout LIP_LayoutPrincip = (LinearLayout) convertView.findViewById(R.id.P_LinearGeneral);
         LIP_textTitle = (TextView) convertView.findViewById(R.id.ILP_Title);
         LIP_textDescript = (TextView) convertView.findViewById(R.id.ILP_Description);
-        LIP_textAuthor= (TextView) convertView.findViewById(R.id.ILP_AuthorName);
+        LIP_textAuthor = (TextView) convertView.findViewById(R.id.ILP_AuthorName);
         LIP_btnVote = (Button) convertView.findViewById(R.id.ILP_Bnt_vote);
 
 
-            LIP_textTitle.setText(model.get(position).getTitle());
-            LIP_textDescript.setText(model.get(position).getDescript());
+        LIP_textTitle.setText(model.get(position).getTitle());
+        LIP_textDescript.setText(model.get(position).getDescript());
+//        LIP_textDescript.setText(model.get(position).());
 //            LIP_textAuthor.setText(p.getAuthor_id()); // canviar a author.getName() quan ho tinguem bé.
 
 
         LIP_textDescript.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                on_click_add_vote(position,v);
+                on_click_add_vote(position, v);
             }
         });
 
@@ -102,9 +103,10 @@ public class AdapterProject extends BaseAdapter {
     }
 
     private void on_click_add_vote(int pos, View v) {
-        Log.d(TAG, "onClick: "+pos);
+        Log.d(TAG, "onClick: " + pos);
         v.setVisibility(View.GONE);
     }
+
     @Override
     public boolean hasStableIds() {
         return true;

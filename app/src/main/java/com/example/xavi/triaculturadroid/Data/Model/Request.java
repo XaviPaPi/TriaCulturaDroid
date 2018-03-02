@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by miquel on 2/23/2018.
@@ -16,7 +17,7 @@ public class Request {
     private int id;
     @SerializedName("proposed_date")
     @Expose
-    private DateFormat data_proposta;
+    private String data_proposta;
     @SerializedName("is_winner")
     @Expose
     private int esGuanyador;
@@ -32,7 +33,7 @@ public class Request {
     public Request() {
     }
 
-    public Request(int id, DateFormat data_proposta, int esGuanyador, int proj_id, int place_id) {
+    public Request(int id, String data_proposta, int esGuanyador, int proj_id, int place_id) {
         this.id = id;
         this.data_proposta = data_proposta;
         this.esGuanyador = esGuanyador;
@@ -48,11 +49,11 @@ public class Request {
         this.id = id;
     }
 
-    public DateFormat getData_proposta() {
+    public String getData_proposta() {
         return data_proposta;
     }
 
-    public void setData_proposta(DateFormat data_proposta) {
+    public void setData_proposta(String data_proposta) {
         this.data_proposta = data_proposta;
     }
 

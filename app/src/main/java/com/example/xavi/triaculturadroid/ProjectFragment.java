@@ -6,13 +6,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.xavi.triaculturadroid.Adapters.AdapterProject;
 import com.example.xavi.triaculturadroid.Data.Model.Project;
+import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
+import com.example.xavi.triaculturadroid.Data.Remote.RetrofitClient;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import rx.Subscriber;
+import rx.schedulers.Schedulers;
 
 import static android.content.ContentValues.TAG;
 
@@ -27,13 +35,18 @@ import static android.content.ContentValues.TAG;
  */
 public class ProjectFragment extends Fragment {
     private ListView listView;
+    ArrayList<Project> ad;
+
     public ProjectFragment() {
         // Required empty public constructor
     }
+
     private static final String ARG_SECTION_NUMBER = "section_number";
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
+     *
      * @return A new instance of fragment ProjectFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -44,6 +57,7 @@ public class ProjectFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,23 +72,20 @@ public class ProjectFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_project, container,
                 false);
 
-        listView =(ListView) rootView.findViewById(R.id.ListProjects);
-        ArrayList<Project> ad= new ArrayList<>();
-        Project c = new Project(1,"Ttol","???","Hola que tal","Fals",3);
-        Project c2 = new Project(2,"itol","???!","Hola que","Erroni",2);
-        Project c3 = new Project(3,"tol","??!?","Hola tal","Tautològic",1);
-        Project c4 = new Project(4,"l","?!??","Hola","Falaç",4);
-        Project c5 = new Project(5,"Titol_2","!???","que tal","Vertader",5);
-        ad.add(c);
-        ad.add(c2);
-        ad.add(c3);
-        ad.add(c4);
-        ad.add(c5);
-        Log.d(TAG, "onCreateView: "+ad.size());
-        AdapterProject adapter = new AdapterProject(getActivity(),ad);
+        listView = (ListView) rootView.findViewById(R.id.ListProjects);
+        ad = new ArrayList<>();
+
+        ad = APIUtils.get_projects_from_place(6);
+
+        /* hasta que hagamos un diálogo de load*/
+        while (ad.size() == 0) {
+            Log.d(TAG, "onCreateView: " + ad.size());
+        }
+
+        AdapterProject adapter = new AdapterProject(getActivity(), ad);
+        ArrayAdapter<Project> adapterlol= new ArrayAdapter<Project>(getActivity(),android.R.layout.simple_list_item_1, ad);
         listView.setItemsCanFocus(true);
         listView.setAdapter(adapter);
-
 
 
         return rootView;
