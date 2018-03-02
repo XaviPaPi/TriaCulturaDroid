@@ -66,6 +66,7 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
+                current_user = null;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
