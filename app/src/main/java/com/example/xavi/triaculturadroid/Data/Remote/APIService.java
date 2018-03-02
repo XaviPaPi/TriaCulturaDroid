@@ -28,9 +28,9 @@ public interface APIService {
     Call<User> postNewPass(@Path("id") int id,
                            @Path("newpass") String password);
 
-    @GET("api/usuari/{id}")
+    @GET("api/usuari/{dni}")
 //    @FormUrlEncoded
-    Observable<User> getUserByDni(@Path("id") String dni);
+    Observable<User> getUserByDni(@Path("dni") String dni);
 
     @GET("api/projects/{place_id}")
 //    @FormUrlEncoded

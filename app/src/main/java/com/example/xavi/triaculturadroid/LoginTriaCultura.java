@@ -59,7 +59,6 @@ public class LoginTriaCultura extends AppCompatActivity {
     private boolean verificarUsuariAndPass(String user_dni) {
         User retrieved_user = APIUtils.get_user_by_dni(user_dni);
         if (retrieved_user != null) {
-            Log.d("DEMIAN", "verificarUsuariAndPass: " + mPasswordView.getText().toString());
             boolean correct = retrieved_user.getPassword().equals(mPasswordView.getText().toString());
             return correct;
         }

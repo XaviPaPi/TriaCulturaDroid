@@ -23,20 +23,21 @@ import static android.content.ContentValues.TAG;
 
 public class APIUtils {
     private static final String BASE_URL = "https://triaculturaservice.azurewebsites.net/";
-
+    static boolean continuar;
     static ArrayList<Project> projectList = new ArrayList<>();
     static User current_user = new User();
 
-    public static APIService getApiService(){
+    public static APIService getApiService() {
         return RetrofitClient.getClient(BASE_URL).create(APIService.class);
     }
 
-    public static ArrayList<Project> get_projects_from_place (int place_id) {
-
+    public static ArrayList<Project> get_projects_from_place(int place_id) {
+        continuar = false;
         getApiService().getProjectFromPlace(place_id).subscribeOn(
                 Schedulers.io()).subscribe(new Subscriber<List<Project>>() {
             @Override
             public void onCompleted() {
+                continuar = true;
                 Log.d(TAG, "Completed.");
             }
 
@@ -50,17 +51,23 @@ public class APIUtils {
                 projectList.addAll(projects);
             }
         });
+        while (!continuar) {
+            Log.d(TAG, "get_projects_from_place: QUERY NOT COMPLETED - WAITING FOR RESPONSE FROM SERVER");
+        }
+
         return projectList;
     }
 
-    public static User get_user_by_dni (String dni) {
+    public static User get_user_by_dni(String dni) {
+        continuar = false;
 
         getApiService().getUserByDni(dni).subscribeOn(
                 Schedulers.io()
-        ).subscribe( new Subscriber<User>() {
+        ).subscribe(new Subscriber<User>() {
 
             @Override
             public void onCompleted() {
+                continuar = true;
                 Log.d(TAG, "User recovered.");
             }
 
@@ -72,9 +79,13 @@ public class APIUtils {
 
             @Override
             public void onNext(User user) {
+                Log.d(TAG, "onNext: USER RETRIEVED - " + user.getDni());
                 current_user = user;
             }
         });
+        while (!continuar) {
+            Log.d(TAG, "get_user_by_dni: QUERY NOT COMPLETED - WAITING FOR RESPONSE FROM SERVER");
+        }
         return current_user;
     }
 }

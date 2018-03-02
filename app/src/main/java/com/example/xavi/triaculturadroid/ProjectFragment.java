@@ -77,10 +77,6 @@ public class ProjectFragment extends Fragment {
 
         ad = APIUtils.get_projects_from_place(6);
 
-        /* hasta que hagamos un diálogo de load*/
-        while (ad.size() == 0) {
-            Log.d(TAG, "onCreateView: " + ad.size());
-        }
 
         AdapterProject adapter = new AdapterProject(getActivity(), ad);
 
