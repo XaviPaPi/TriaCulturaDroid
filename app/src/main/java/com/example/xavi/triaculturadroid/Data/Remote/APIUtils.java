@@ -23,7 +23,7 @@ import static android.content.ContentValues.TAG;
 public class APIUtils {
     private static final String BASE_URL = "https://triaculturaservice.azurewebsites.net/";
     static boolean continuar;
-    static ArrayList<Project> projectList = new ArrayList<>();
+    static ArrayList<Project> projectList;
     static APIService service;
 
     static User current_user = new User();
@@ -45,6 +45,7 @@ public class APIUtils {
 
     public static ArrayList<Project> get_projects_from_place(int place_id) {
         continuar = false;
+        projectList = new ArrayList<>();
         service.getProjectFromPlace(place_id).subscribeOn(
                 Schedulers.io()).subscribe(new Subscriber<List<Project>>() {
             @Override
