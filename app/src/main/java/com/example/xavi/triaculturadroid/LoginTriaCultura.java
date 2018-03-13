@@ -32,6 +32,7 @@ public class LoginTriaCultura extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     verificarUsuariBuit();
+                    verificarPasswordBuit();
                 }
             }
         });
@@ -69,6 +70,10 @@ public class LoginTriaCultura extends AppCompatActivity {
         if (mUserView.getText().toString().isEmpty()) {
             Toast.makeText(this, R.string.userField, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void verificarPasswordBuit(){
+       // if(mPasswordView)
     }
 }
 
