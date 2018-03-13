@@ -74,7 +74,9 @@ public class LoginTriaCultura extends AppCompatActivity {
     }
 
     private void verificarPasswordBuit(){
-       // if(mPasswordView)
+        if(mPasswordView.getText().toString().isEmpty()){
+            Toast.makeText(this, "El camp del password és buit", Toast.LENGTH_SHORT).show();
+        }
     }
 }
 
