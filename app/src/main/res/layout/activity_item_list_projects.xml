@@ -26,12 +26,25 @@
         android:text="AUTHOR NAME" />
 
     <TextView
-        android:id="@+id/ILP_Description"
+        android:id="@+id/ILP_DescriptionLimitat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:text="THIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECT"
+        android:lines="3"
+        android:maxLines="3"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/ILP_DescriptionComplert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_weight="1"
         android:text="THIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECT"
+        android:visibility="gone"
         android:textAlignment="center" />
 
     <Button
