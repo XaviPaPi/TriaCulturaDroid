@@ -15,7 +15,10 @@ import android.widget.TextView;
 
 import com.example.xavi.triaculturadroid.Data.Model.Project;
 import com.example.xavi.triaculturadroid.R;
+import com.google.gson.internal.bind.CollectionTypeAdapterFactory;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -32,7 +35,7 @@ public class AdapterProject extends BaseAdapter {
     private TextView LIP_textAuthor, LIP_textDescript, LIP_textTitle,LIP_textDescriptComplert;
     private Button LIP_btnVote;
     private int dissable=-1;
-
+ //   private Collection<Button> collection;
     public AdapterProject(Context context, List<Project> model) {
         this.model = model;
         mode = 1;
@@ -86,7 +89,7 @@ public class AdapterProject extends BaseAdapter {
         LIP_textDescriptComplert = (TextView) convertView.findViewById(R.id.ILP_DescriptionComplert);
         LIP_textAuthor = (TextView) convertView.findViewById(R.id.ILP_AuthorName);
         LIP_btnVote = (Button) convertView.findViewById(R.id.ILP_Bnt_vote);
-
+       // collection.add(LIP_btnVote);
 
         LIP_textTitle.setText(model.get(position).getTitle());
         LIP_textDescript.setText(model.get(position).getDescript());
@@ -94,8 +97,8 @@ public class AdapterProject extends BaseAdapter {
         LIP_textAuthor.setText(model.get(position).getAuthor().getName());
 
         //solo funciona si el item no se esta viendo.
-        /*
-        if (dissable>-1&&dissable!=position){
+
+       /* if (dissable>-1&&dissable!=position){
             LIP_btnVote.setEnabled(false);
         }else{
 
