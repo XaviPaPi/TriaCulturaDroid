@@ -45,6 +45,18 @@ public class FragmentProfile extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_profile, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_fragment_profile, container, false);
+        rootView.findViewById(R.id.btn_change_mail).setOnClickListener(change_mail_click);
+
+
+
+        return rootView;
     }
+
+    public View.OnClickListener change_mail_click = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
 }
