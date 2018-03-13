@@ -89,6 +89,7 @@ public class APIUtils {
             @Override
             public void onError(Throwable e) {
                 current_user = null;
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -116,6 +117,7 @@ public class APIUtils {
             @Override
             public void onError(Throwable e) {
                 current_user = null;
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -140,6 +142,7 @@ public class APIUtils {
             @Override
             public void onError(Throwable e) {
                 user_votes = new ArrayList<>();
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -163,6 +166,7 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -185,6 +189,7 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -207,6 +212,7 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -230,6 +236,7 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -253,6 +260,7 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -276,6 +284,7 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -299,6 +308,7 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
