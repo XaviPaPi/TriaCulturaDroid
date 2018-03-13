@@ -22,10 +22,13 @@ import static android.content.ContentValues.TAG;
 
 public class APIUtils {
     private static final String BASE_URL = "https://triaculturaservice.azurewebsites.net/";
-    static boolean continuar;
-    static ArrayList<Project> projectList = new ArrayList<>();
     static APIService service;
 
+    // por si hay que detenerlo internamente
+    static boolean continuar;
+
+    // variables para devolver los valores
+    static List<Project> projectList = new ArrayList<>();
     static User current_user = new User();
     static List<Vote> user_votes = new ArrayList<>();
     static Vote aux_vote = new Vote();
@@ -43,7 +46,7 @@ public class APIUtils {
         return RetrofitClient.getClient(BASE_URL).create(APIService.class);
     }
 
-    public static ArrayList<Project> get_projects_from_place(int place_id) {
+    public static List<Project> get_projects_from_place(int place_id) {
         continuar = false;
         service.getProjectFromPlace(place_id).subscribeOn(
                 Schedulers.io()).subscribe(new Subscriber<List<Project>>() {
@@ -60,7 +63,7 @@ public class APIUtils {
 
             @Override
             public void onNext(List<Project> projects) {
-                projectList.addAll(projects);
+                projectList = projects;
             }
         });
         while (!continuar) {
@@ -86,6 +89,7 @@ public class APIUtils {
             @Override
             public void onError(Throwable e) {
                 current_user = null;
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -113,6 +117,7 @@ public class APIUtils {
             @Override
             public void onError(Throwable e) {
                 current_user = null;
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -137,6 +142,7 @@ public class APIUtils {
             @Override
             public void onError(Throwable e) {
                 user_votes = new ArrayList<>();
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -160,6 +166,7 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -182,6 +189,7 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -204,6 +212,7 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -227,6 +236,7 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -250,6 +260,7 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -273,6 +284,7 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -296,6 +308,7 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 

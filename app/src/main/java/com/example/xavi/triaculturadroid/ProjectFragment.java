@@ -35,7 +35,7 @@ import static android.content.ContentValues.TAG;
  */
 public class ProjectFragment extends Fragment {
     private ListView listView;
-    ArrayList<Project> ad;
+    List<Project> ad;
 
     public ProjectFragment() {
         // Required empty public constructor
