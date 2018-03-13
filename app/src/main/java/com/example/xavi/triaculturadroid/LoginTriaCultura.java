@@ -25,6 +25,7 @@ public class LoginTriaCultura extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_tria_cultura);
+        APIUtils.init_service();
 
         mUserView = (AutoCompleteTextView) findViewById(R.id.text_usuari);
         mUserView.setOnFocusChangeListener(new View.OnFocusChangeListener() {

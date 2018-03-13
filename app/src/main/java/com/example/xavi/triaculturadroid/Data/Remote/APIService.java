@@ -13,7 +13,6 @@ import com.example.xavi.triaculturadroid.Data.Model.*;
 import java.util.HashSet;
 import java.util.List;
 
-import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -25,7 +24,7 @@ public interface APIService {
 
     @PUT("api/usuari/{id}/{newpass}")
     @FormUrlEncoded
-    Call<User> postNewPass(@Path("id") int id,
+    Observable<User> postNewPass(@Path("id") int id,
                            @Path("newpass") String password);
 
     @GET("api/usuari/{dni}")
@@ -38,37 +37,37 @@ public interface APIService {
 
     @GET("api/votes/{user_id}")
 //    @FormUrlEncoded
-    Call<List<Vote>> getVotes(@Path("user_id") int user_id);
+    Observable<List<Vote>> getVotes(@Path("user_id") int user_id);
 
     @PUT("api/votes/{user_id}/{project_id}")
     @FormUrlEncoded
-    Call<Vote> postNewVote(@Path("user_id") int user_id,
+    Observable<Vote> postNewVote(@Path("user_id") int user_id,
                            @Path("project_id") int project_id);
 
     @DELETE("api/votes{user_id}/{project_id}")
     @FormUrlEncoded
-    Call<Vote> deleteVote(@Path("user_id") int user_id,
+    Observable<Vote> deleteVote(@Path("user_id") int user_id,
                           @Path("project_id") int project_id);
 
     @GET("api/winningrequests")
 //    @FormUrlEncoded
-    Call<List<Request>> getWinningRequests (); //NOT SURE
+    Observable<List<Request>> getWinningRequests (); //NOT SURE
 
     @GET("api/files/{project_id}")
 //    @FormUrlEncoded
-    Call<List<File>> getFilesFromProject(@Path("project_id") int project_id);
+    Observable<List<File>> getFilesFromProject(@Path("project_id") int project_id);
 
     @GET("api/author/{project_id}")
 //    @FormUrlEncoded
-    Call<Author> getAuthorFromProject(@Path("project_id") int project_id);
+    Observable<Author> getAuthorFromProject(@Path("project_id") int project_id);
 
     @GET("api/rating/{project_id}")
 //    @FormUrlEncoded
-    Call<Double> getProjectAvgRating(@Path("project_id") int project_id);
+    Observable<Double> getProjectAvgRating(@Path("project_id") int project_id);
 
     @GET("api/rating/{user_id}/{project_id}")
 //    @FormUrlEncoded
-    Call<Rating> getRatingWhereAuthor(@Path("user_id") int user_id,
+    Observable<Rating> getRatingWhereUser(@Path("user_id") int user_id,
                                       @Path("project_id") int project_id);
 
 
