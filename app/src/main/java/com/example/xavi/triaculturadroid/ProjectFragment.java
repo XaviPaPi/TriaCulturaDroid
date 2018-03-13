@@ -6,8 +6,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.xavi.triaculturadroid.Adapters.AdapterProject;
@@ -83,6 +87,47 @@ public class ProjectFragment extends Fragment {
         listView.setItemsCanFocus(true);
         listView.setAdapter(adapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Project projct;
+                int mode;
+                final TextView LIP_textAuthor, LIP_textDescript, LIP_textTitle, LIP_textDescriptComplert;
+                final Button LIP_btnVote;
+
+                //Project item = model.get(position);
+                final LinearLayout LIP_LayoutPrincip = (LinearLayout) parent.findViewById(R.id.P_LinearGeneral);
+                LIP_textTitle = (TextView) parent.findViewById(R.id.ILP_Title);
+                LIP_textDescript = (TextView) parent.findViewById(R.id.ILP_DescriptionLimitat);
+                LIP_textDescriptComplert = (TextView) parent.findViewById(R.id.ILP_DescriptionComplert);
+                LIP_textAuthor = (TextView) parent.findViewById(R.id.ILP_AuthorName);
+                LIP_btnVote = (Button) parent.findViewById(R.id.ILP_Bnt_vote);
+
+
+              /*  LIP_textTitle.setText(ad.get(position).getTitle());
+                LIP_textDescript.setText(ad.get(position).getDescript());
+                LIP_textDescriptComplert.setText(ad.get(position).getDescript());
+                LIP_textAuthor.setText(ad.get(position).getAuthor().getName());*/
+
+
+                LIP_textDescript.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //on_click_descriptionLimitat(position, view);
+                        LIP_textDescript.setVisibility(View.GONE);
+                        LIP_textDescriptComplert.setVisibility(View.VISIBLE);
+                    }
+                });
+                LIP_textDescriptComplert.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // on_click_descriptionComplert(position, view);
+                        LIP_textDescript.setVisibility(View.VISIBLE);
+                        LIP_textDescriptComplert.setVisibility(View.GONE);
+                    }
+                });
+            }
+        });
 
         return rootView;
     }

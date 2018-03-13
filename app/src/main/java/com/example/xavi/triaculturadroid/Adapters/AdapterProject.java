@@ -1,5 +1,6 @@
 package com.example.xavi.triaculturadroid.Adapters;
 
+import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,13 +25,13 @@ import static android.content.ContentValues.TAG;
  */
 
 public class AdapterProject extends BaseAdapter {
-    List<Project> model;
-    Context context;
-    Project projct;
-    int mode;
-    TextView LIP_textAuthor, LIP_textDescript, LIP_textTitle,LIP_textDescriptComplert;
-    Button LIP_btnVote;
-
+    private List<Project> model;
+    private Context context;
+    private Project projct;
+    private int mode;
+    private TextView LIP_textAuthor, LIP_textDescript, LIP_textTitle,LIP_textDescriptComplert;
+    private Button LIP_btnVote;
+    private int dissable=-1;
 
     public AdapterProject(Context context, List<Project> model) {
         this.model = model;
@@ -69,12 +70,12 @@ public class AdapterProject extends BaseAdapter {
         else
             return 0;
     }
-
+    LayoutInflater inflator;
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            LayoutInflater inflator = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            inflator= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflator.inflate(R.layout.activity_item_list_projects, parent, false);
         }
 
@@ -90,38 +91,84 @@ public class AdapterProject extends BaseAdapter {
         LIP_textTitle.setText(model.get(position).getTitle());
         LIP_textDescript.setText(model.get(position).getDescript());
         LIP_textDescriptComplert.setText(model.get(position).getDescript());
-//        LIP_textDescript.setText(model.get(position).());
-//            LIP_textAuthor.setText(p.getAuthor_id()); // canviar a author.getName() quan ho tinguem bé.
+        LIP_textAuthor.setText(model.get(position).getAuthor().getName());
+
+        //solo funciona si el item no se esta viendo.
+        /*
+        if (dissable>-1&&dissable!=position){
+            LIP_btnVote.setEnabled(false);
+        }else{
+
+        }*/
 
 
+
+        final View finalConvertView = convertView;
         LIP_textDescript.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                on_click_descriptionLimitat(position, v);
+                LIP_textDescript = (TextView) finalConvertView.findViewById(R.id.ILP_DescriptionLimitat);
+                LIP_textDescriptComplert = (TextView)finalConvertView.findViewById(R.id.ILP_DescriptionComplert);
+                LIP_textDescript.setVisibility(View.GONE);
                 LIP_textDescriptComplert.setVisibility(View.VISIBLE);
             }
         });
         LIP_textDescriptComplert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                on_click_descriptionComplert(position, v);
+                LIP_textDescript = (TextView) finalConvertView.findViewById(R.id.ILP_DescriptionLimitat);
+                LIP_textDescriptComplert = (TextView) finalConvertView.findViewById(R.id.ILP_DescriptionComplert);
                 LIP_textDescript.setVisibility(View.VISIBLE);
+                LIP_textDescriptComplert.setVisibility(View.GONE);
+            }
+        });
+        LIP_btnVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dissable==position){
+
+                }else {
+                    dissable = position;
+                }
             }
         });
         return convertView;
     }
-    private void on_click_descriptionLimitat(int pos, View v) {
+    private void dissableButtons(){
+
+    }
+
+
+
+
+   /* private void on_click_descriptionLimitat(int pos, View v) {
         Log.d(TAG, "onClick: " + pos);
-        v.setVisibility(View.GONE);
+        //LIP_textTitle = (TextView) v.findViewById(R.id.ILP_Title);
+        LIP_textDescript = (TextView) v.findViewById(R.id.ILP_DescriptionLimitat);
+        LIP_textDescriptComplert = (TextView) v.findViewById(R.id.ILP_DescriptionComplert);
+        //LIP_btnVote = (Button) v.findViewById(R.id.ILP_Bnt_vote);
+        //v.setVisibility(View.GONE);
+        LIP_textDescript.setVisibility(View.GONE);
+        LIP_textDescriptComplert.setVisibility(View.VISIBLE);
+
     }
     private void on_click_descriptionComplert(int pos, View v) {
         Log.d(TAG, "onClick: " + pos);
         v.setVisibility(View.GONE);
+        LIP_textDescript.setVisibility(View.VISIBLE);
     }
     private void on_click_add_vote(int pos, View v) {
-        Log.d(TAG, "onClick: " + pos);
-        v.setVisibility(View.GONE);
-    }
+        /*for (int i=0; i<model.size(); i++){
+            if (pos != i){
+
+            }else{
+
+            }
+        }
+
+    }*/
+
+
 
     @Override
     public boolean hasStableIds() {
