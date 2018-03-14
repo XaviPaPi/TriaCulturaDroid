@@ -3,6 +3,7 @@ package com.example.xavi.triaculturadroid.Data.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -11,7 +12,7 @@ import java.util.HashSet;
  * 02/26/18.
  */
 
-public class User {
+public class User implements Serializable{
     @SerializedName("id")
     @Expose
     public int id;

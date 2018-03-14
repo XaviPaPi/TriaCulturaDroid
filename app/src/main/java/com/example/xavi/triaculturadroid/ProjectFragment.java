@@ -1,5 +1,6 @@
 package com.example.xavi.triaculturadroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.xavi.triaculturadroid.Adapters.AdapterProject;
 import com.example.xavi.triaculturadroid.Data.Model.Project;
+import com.example.xavi.triaculturadroid.Data.Model.User;
 import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
 import com.example.xavi.triaculturadroid.Data.Remote.RetrofitClient;
 
@@ -43,6 +45,7 @@ public class ProjectFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
+    User user;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -61,7 +64,8 @@ public class ProjectFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+//        Intent intent = new Intent();
+        user = (User) getActivity().getIntent().getExtras().getSerializable("Usuari");
 
     }
 

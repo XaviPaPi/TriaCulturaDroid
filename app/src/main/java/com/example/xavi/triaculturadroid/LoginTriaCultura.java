@@ -20,6 +20,7 @@ public class LoginTriaCultura extends AppCompatActivity {
     private Button btn_Acces;
     private AutoCompleteTextView mUserView;
     private EditText mPasswordView;
+    User retrieved_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class LoginTriaCultura extends AppCompatActivity {
         boolean exists = verificarUsuariAndPass(mUserView.getText().toString());
         if (exists) {
             Intent intent = new Intent(getApplication(), TabbetsActivity.class);
+            intent.putExtra("Usuari",retrieved_user);
             startActivity(intent);
         } else {
             Toast.makeText(getApplication(), R.string.errorPassOrUsrInvalid, Toast.LENGTH_SHORT).show();
@@ -59,7 +61,8 @@ public class LoginTriaCultura extends AppCompatActivity {
     }
 
     private boolean verificarUsuariAndPass(String user_dni) {
-        User retrieved_user = APIUtils.get_user_by_dni(user_dni);
+        retrieved_user = APIUtils.get_user_by_dni(user_dni);
+
         if (retrieved_user != null) {
             boolean correct = retrieved_user.getPassword().equals(mPasswordView.getText().toString());
             return correct;
