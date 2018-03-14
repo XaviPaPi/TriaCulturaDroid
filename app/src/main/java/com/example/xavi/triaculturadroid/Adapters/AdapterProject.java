@@ -14,9 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.xavi.triaculturadroid.Data.Model.Project;
+import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
 import com.example.xavi.triaculturadroid.R;
 import com.google.gson.internal.bind.CollectionTypeAdapterFactory;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -34,9 +36,10 @@ public class AdapterProject extends BaseAdapter {
     private int mode;
     private TextView LIP_textAuthor, LIP_textDescript, LIP_textTitle,LIP_textDescriptComplert;
     private Button LIP_btnVote;
-    private int dissable=-1;
- //   private Collection<Button> collection;
+    private static int dissable=0;
+    private ArrayList<Button> arrButons;
     public AdapterProject(Context context, List<Project> model) {
+        arrButons= new ArrayList<>();
         this.model = model;
         mode = 1;
         this.context = context;
@@ -73,12 +76,12 @@ public class AdapterProject extends BaseAdapter {
         else
             return 0;
     }
-    LayoutInflater inflator;
+
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            inflator= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflator = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflator.inflate(R.layout.activity_item_list_projects, parent, false);
         }
 
@@ -89,7 +92,7 @@ public class AdapterProject extends BaseAdapter {
         LIP_textDescriptComplert = (TextView) convertView.findViewById(R.id.ILP_DescriptionComplert);
         LIP_textAuthor = (TextView) convertView.findViewById(R.id.ILP_AuthorName);
         LIP_btnVote = (Button) convertView.findViewById(R.id.ILP_Bnt_vote);
-       // collection.add(LIP_btnVote);
+        arrButons.add(LIP_btnVote);
 
         LIP_textTitle.setText(model.get(position).getTitle());
         LIP_textDescript.setText(model.get(position).getDescript());
@@ -98,12 +101,12 @@ public class AdapterProject extends BaseAdapter {
 
         //solo funciona si el item no se esta viendo.
 
-       /* if (dissable>-1&&dissable!=position){
+        /*if (!arrButons.get(position).isEnabled()){
             LIP_btnVote.setEnabled(false);
-        }else{
-
         }*/
-
+        if (dissable!=0&&dissable!=position){
+            LIP_btnVote.setEnabled(false);
+        }
 
 
         final View finalConvertView = convertView;
@@ -128,11 +131,16 @@ public class AdapterProject extends BaseAdapter {
         LIP_btnVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (dissable==position){
-
-                }else {
-                    dissable = position;
-                }
+               /* if (dissable!=position){
+                    arrButons
+                }*/
+                APIUtils.post_new_vote(4, model.get(position).getId());
+                dissable=position;
+               for (int i =0; i<arrButons.size();i++){
+                   if (i!=position) {
+                       arrButons.get(i).setEnabled(false);
+                   }
+               }
             }
         });
         return convertView;
