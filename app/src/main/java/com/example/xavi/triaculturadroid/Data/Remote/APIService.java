@@ -39,7 +39,7 @@ public interface APIService {
 //    @FormUrlEncoded
     Observable<List<Vote>> getVotes(@Path("user_id") int user_id);
 
-    @PUT("api/votes/{user_id}/{project_id}")
+    @POST("api/votes/{user_id}/{project_id}")
     @FormUrlEncoded
     Observable<Vote> postNewVote(@Path("user_id") int user_id,
                            @Path("project_id") int project_id);

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.xavi.triaculturadroid.Data.Model.User;
+import com.example.xavi.triaculturadroid.Data.Model.userTransfer;
 import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
 
 
@@ -53,7 +54,11 @@ public class LoginTriaCultura extends AppCompatActivity {
         boolean exists = verificarUsuariAndPass(mUserView.getText().toString());
         if (exists) {
             Intent intent = new Intent(getApplication(), TabbetsActivity.class);
-            intent.putExtra("Usuari",retrieved_user);
+            userTransfer usuari= new userTransfer();
+            usuari.setId(retrieved_user.getId());
+            usuari.setDni(retrieved_user.getDni());
+            usuari.setPassword(retrieved_user.getPassword());
+            intent.putExtra("Usuari",usuari);
             startActivity(intent);
         } else {
             Toast.makeText(getApplication(), R.string.errorPassOrUsrInvalid, Toast.LENGTH_SHORT).show();

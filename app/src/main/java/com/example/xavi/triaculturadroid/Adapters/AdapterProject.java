@@ -14,6 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.xavi.triaculturadroid.Data.Model.Project;
+import com.example.xavi.triaculturadroid.Data.Model.User;
+import com.example.xavi.triaculturadroid.Data.Model.Vote;
+import com.example.xavi.triaculturadroid.Data.Model.userTransfer;
 import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
 import com.example.xavi.triaculturadroid.R;
 import com.google.gson.internal.bind.CollectionTypeAdapterFactory;
@@ -31,22 +34,38 @@ import static android.content.ContentValues.TAG;
 
 public class AdapterProject extends BaseAdapter {
     private List<Project> model;
+    private List<Vote> votes;
     private Context context;
     private Project projct;
+    private userTransfer user;
     private int mode;
     private TextView LIP_textAuthor, LIP_textDescript, LIP_textTitle,LIP_textDescriptComplert;
     private Button LIP_btnVote;
-    private static int dissable=0;
+    private static boolean votat;
+    private static int idProjecVotat;
+    private static Vote voteUser;
     private ArrayList<Button> arrButons;
-    public AdapterProject(Context context, List<Project> model) {
+    public AdapterProject(Context context, List<Project> model,userTransfer user) {
         arrButons= new ArrayList<>();
+        this.user = user;
         this.model = model;
         mode = 1;
         this.context = context;
+
+        votes = APIUtils.get_votes(user.getId());
+        if (votes!=null&&votes.size()>0) {
+            Vote vote = votes.get(votes.size() - 1);
+            if (model.contains(vote.getProject())) {
+                votat = true;
+                idProjecVotat = vote.getProject().getId();
+            }
+        }
+
         Log.d(TAG, "ADAPTER COUNT: " + model.size());
     }
 
     public AdapterProject(Context context, Project project) {
+
         this.projct = project;
         this.context = context;
         mode = 0;
@@ -99,12 +118,11 @@ public class AdapterProject extends BaseAdapter {
         LIP_textDescriptComplert.setText(model.get(position).getDescript());
         LIP_textAuthor.setText(model.get(position).getAuthor().getName());
 
-        //solo funciona si el item no se esta viendo.
 
-        /*if (!arrButons.get(position).isEnabled()){
-            LIP_btnVote.setEnabled(false);
-        }*/
-        if (dissable!=0&&dissable!=position){
+
+
+
+        if (voteUser!=null&&votat&&idProjecVotat!=position){
             LIP_btnVote.setEnabled(false);
         }
 
@@ -131,55 +149,20 @@ public class AdapterProject extends BaseAdapter {
         LIP_btnVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* if (dissable!=position){
-                    arrButons
-                }*/
-                APIUtils.post_new_vote(4, model.get(position).getId());
-                dissable=position;
-               for (int i =0; i<arrButons.size();i++){
-                   if (i!=position) {
-                       arrButons.get(i).setEnabled(false);
-                   }
-               }
+                if (!votat) {
+                    voteUser = APIUtils.post_new_vote(user.getId(), model.get(position).getId());
+                    for (int i = 0; i < arrButons.size(); i++) {
+                        if (i != position) {
+                            arrButons.get(i).setEnabled(false);
+                        }
+                    }
+                }else{
+                    APIUtils.delete_vote(user.getId(), model.get(position).getId());
+                }
             }
         });
         return convertView;
     }
-    private void dissableButtons(){
-
-    }
-
-
-
-
-   /* private void on_click_descriptionLimitat(int pos, View v) {
-        Log.d(TAG, "onClick: " + pos);
-        //LIP_textTitle = (TextView) v.findViewById(R.id.ILP_Title);
-        LIP_textDescript = (TextView) v.findViewById(R.id.ILP_DescriptionLimitat);
-        LIP_textDescriptComplert = (TextView) v.findViewById(R.id.ILP_DescriptionComplert);
-        //LIP_btnVote = (Button) v.findViewById(R.id.ILP_Bnt_vote);
-        //v.setVisibility(View.GONE);
-        LIP_textDescript.setVisibility(View.GONE);
-        LIP_textDescriptComplert.setVisibility(View.VISIBLE);
-
-    }
-    private void on_click_descriptionComplert(int pos, View v) {
-        Log.d(TAG, "onClick: " + pos);
-        v.setVisibility(View.GONE);
-        LIP_textDescript.setVisibility(View.VISIBLE);
-    }
-    private void on_click_add_vote(int pos, View v) {
-        /*for (int i=0; i<model.size(); i++){
-            if (pos != i){
-
-            }else{
-
-            }
-        }
-
-    }*/
-
-
 
     @Override
     public boolean hasStableIds() {
