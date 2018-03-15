@@ -5,4 +5,14 @@ package com.example.xavi.triaculturadroid;
  */
 
 public class Dialogs {
+
+
+
+
+
+
+
+
+
+
 }
