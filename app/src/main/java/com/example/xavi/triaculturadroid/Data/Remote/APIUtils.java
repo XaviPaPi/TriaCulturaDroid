@@ -67,7 +67,7 @@ public class APIUtils {
             }
         });
         while (!continuar) {
-            Log.d(TAG, "get_projects_from_place: QUERY NOT COMPLETED - WAITING FOR RESPONSE FROM SERVER");
+//            Log.d(TAG, "get_projects_from_place: QUERY NOT COMPLETED - WAITING FOR RESPONSE FROM SERVER");
         }
 
         return projectList;
