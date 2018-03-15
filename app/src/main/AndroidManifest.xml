@@ -17,7 +17,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginTriaCultura"
-            android:label="@string/title_activity_login_tria_cultura">
+            android:label="@string/title_activity_login_tria_cultura"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

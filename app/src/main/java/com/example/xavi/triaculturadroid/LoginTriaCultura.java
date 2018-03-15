@@ -35,17 +35,29 @@ public class LoginTriaCultura extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     verificarUsuariBuit();
-                    verificarPasswordBuit();
                 }
             }
         });
         mPasswordView = findViewById(R.id.password);
+        mPasswordView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    verificarPasswordBuit();
+                }
+            }
+        });
 
         btn_Acces = (Button) findViewById(R.id.tcLogin_button);
         btn_Acces.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                log_in();
+                if(!mUserView.getText().toString().isEmpty() || !mPasswordView.getText().toString().isEmpty()) {
+                    log_in();
+                }else {
+                    Toast.makeText(LoginTriaCultura.this, "Els camps estan buits", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

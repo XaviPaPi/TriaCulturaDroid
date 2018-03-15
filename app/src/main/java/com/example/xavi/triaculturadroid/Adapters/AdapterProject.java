@@ -33,18 +33,18 @@ import static android.content.ContentValues.TAG;
  */
 
 public class AdapterProject extends BaseAdapter {
-    private List<Project> model;
-    private List<Vote> votes;
-    private Context context;
-    private Project projct;
-    private userTransfer user;
-    private int mode;
-    private TextView LIP_textAuthor, LIP_textDescript, LIP_textTitle,LIP_textDescriptComplert;
-    private Button LIP_btnVote;
-    private static boolean votat;
-    private static int idProjecVotat;
-    private static Vote voteUser;
-    private ArrayList<Button> arrButons;
+    List<Project> model;
+    List<Vote> votes;
+    Context context;
+    Project projct;
+    userTransfer user;
+    int mode;
+    TextView LIP_textAuthor, LIP_textDescript, LIP_textTitle,LIP_textDescriptComplert;
+    Button LIP_btnVote;
+    static boolean votat;
+    static int idProjecVotat;
+    static Vote voteUser;
+    ArrayList<Button> arrButons;
     public AdapterProject(Context context, List<Project> model,userTransfer user) {
         arrButons= new ArrayList<>();
         this.user = user;
