@@ -1,5 +1,6 @@
 package com.example.xavi.triaculturadroid.Data.Remote;
 
+import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -33,13 +34,17 @@ public interface APIService {
 
     @GET("api/projects/{place_id}")
 //    @FormUrlEncoded
+    Call<List<Project>> getProjectByPlace(@Path("place_id") int place_id);
+
+    @GET("api/projects/{place_id}")
+//    @FormUrlEncoded
     Observable<List<Project>> getProjectFromPlace(@Path("place_id") int place_id);
 
     @GET("api/votes/{user_id}")
 //    @FormUrlEncoded
     Observable<List<Vote>> getVotes(@Path("user_id") int user_id);
 
-    @PUT("api/votes/{user_id}/{project_id}")
+    @POST("api/votes/{user_id}/{project_id}")
     @FormUrlEncoded
     Observable<Vote> postNewVote(@Path("user_id") int user_id,
                            @Path("project_id") int project_id);

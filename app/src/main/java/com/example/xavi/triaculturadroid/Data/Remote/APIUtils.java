@@ -46,6 +46,27 @@ public class APIUtils {
         return RetrofitClient.getClient(BASE_URL).create(APIService.class);
     }
 
+    public static List<Project> get_projects_by_place(int place_id) {
+        continuar = false;
+        service.getProjectByPlace(place_id).enqueue(new Callback<List<Project>>() {
+            @Override
+            public void onResponse(Call<List<Project>> call, Response<List<Project>> response) {
+                continuar = true;
+                projectList = response.body();
+                Log.d(TAG, "Completed.");
+            }
+
+            @Override
+            public void onFailure(Call<List<Project>> call, Throwable t) {
+                Log.d(TAG, "onError:" + t.toString());
+            }
+        });
+        while (!continuar) {
+
+        }
+        return projectList;
+    }
+
     public static List<Project> get_projects_from_place(int place_id) {
         continuar = false;
         service.getProjectFromPlace(place_id).subscribeOn(
@@ -67,7 +88,7 @@ public class APIUtils {
             }
         });
         while (!continuar) {
-            Log.d(TAG, "get_projects_from_place: QUERY NOT COMPLETED - WAITING FOR RESPONSE FROM SERVER");
+//            Log.d(TAG, "get_projects_from_place: QUERY NOT COMPLETED - WAITING FOR RESPONSE FROM SERVER");
         }
 
         return projectList;

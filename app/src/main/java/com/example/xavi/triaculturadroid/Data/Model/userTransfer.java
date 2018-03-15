@@ -1,30 +1,17 @@
 package com.example.xavi.triaculturadroid.Data.Model;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by demian ${EMAIL}
- * 02/26/18.
+ * Created by miquel on 3/14/2018.
  */
 
-public class User {
-    @SerializedName("id")
-    @Expose
+public class userTransfer implements Serializable {
     public int id;
-    @SerializedName("dni")
-    @Expose
     private String dni;
-    @SerializedName("password")
-    @Expose
     private String password;
-    @SerializedName("ratings")
-    @Expose
     private ArrayList<Rating> ratings;
-    @SerializedName("votes")
-    @Expose
     private ArrayList<Vote> votes;
 
     public ArrayList<Rating> getRatings() {
@@ -43,12 +30,12 @@ public class User {
         this.votes = votes;
     }
 
-    public User() {
+    public userTransfer() {
         this.ratings = new ArrayList<Rating>();
         this.votes = new ArrayList<Vote>();
     }
 
-    public User(int id, String dni, String password) {
+    public userTransfer(int id, String dni, String password) {
         this.id = id;
         this.dni = dni;
         this.password = password;
@@ -78,5 +65,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+
     }
 }
