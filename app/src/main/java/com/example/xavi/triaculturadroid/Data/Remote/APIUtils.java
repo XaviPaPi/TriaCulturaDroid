@@ -48,7 +48,7 @@ public class APIUtils {
 
     public static List<Project> get_projects_by_place(int place_id) {
         continuar = false;
-        service.getProjectByPlace(place_id).enqueue(new Callback<List<Project>>() {
+        getApiService().getProjectByPlace(place_id).enqueue(new Callback<List<Project>>() {
             @Override
             public void onResponse(Call<List<Project>> call, Response<List<Project>> response) {
                 continuar = true;
@@ -58,6 +58,7 @@ public class APIUtils {
 
             @Override
             public void onFailure(Call<List<Project>> call, Throwable t) {
+                continuar = true;
                 Log.d(TAG, "onError:" + t.toString());
             }
         });
@@ -79,6 +80,7 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
+                continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }
 
@@ -109,7 +111,6 @@ public class APIUtils {
 
             @Override
             public void onError(Throwable e) {
-                current_user = null;
                 continuar = true;
                 Log.d(TAG, "onError:" + e.toString());
             }

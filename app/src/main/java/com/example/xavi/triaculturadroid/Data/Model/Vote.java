@@ -16,7 +16,7 @@ public class Vote {
     private int id;
     @SerializedName("date")
     @Expose
-    private DateFormat dateVote;
+    private String dateVote;
     @SerializedName("project_id")
     @Expose
     private int proj_id;
@@ -31,7 +31,7 @@ public class Vote {
 
     }
 
-    public Vote(int id, DateFormat dateVote, int proj_id, int user_id) {
+    public Vote(int id, String dateVote, int proj_id, int user_id) {
         this.id = id;
         this.dateVote = dateVote;
         this.proj_id = proj_id;
@@ -46,11 +46,11 @@ public class Vote {
         this.id = id;
     }
 
-    public DateFormat getDateVote() {
+    public String getDateVote() {
         return dateVote;
     }
 
-    public void setDateVote(DateFormat dateVote) {
+    public void setDateVote(String dateVote) {
         this.dateVote = dateVote;
     }
 

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/TriaCulturaDroid.iml" filepath="$PROJECT_DIR$/.idea/TriaCulturaDroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TriaCulturaDroid.iml" filepath="$PROJECT_DIR$/TriaCulturaDroid.iml" />
+      <module fileurl="file://E:\DroidApps\TriaCulturaDroid\.idea\TriaCulturaDroid.iml" filepath="E:\DroidApps\TriaCulturaDroid\.idea\TriaCulturaDroid.iml" />
       <module fileurl="file://C:\Users\Xavi\Downloads\NotificationExemple\TriaCulturaDroid\TriaCulturaDroid.iml" filepath="C:\Users\Xavi\Downloads\NotificationExemple\TriaCulturaDroid\TriaCulturaDroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
