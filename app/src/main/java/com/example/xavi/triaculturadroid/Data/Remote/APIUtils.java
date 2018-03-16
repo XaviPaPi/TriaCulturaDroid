@@ -70,7 +70,7 @@ public class APIUtils {
 
     public static List<Project> get_projects_from_place(int place_id) {
         continuar = false;
-        service.getProjectFromPlace(place_id).subscribeOn(
+        service.getProjectFromPlace(4).subscribeOn(
                 Schedulers.io()).subscribe(new Subscriber<List<Project>>() {
             @Override
             public void onCompleted() {
@@ -206,7 +206,7 @@ public class APIUtils {
     public static void delete_vote(Vote vote) {
 
         continuar = false;
-        service.postNewVote(vote.getUser_id(),vote.getProj_id(),vote.getDateVote(),vote.getUser_id(),vote.getProj_id()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Vote>() {
+        service.deleteVote(vote.getUser_id(),vote.getProj_id()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Vote>() {
             @Override
             public void onCompleted() {
                 Log.d(TAG, "Vote deleted.");
