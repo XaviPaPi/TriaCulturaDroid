@@ -21,6 +21,7 @@ import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
 import com.example.xavi.triaculturadroid.R;
 import com.google.gson.internal.bind.CollectionTypeAdapterFactory;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -149,8 +150,12 @@ public class AdapterProject extends BaseAdapter {
         LIP_btnVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Vote vote = new Vote();
+                vote.setProj_id(model.get(position).getId());
+                vote.setUser_id(user.getId());
+                vote.setDateVote(String.valueOf(DateFormat.getDateInstance()));
                 if (!votat) {
-                    voteUser = APIUtils.post_new_vote(user.getId(), model.get(position).getId());
+                    voteUser = APIUtils.post_new_vote(vote);
                     for (int i = 0; i < arrButons.size(); i++) {
                         if (i != position) {
                             arrButons.get(i).setEnabled(false);

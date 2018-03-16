@@ -47,7 +47,10 @@ public interface APIService {
     @POST("api/votes/{user_id}/{project_id}")
     @FormUrlEncoded
     Observable<Vote> postNewVote(@Path("user_id") int user_id,
-                           @Path("project_id") int project_id);
+                           @Path("project_id") int project_id,
+                            @Field("date") String data_vot,
+                                 @Field("project_id") int proj_id,
+                                 @Field("user_id") int u_id);
 
     @DELETE("api/votes{user_id}/{project_id}")
     @FormUrlEncoded
