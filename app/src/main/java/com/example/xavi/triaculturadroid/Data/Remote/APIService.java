@@ -23,10 +23,11 @@ import rx.Observable;
 
 public interface APIService {
 
-    @PUT("api/usuari/{id}/{newpass}")
+    @PUT("api/usuari/")
     @FormUrlEncoded
-    Observable<User> postNewPass(@Path("id") int id,
-                           @Path("newpass") String password);
+    Observable<User> postNewPass(@Field("password") String password
+//                                 ,@Field("email") String email
+    );
 
     @GET("api/usuari/{dni}")
 //    @FormUrlEncoded
@@ -44,13 +45,12 @@ public interface APIService {
 //    @FormUrlEncoded
     Observable<List<Vote>> getVotes(@Path("user_id") int user_id);
 
-    @POST("api/votes/{user_id}/{project_id}")
+    @POST("api/votes/")
     @FormUrlEncoded
-    Observable<Vote> postNewVote(@Path("user_id") int user_id,
-                           @Path("project_id") int project_id,
-                            @Field("date") String data_vot,
-                                 @Field("project_id") int proj_id,
-                                 @Field("user_id") int u_id);
+    Observable<Vote> postNewVote(@Field("project_id") int proj_id,
+                                 @Field("user_id") int u_id,
+                                 @Field("date") String data_vot);
+
 
     @DELETE("api/votes{user_id}/{project_id}")
     @FormUrlEncoded
