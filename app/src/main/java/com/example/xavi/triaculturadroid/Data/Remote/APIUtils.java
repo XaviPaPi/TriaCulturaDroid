@@ -127,9 +127,9 @@ public class APIUtils {
         return current_user;
     }
 
-    public static User update_user(int id, String password) {
+    public static User update_user(User u) {
         continuar = false;
-        service.postNewPass(id, password).subscribeOn(Schedulers.io()).subscribe(new Subscriber<User>() {
+        service.postNewPass(u.getId(),u.getPassword()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<User>() {
             @Override
             public void onCompleted() {
                 continuar = true;
@@ -182,7 +182,7 @@ public class APIUtils {
     public static Vote post_new_vote(Vote vote) {
         continuar = false;
         aux_vote = null;
-        service.postNewVote(vote.getUser_id(),vote.getProj_id(),vote.getDateVote(),vote.getUser_id(),vote.getProj_id()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Vote>() {
+        service.postNewVote(vote.getUser_id(),vote.getProj_id(),vote.getDateVote()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Vote>() {
             @Override
             public void onCompleted() {
                 continuar = true;

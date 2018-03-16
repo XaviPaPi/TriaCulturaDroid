@@ -25,7 +25,9 @@ public interface APIService {
 
     @PUT("api/usuari/")
     @FormUrlEncoded
-    Observable<User> postNewPass(@Field("password") String password
+    Observable<User> postNewPass(
+            @Field("id") int id,
+            @Field("password") String password
 //                                 ,@Field("email") String email
     );
 
