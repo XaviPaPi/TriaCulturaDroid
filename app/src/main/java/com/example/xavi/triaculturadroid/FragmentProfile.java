@@ -7,15 +7,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.xavi.triaculturadroid.Data.Model.User;
 import com.example.xavi.triaculturadroid.Data.Model.userTransfer;
+import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
 
 import org.w3c.dom.Text;
 
@@ -32,6 +38,11 @@ public class FragmentProfile extends Fragment {
 
     String new_pass;
     String confirm_pass;
+    PopupWindow passPopUp;
+    Button btn_aceptar;
+    Button btn_cancel;
+
+
 
     public FragmentProfile() {
         // Required empty public constructor
@@ -76,6 +87,38 @@ public class FragmentProfile extends Fragment {
     public View.OnClickListener change_mail_click = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+
+            View passView;
+            LayoutInflater inflater;
+
+            inflater = (LayoutInflater)getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            passView = inflater.inflate(R.layout.dialogstyle,null);
+            passPopUp = new PopupWindow(passView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+
+            //Mostrar PopUpPasswaord
+
+            passPopUp.showAtLocation(view, Gravity.CENTER, 0 ,0);
+
+            //Declarar Buttons del PopUp
+
+            btn_aceptar = (Button)passView.findViewById(R.id.DS_btn_aceptar_pass);
+            btn_cancel = (Button)passView.findViewById(R.id.DS_btn_cancel_pass);
+
+            btn_aceptar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    upDatePass(user);
+                }
+            });
+            btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Tancar el PopUp
+                    passPopUp.dismiss();
+                }
+            });
+
+
             //TODO: CREAR DIÁLOGO PARA RELLENAR NUEVO MAIL
         }
     };
@@ -112,5 +155,9 @@ public class FragmentProfile extends Fragment {
         });
 
         builder.show();
+    }
+
+    private void upDatePass(userTransfer u){
+        APIUtils.update_user(u.getId(), u.getPassword());
     }
 }
