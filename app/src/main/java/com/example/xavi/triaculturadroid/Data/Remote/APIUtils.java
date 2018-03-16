@@ -173,6 +173,9 @@ public class APIUtils {
                 user_votes = votes;
             }
         });
+        while (!continuar) {
+            Log.d(TAG, "get_user_by_dni: QUERY NOT COMPLETED - WAITING FOR RESPONSE FROM SERVER");
+        }
         return user_votes;
     }
 
