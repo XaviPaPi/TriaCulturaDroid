@@ -118,7 +118,7 @@ public class AdapterProject extends BaseAdapter {
         LIP_textTitle.setText(model.get(position).getTitle());
         LIP_textDescript.setText(model.get(position).getDescript());
         LIP_textDescriptComplert.setText(model.get(position).getDescript());
-        LIP_textAuthor.setText(model.get(position).getAuthor().getName());
+//        LIP_textAuthor.setText(model.get(position).getAuthor().getName());
 
 
         if (votat&&idProjecVotat!=position){
@@ -154,11 +154,6 @@ public class AdapterProject extends BaseAdapter {
                 vote.setDateVote(String.valueOf(DateFormat.getDateInstance()));
                 if (!votat) {
                     voteUser = APIUtils.post_new_vote(vote);
-                   /* for (int i = 0; i < arrButons.size(); i++) {
-                        if (i != position) {
-                            arrButons.get(i).setEnabled(false);
-                        }
-                    }*/
                     votat=true;
                 }else{
                     APIUtils.delete_vote(vote);
