@@ -34,6 +34,7 @@ import static android.content.ContentValues.TAG;
  */
 
 public class AdapterProject extends BaseAdapter {
+
     List<Project> model;
     List<Vote> votes;
     Context context;
