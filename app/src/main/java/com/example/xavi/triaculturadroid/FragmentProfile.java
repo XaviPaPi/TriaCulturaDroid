@@ -158,6 +158,6 @@ public class FragmentProfile extends Fragment {
     }
 
     private void upDatePass(userTransfer u){
-        APIUtils.update_user(u.getId(), u.getPassword());
+        APIUtils.update_user(new User(u));
     }
 }
