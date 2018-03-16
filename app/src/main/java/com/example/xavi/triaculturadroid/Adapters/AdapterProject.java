@@ -54,15 +54,15 @@ public class AdapterProject extends BaseAdapter {
         mode = 1;
         this.context = context;
 
-        votes = APIUtils.get_votes(user.getId());
+       votes = APIUtils.get_votes(user.getId());
         if (votes!=null&&votes.size()>0) {
             Vote vote = votes.get(votes.size() - 1);
-            if (model.contains(vote.getProject())) {
-                votat = true;
-                idProjecVotat = vote.getProject().getId();
-            }
+            for (Project p: model)
+                if (p.getId()==vote.getProj_id()){
+                    votat = true;
+                    idProjecVotat = vote.getProject().getId();
+                }
         }
-
         Log.d(TAG, "ADAPTER COUNT: " + model.size());
     }
 
@@ -121,16 +121,6 @@ public class AdapterProject extends BaseAdapter {
         LIP_textAuthor.setText(model.get(position).getAuthor().getName());
 
 
-        votes = APIUtils.get_votes(user.getId());
-        if (votes!=null&&votes.size()>0) {
-            Vote vote = votes.get(votes.size() - 1);
-            if (model.contains(vote.getProject())) {
-                votat = true;
-                idProjecVotat = vote.getProject().getId();
-            }
-        }
-
-
         if (votat&&idProjecVotat!=position){
             LIP_btnVote.setEnabled(false);
         }
@@ -164,11 +154,11 @@ public class AdapterProject extends BaseAdapter {
                 vote.setDateVote(String.valueOf(DateFormat.getDateInstance()));
                 if (!votat) {
                     voteUser = APIUtils.post_new_vote(vote);
-                    for (int i = 0; i < arrButons.size(); i++) {
+                   /* for (int i = 0; i < arrButons.size(); i++) {
                         if (i != position) {
                             arrButons.get(i).setEnabled(false);
                         }
-                    }
+                    }*/
                     votat=true;
                 }else{
                     APIUtils.delete_vote(vote);
