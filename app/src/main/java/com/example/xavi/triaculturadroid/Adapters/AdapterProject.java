@@ -107,7 +107,6 @@ public class AdapterProject extends BaseAdapter {
         }
 
         //Project item = model.get(position);
-        final LinearLayout LIP_LayoutPrincip = (LinearLayout) convertView.findViewById(R.id.P_LinearGeneral);
         LIP_textTitle = (TextView) convertView.findViewById(R.id.ILP_Title);
         LIP_textDescript = (TextView) convertView.findViewById(R.id.ILP_DescriptionLimitat);
         LIP_textDescriptComplert = (TextView) convertView.findViewById(R.id.ILP_DescriptionComplert);
