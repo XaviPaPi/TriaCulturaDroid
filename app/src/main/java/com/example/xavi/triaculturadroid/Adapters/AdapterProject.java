@@ -162,7 +162,7 @@ public class AdapterProject extends BaseAdapter {
                         }
                     }
                 }else{
-                    APIUtils.delete_vote(user.getId(), model.get(position).getId());
+                    APIUtils.delete_vote(vote);
                 }
             }
         });
