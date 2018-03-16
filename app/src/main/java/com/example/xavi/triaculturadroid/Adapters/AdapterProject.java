@@ -32,7 +32,6 @@ import static android.content.ContentValues.TAG;
 /**
  * Created by miquel on 2/22/2018.
  */
-
 public class AdapterProject extends BaseAdapter {
 
     List<Project> model;
@@ -41,24 +40,26 @@ public class AdapterProject extends BaseAdapter {
     Project projct;
     userTransfer user;
     int mode;
-    TextView LIP_textAuthor, LIP_textDescript, LIP_textTitle,LIP_textDescriptComplert;
+
+    TextView LIP_textAuthor, LIP_textDescript, LIP_textTitle, LIP_textDescriptComplert;
     Button LIP_btnVote;
     static boolean votat;
     static int idProjecVotat;
     static Vote voteUser;
     ArrayList<Button> arrButons;
-    public AdapterProject(Context context, List<Project> model,userTransfer user) {
-        arrButons= new ArrayList<>();
+
+    public AdapterProject(Context context, List<Project> model, userTransfer user) {
+        arrButons = new ArrayList<>();
         this.user = user;
         this.model = model;
         mode = 1;
         this.context = context;
 
-       votes = APIUtils.get_votes(user.getId());
-        if (votes!=null&&votes.size()>0) {
+        votes = APIUtils.get_votes(user.getId());
+        if (votes != null && votes.size() > 0) {
             Vote vote = votes.get(votes.size() - 1);
-            for (Project p: model)
-                if (p.getId()==vote.getProj_id()){
+            for (Project p : model)
+                if (p.getId() == vote.getProj_id()) {
                     votat = true;
                     idProjecVotat = vote.getProject().getId();
                 }
@@ -117,10 +118,10 @@ public class AdapterProject extends BaseAdapter {
         LIP_textTitle.setText(model.get(position).getTitle());
         LIP_textDescript.setText(model.get(position).getDescript());
         LIP_textDescriptComplert.setText(model.get(position).getDescript());
-//        LIP_textAuthor.setText(model.get(position).getAuthor().getName());
+        LIP_textAuthor.setText(model.get(position).getAuthor().getName());
 
 
-        if (votat&&idProjecVotat!=position){
+        if (votat && idProjecVotat != position) {
             LIP_btnVote.setEnabled(false);
         }
 
@@ -130,7 +131,7 @@ public class AdapterProject extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 LIP_textDescript = (TextView) finalConvertView.findViewById(R.id.ILP_DescriptionLimitat);
-                LIP_textDescriptComplert = (TextView)finalConvertView.findViewById(R.id.ILP_DescriptionComplert);
+                LIP_textDescriptComplert = (TextView) finalConvertView.findViewById(R.id.ILP_DescriptionComplert);
                 LIP_textDescript.setVisibility(View.GONE);
                 LIP_textDescriptComplert.setVisibility(View.VISIBLE);
             }
@@ -150,13 +151,18 @@ public class AdapterProject extends BaseAdapter {
                 Vote vote = new Vote();
                 vote.setProj_id(model.get(position).getId());
                 vote.setUser_id(user.getId());
-                vote.setDateVote(String.valueOf(DateFormat.getDateInstance()));
                 if (!votat) {
+                    for (int i = 0; i < arrButons.size(); i++) {
+                        if (i != position) {
+                            arrButons.get(i).setEnabled(false);
+                        }
+                    }
+                    idProjecVotat = position;
                     voteUser = APIUtils.post_new_vote(vote);
-                    votat=true;
-                }else{
+                    votat = true;
+                } else {
                     APIUtils.delete_vote(vote);
-                    votat=false;
+                    votat = false;
                 }
             }
         });
@@ -168,4 +174,3 @@ public class AdapterProject extends BaseAdapter {
         return true;
     }
 }
-
