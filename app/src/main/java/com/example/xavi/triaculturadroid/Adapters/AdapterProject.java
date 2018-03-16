@@ -120,10 +120,17 @@ public class AdapterProject extends BaseAdapter {
         LIP_textAuthor.setText(model.get(position).getAuthor().getName());
 
 
+        votes = APIUtils.get_votes(user.getId());
+        if (votes!=null&&votes.size()>0) {
+            Vote vote = votes.get(votes.size() - 1);
+            if (model.contains(vote.getProject())) {
+                votat = true;
+                idProjecVotat = vote.getProject().getId();
+            }
+        }
 
 
-
-        if (voteUser!=null&&votat&&idProjecVotat!=position){
+        if (votat&&idProjecVotat!=position){
             LIP_btnVote.setEnabled(false);
         }
 
@@ -161,8 +168,10 @@ public class AdapterProject extends BaseAdapter {
                             arrButons.get(i).setEnabled(false);
                         }
                     }
+                    votat=true;
                 }else{
-                    APIUtils.delete_vote(user.getId(), model.get(position).getId());
+                    APIUtils.delete_vote(vote);
+                    votat=false;
                 }
             }
         });
