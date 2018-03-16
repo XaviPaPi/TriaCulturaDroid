@@ -176,10 +176,10 @@ public class APIUtils {
         return user_votes;
     }
 
-    public static Vote post_new_vote(int user_id, int project_id) {
+    public static Vote post_new_vote(Vote vote) {
         continuar = false;
         aux_vote = null;
-        service.postNewVote(user_id, project_id).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Vote>() {
+        service.postNewVote(vote.getUser_id(),vote.getProj_id(),vote.getDateVote(),vote.getUser_id(),vote.getProj_id()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Vote>() {
             @Override
             public void onCompleted() {
                 continuar = true;
@@ -200,9 +200,10 @@ public class APIUtils {
         return aux_vote;
     }
 
-    public static void delete_vote(int user_id, int project_id) {
+    public static void delete_vote(Vote vote) {
+
         continuar = false;
-        service.postNewVote(user_id, project_id).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Vote>() {
+        service.postNewVote(vote.getUser_id(),vote.getProj_id(),vote.getDateVote(),vote.getUser_id(),vote.getProj_id()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Vote>() {
             @Override
             public void onCompleted() {
                 Log.d(TAG, "Vote deleted.");
