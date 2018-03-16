@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/oldpass"
         android:inputType="textEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,10 +12,10 @@
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
-        android:hint="Password"
+        android:hint="Insert old Password"
         android:background="@drawable/edittextstyle"/>
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/newpass1"
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,6 +24,39 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif"
-        android:hint="Password"
+        android:hint="Insert a new Password"
         android:background="@drawable/edittextstyle"/>
+    <EditText
+        android:id="@+id/newpass2"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="sans-serif"
+        android:hint="Insert the new Password again"
+        android:background="@drawable/edittextstyle"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/DS_btn_aceptar_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/DS_btn_cancel_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Button" />
+    </LinearLayout>
+
 </LinearLayout>

@@ -48,6 +48,14 @@ public class User {
         this.votes = new ArrayList<Vote>();
     }
 
+    public User(userTransfer uT){
+        this.id = uT.getId();
+        this.dni = uT.getDni();
+        this.password = uT.getPassword();
+        this.ratings = uT.getRatings();
+        this.votes = uT.getVotes();
+    }
+
     public User(int id, String dni, String password) {
         this.id = id;
         this.dni = dni;
