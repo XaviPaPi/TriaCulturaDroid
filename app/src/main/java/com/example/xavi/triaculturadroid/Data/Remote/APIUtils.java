@@ -136,6 +136,7 @@ public class APIUtils {
                 Log.d(TAG, "User modified.");
             }
 
+
             @Override
             public void onError(Throwable e) {
                 current_user = null;
