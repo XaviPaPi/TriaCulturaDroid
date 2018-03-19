@@ -28,7 +28,7 @@ public interface APIService {
     Observable<User> postNewPass(
             @Field("id") int id,
             @Field("password") String password
-//                                 ,@Field("email") String email
+//                                 , @Field("email") String email
     );
 
     @GET("api/usuari/{dni}")
@@ -54,10 +54,9 @@ public interface APIService {
                                  @Field("date") String data_vot);
 
 
-    @DELETE("api/votes{user_id}/{project_id}")
+    @DELETE("api/votes/{vote_id}")
     @FormUrlEncoded
-    Observable<Vote> deleteVote(@Path("user_id") int user_id,
-                          @Path("project_id") int project_id);
+    Observable<Vote> deleteVote(@Path ("vote_id") int vote_id);
 
     @GET("api/winningrequests")
 //    @FormUrlEncoded

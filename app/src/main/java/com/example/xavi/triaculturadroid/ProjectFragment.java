@@ -84,7 +84,7 @@ public class ProjectFragment extends Fragment {
         listView = (ListView) rootView.findViewById(R.id.ListProjects);
         ad = new ArrayList<>();
 
-        ad = APIUtils.get_projects_from_place(4);
+        ad = APIUtils.get_projects_from_place(APIUtils.get_current_place());
 
         AdapterProject adapter = new AdapterProject(getActivity(), ad,user);
 

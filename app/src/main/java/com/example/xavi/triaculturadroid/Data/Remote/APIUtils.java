@@ -208,7 +208,7 @@ public class APIUtils {
     public static void delete_vote(Vote vote) {
 
         continuar = false;
-        service.deleteVote(vote.getUser_id(),vote.getProj_id()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Vote>() {
+        service.deleteVote(vote.getId()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Vote>() {
             @Override
             public void onCompleted() {
                 Log.d(TAG, "Vote deleted.");
@@ -348,7 +348,7 @@ public class APIUtils {
         return user_rating;
     }
 
-    public Integer get_current_place() {
+    public static Integer get_current_place() {
         service.getCurrentPlace().enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
