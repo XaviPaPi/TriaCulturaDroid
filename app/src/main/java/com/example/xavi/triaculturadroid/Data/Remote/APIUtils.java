@@ -70,7 +70,7 @@ public class APIUtils {
 
     public static List<Project> get_projects_from_place(int place_id) {
         continuar = false;
-        service.getProjectFromPlace(4).subscribeOn(
+        service.getProjectFromPlace(place_id).subscribeOn(
                 Schedulers.io()).subscribe(new Subscriber<List<Project>>() {
             @Override
             public void onCompleted() {
