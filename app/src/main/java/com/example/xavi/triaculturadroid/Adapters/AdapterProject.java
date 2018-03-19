@@ -61,7 +61,7 @@ public class AdapterProject extends BaseAdapter {
             for (Project p : model)
                 if (p.getId() == vote.getProj_id()) {
                     votat = true;
-                    idProjecVotat = vote.getProject().getId();
+                    idProjecVotat = p.getId();
                 }
         }
         Log.d(TAG, "ADAPTER COUNT: " + model.size());
@@ -121,7 +121,7 @@ public class AdapterProject extends BaseAdapter {
         LIP_textAuthor.setText(model.get(position).getAuthor().getName());
 
 
-        if (votat && idProjecVotat != position) {
+        if (votat && idProjecVotat != model.get(position).getId()) {
             LIP_btnVote.setEnabled(false);
         }else{
             LIP_btnVote.setEnabled(true);
