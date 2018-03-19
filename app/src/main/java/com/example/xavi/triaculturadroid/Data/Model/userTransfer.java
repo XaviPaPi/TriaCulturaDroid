@@ -13,6 +13,8 @@ public class userTransfer implements Serializable {
     private String password;
     private ArrayList<Rating> ratings;
     private ArrayList<Vote> votes;
+    private String name;
+    private String email;
 
     public ArrayList<Rating> getRatings() {
         return ratings;
@@ -43,6 +45,16 @@ public class userTransfer implements Serializable {
         this.votes = new ArrayList<>();
     }
 
+    public userTransfer(int id, String dni, String password, String name, String email) {
+        this.id = id;
+        this.dni = dni;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.ratings = new ArrayList<>();
+        this.votes = new ArrayList<>();
+    }
+
     public int getId() {
         return id;
     }
@@ -65,6 +77,21 @@ public class userTransfer implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
