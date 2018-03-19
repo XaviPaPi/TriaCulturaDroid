@@ -123,6 +123,8 @@ public class AdapterProject extends BaseAdapter {
 
         if (votat && idProjecVotat != position) {
             LIP_btnVote.setEnabled(false);
+        }else{
+            LIP_btnVote.setEnabled(true);
         }
 
 
@@ -163,6 +165,11 @@ public class AdapterProject extends BaseAdapter {
                 } else {
                     APIUtils.delete_vote(vote);
                     votat = false;
+                    for (int i = 0; i < arrButons.size(); i++) {
+                        if (i != position) {
+                            arrButons.get(i).setEnabled(true);
+                        }
+                    }
                 }
             }
         });
