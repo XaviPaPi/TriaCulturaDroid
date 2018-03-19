@@ -26,6 +26,12 @@ public class User {
     @SerializedName("votes")
     @Expose
     private ArrayList<Vote> votes;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("email")
+    @Expose
+    private String email;
 
     public ArrayList<Rating> getRatings() {
         return ratings;
@@ -54,12 +60,16 @@ public class User {
         this.password = uT.getPassword();
         this.ratings = uT.getRatings();
         this.votes = uT.getVotes();
+        this.email = uT.getEmail();
+        this.name=uT.getName();
     }
 
-    public User(int id, String dni, String password) {
+    public User(int id, String dni, String password, String name, String email) {
         this.id = id;
         this.dni = dni;
         this.password = password;
+        this.email = email;
+        this.name=name;
         this.ratings = new ArrayList<>();
         this.votes = new ArrayList<>();
     }
@@ -86,5 +96,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
