@@ -66,11 +66,8 @@ public class LoginTriaCultura extends AppCompatActivity {
         boolean exists = verificarUsuariAndPass(mUserView.getText().toString());
         if (exists) {
             Intent intent = new Intent(getApplication(), TabbetsActivity.class);
-            userTransfer usuari= new userTransfer();
-            usuari.setId(retrieved_user.getId());
-            usuari.setDni(retrieved_user.getDni());
-            usuari.setPassword(retrieved_user.getPassword());
-            intent.putExtra("Usuari",usuari);
+//            userTransfer usuari= new userTransfer(retrieved_user);
+            intent.putExtra("Usuari",""+retrieved_user.getDni());
             startActivity(intent);
         } else {
             Toast.makeText(getApplication(), R.string.errorPassOrUsrInvalid, Toast.LENGTH_SHORT).show();

@@ -70,7 +70,7 @@ public class ProjectFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        Intent intent = new Intent();
-        user = (userTransfer) getActivity().getIntent().getExtras().getSerializable("Usuari");
+        user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
 
     }
 

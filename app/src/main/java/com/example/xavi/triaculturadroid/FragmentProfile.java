@@ -61,10 +61,11 @@ public class FragmentProfile extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user = (userTransfer) getActivity().getIntent().getExtras().getSerializable("Usuari");
+//        user = (userTransfer) getActivity().getIntent().getExtras().getSerializable("Usuari");
         if (getArguments() != null) {
 
         }
+        user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
     }
 
     @Override
@@ -79,7 +80,10 @@ public class FragmentProfile extends Fragment {
         tv_name= (TextView)rootView.findViewById(R.id.tv_user_nom);
         tv_email= (TextView)rootView.findViewById(R.id.tv_label_mail);
 
+
         tv_dni.setText(user.getDni());
+        tv_email.setText(user.getEmail());
+        tv_name.setText(user.getName());
 
         return rootView;
     }

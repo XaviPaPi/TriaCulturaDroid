@@ -55,6 +55,16 @@ public class userTransfer implements Serializable {
         this.votes = new ArrayList<>();
     }
 
+    public userTransfer(User user) {
+        this.id = user.getId();
+        this.dni = user.getDni();
+        this.password = user.getPassword();
+        this.ratings = user.getRatings();
+        this.votes = user.getVotes();
+        this.name = user.getName();
+        this.email = user.getEmail();
+    }
+
     public int getId() {
         return id;
     }

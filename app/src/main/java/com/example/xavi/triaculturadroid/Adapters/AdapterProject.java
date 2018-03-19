@@ -167,7 +167,7 @@ public class AdapterProject extends BaseAdapter {
                     voteUser = APIUtils.post_new_vote(vote);
                     votat = true;
                 } else {
-                    vote.setId(id_vote);
+                    vote.setId(voteUser.getId());
                     APIUtils.delete_vote(vote);
                     votat = false;
                     for (int i = 0; i < arrButons.size(); i++) {

@@ -1,6 +1,7 @@
 package com.example.xavi.triaculturadroid.Data.Remote;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -28,7 +29,8 @@ public interface APIService {
     Observable<User> postNewPass(
             @Field("id") int id,
             @Field("password") String password
-//                                 , @Field("email") String email
+          , @Field("email") String email,
+            @Field("name") String name
     );
 
     @GET("api/usuari/{dni}")
@@ -47,20 +49,18 @@ public interface APIService {
 //    @FormUrlEncoded
     Observable<List<Vote>> getVotes(@Path("user_id") int user_id);
 
-    @POST("api/votes/")
-    @FormUrlEncoded
-    Observable<Vote> postNewVote(@Field("project_id") int proj_id,
-                                 @Field("user_id") int u_id,
-                                 @Field("date") String data_vot);
+    @POST("api/votes/{user_id}/{project_id}")
+//    @FormUrlEncoded
+    Observable<Vote> postNewVote(@Path ("user_id") int user_id,
+                                 @Path ("project_id") int project_id);
 
 
     @DELETE("api/votes/{vote_id}")
-    @FormUrlEncoded
-    Observable<Vote> deleteVote(@Path ("vote_id") int vote_id);
+    Observable<Vote> deleteVote(@Path("vote_id") int vote_id);
 
     @GET("api/winningrequests")
 //    @FormUrlEncoded
-    Observable<List<Request>> getWinningRequests (); //NOT SURE
+    Observable<List<Request>> getWinningRequests(); //NOT SURE
 
     @GET("api/files/{project_id}")
 //    @FormUrlEncoded
@@ -77,9 +77,9 @@ public interface APIService {
     @GET("api/rating/{user_id}/{project_id}")
 //    @FormUrlEncoded
     Observable<Rating> getRatingWhereUser(@Path("user_id") int user_id,
-                                      @Path("project_id") int project_id);
+                                          @Path("project_id") int project_id);
 
-@GET ("api/current")
+    @GET("api/current")
     Observable<Integer> getCurrentPlace();
 
 }
