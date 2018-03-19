@@ -40,6 +40,7 @@ public class AdapterProject extends BaseAdapter {
     Project projct;
     userTransfer user;
     int mode;
+    int id_vote;
 
     TextView LIP_textAuthor, LIP_textDescript, LIP_textTitle, LIP_textDescriptComplert;
     Button LIP_btnVote;
@@ -62,6 +63,7 @@ public class AdapterProject extends BaseAdapter {
                 if (p.getId() == vote.getProj_id()) {
                     votat = true;
                     idProjecVotat = p.getId();
+                    id_vote= vote.getId();
                 }
         }
         Log.d(TAG, "ADAPTER COUNT: " + model.size());
@@ -154,6 +156,7 @@ public class AdapterProject extends BaseAdapter {
                 Vote vote = new Vote();
                 vote.setProj_id(model.get(position).getId());
                 vote.setUser_id(user.getId());
+                vote.setId(id_vote);
                 if (!votat) {
                     for (int i = 0; i < arrButons.size(); i++) {
                         if (i != position) {
