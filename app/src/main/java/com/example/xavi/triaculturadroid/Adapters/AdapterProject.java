@@ -61,7 +61,7 @@ public class AdapterProject extends BaseAdapter {
             for (Project p : model)
                 if (p.getId() == vote.getProj_id()) {
                     votat = true;
-                    idProjecVotat = p.getId();
+                    idProjecVotat = vote.getProject().getId();
                 }
         }
         Log.d(TAG, "ADAPTER COUNT: " + model.size());
@@ -115,17 +115,14 @@ public class AdapterProject extends BaseAdapter {
         LIP_btnVote = (Button) convertView.findViewById(R.id.ILP_Bnt_vote);
         arrButons.add(LIP_btnVote);
 
-
         LIP_textTitle.setText(model.get(position).getTitle());
         LIP_textDescript.setText(model.get(position).getDescript());
         LIP_textDescriptComplert.setText(model.get(position).getDescript());
         LIP_textAuthor.setText(model.get(position).getAuthor().getName());
 
 
-        if (votat && idProjecVotat != model.get(position).getId()) {
+        if (votat && idProjecVotat != position) {
             LIP_btnVote.setEnabled(false);
-        }else{
-            LIP_btnVote.setEnabled(true);
         }
 
 
@@ -166,11 +163,6 @@ public class AdapterProject extends BaseAdapter {
                 } else {
                     APIUtils.delete_vote(vote);
                     votat = false;
-                    for (int i = 0; i < arrButons.size(); i++) {
-                        if (i != position) {
-                            arrButons.get(i).setEnabled(true);
-                        }
-                    }
                 }
             }
         });

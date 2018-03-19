@@ -84,7 +84,7 @@ public class FragmentProfile extends Fragment {
         return rootView;
     }
 
-    public View.OnClickListener change_mail_click = new View.OnClickListener() {
+    public View.OnClickListener change_pass_click = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 
@@ -123,7 +123,7 @@ public class FragmentProfile extends Fragment {
         }
     };
 
-    public View.OnClickListener change_pass_click = new View.OnClickListener() {
+    public View.OnClickListener change_mail_click = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             show_change_pass_dialog(view);
