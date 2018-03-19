@@ -40,6 +40,7 @@ public class AdapterProject extends BaseAdapter {
     Project projct;
     userTransfer user;
     int mode;
+    int id_vote;
 
     TextView LIP_textAuthor, LIP_textDescript, LIP_textTitle, LIP_textDescriptComplert;
     Button LIP_btnVote;
@@ -61,7 +62,8 @@ public class AdapterProject extends BaseAdapter {
             for (Project p : model)
                 if (p.getId() == vote.getProj_id()) {
                     votat = true;
-                    idProjecVotat = vote.getProject().getId();
+                    idProjecVotat = p.getId();
+                    id_vote= vote.getId();
                 }
         }
         Log.d(TAG, "ADAPTER COUNT: " + model.size());
@@ -115,14 +117,17 @@ public class AdapterProject extends BaseAdapter {
         LIP_btnVote = (Button) convertView.findViewById(R.id.ILP_Bnt_vote);
         arrButons.add(LIP_btnVote);
 
+
         LIP_textTitle.setText(model.get(position).getTitle());
         LIP_textDescript.setText(model.get(position).getDescript());
         LIP_textDescriptComplert.setText(model.get(position).getDescript());
         LIP_textAuthor.setText(model.get(position).getAuthor().getName());
 
 
-        if (votat && idProjecVotat != position) {
+        if (votat && idProjecVotat != model.get(position).getId()) {
             LIP_btnVote.setEnabled(false);
+        }else{
+            LIP_btnVote.setEnabled(true);
         }
 
 
@@ -151,18 +156,25 @@ public class AdapterProject extends BaseAdapter {
                 Vote vote = new Vote();
                 vote.setProj_id(model.get(position).getId());
                 vote.setUser_id(user.getId());
+
                 if (!votat) {
                     for (int i = 0; i < arrButons.size(); i++) {
                         if (i != position) {
                             arrButons.get(i).setEnabled(false);
+                            idProjecVotat=model.get(position).getId();
                         }
                     }
-                    idProjecVotat = position;
                     voteUser = APIUtils.post_new_vote(vote);
                     votat = true;
                 } else {
+                    vote.setId(id_vote);
                     APIUtils.delete_vote(vote);
                     votat = false;
+                    for (int i = 0; i < arrButons.size(); i++) {
+                        if (i != position) {
+                            arrButons.get(i).setEnabled(true);
+                        }
+                    }
                 }
             }
         });
