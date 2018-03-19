@@ -161,9 +161,9 @@ public class AdapterProject extends BaseAdapter {
                     for (int i = 0; i < arrButons.size(); i++) {
                         if (i != position) {
                             arrButons.get(i).setEnabled(false);
+                            idProjecVotat=model.get(position).getId();
                         }
                     }
-                    idProjecVotat = position;
                     voteUser = APIUtils.post_new_vote(vote);
                     votat = true;
                 } else {
