@@ -130,7 +130,7 @@ public class APIUtils {
 
     public static User update_user(User u) {
         continuar = false;
-        service.postNewPass(u.getId(),u.getPassword()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<User>() {
+        service.postNewPass(u.getId(), u.getPassword()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<User>() {
             @Override
             public void onCompleted() {
                 continuar = true;
@@ -184,7 +184,7 @@ public class APIUtils {
     public static Vote post_new_vote(Vote vote) {
         continuar = false;
         aux_vote = null;
-        service.postNewVote(vote.getUser_id(),vote.getProj_id(),vote.getDateVote()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Vote>() {
+        service.postNewVote(vote.getUser_id(), vote.getProj_id(), vote.getDateVote()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Vote>() {
             @Override
             public void onCompleted() {
                 continuar = true;
@@ -349,19 +349,24 @@ public class APIUtils {
     }
 
     public static Integer get_current_place() {
-        service.getCurrentPlace().enqueue(new Callback<Integer>() {
+        continuar = false;
+        service.getCurrentPlace().subscribeOn(Schedulers.io()).subscribe(new Subscriber<Integer>() {
             @Override
-            public void onResponse(Call<Integer> call, Response<Integer> response) {
-                current_place_id = response.body();
+            public void onCompleted() {
+                continuar = true;
             }
 
             @Override
-            public void onFailure(Call<Integer> call, Throwable t) {
-                current_place_id = -1;
+            public void onError(Throwable e) {
+                continuar = true;
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                current_place_id = integer;
             }
         });
-        while (current_place_id==0) {
-
+        while (!continuar) {
         }
         return current_place_id;
     }

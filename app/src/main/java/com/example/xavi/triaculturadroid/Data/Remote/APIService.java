@@ -80,7 +80,7 @@ public interface APIService {
                                       @Path("project_id") int project_id);
 
 @GET ("api/current")
-    Call<Integer> getCurrentPlace();
+    Observable<Integer> getCurrentPlace();
 
 }
 
