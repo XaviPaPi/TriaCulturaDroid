@@ -156,7 +156,7 @@ public class AdapterProject extends BaseAdapter {
                 Vote vote = new Vote();
                 vote.setProj_id(model.get(position).getId());
                 vote.setUser_id(user.getId());
-                vote.setId(id_vote);
+
                 if (!votat) {
                     for (int i = 0; i < arrButons.size(); i++) {
                         if (i != position) {
@@ -167,6 +167,7 @@ public class AdapterProject extends BaseAdapter {
                     voteUser = APIUtils.post_new_vote(vote);
                     votat = true;
                 } else {
+                    vote.setId(id_vote);
                     APIUtils.delete_vote(vote);
                     votat = false;
                     for (int i = 0; i < arrButons.size(); i++) {

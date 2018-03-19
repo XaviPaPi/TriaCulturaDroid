@@ -194,7 +194,7 @@ public class APIUtils {
             @Override
             public void onError(Throwable e) {
                 continuar = true;
-                Log.d(TAG, "onError:" + e.toString());
+                Log.d(TAG, "onError:" +e.toString() );
             }
 
             @Override
