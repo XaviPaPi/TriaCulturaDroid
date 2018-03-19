@@ -115,6 +115,7 @@ public class AdapterProject extends BaseAdapter {
         LIP_btnVote = (Button) convertView.findViewById(R.id.ILP_Bnt_vote);
         arrButons.add(LIP_btnVote);
 
+
         LIP_textTitle.setText(model.get(position).getTitle());
         LIP_textDescript.setText(model.get(position).getDescript());
         LIP_textDescriptComplert.setText(model.get(position).getDescript());
