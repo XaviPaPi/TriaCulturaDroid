@@ -80,7 +80,8 @@ public interface APIService {
     Observable<Rating> getRatingWhereUser(@Path("user_id") int user_id,
                                       @Path("project_id") int project_id);
 
-
+@GET ("api/current")
+    Call<Integer> getCurrentPlace();
 
 }
 

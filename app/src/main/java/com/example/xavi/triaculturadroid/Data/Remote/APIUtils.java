@@ -37,6 +37,7 @@ public class APIUtils {
     static Author project_author = new Author();
     static Double project_avg = 0.0;
     static Rating user_rating = new Rating();
+    static Integer current_place_id = 0;
 
     public static void init_service() {
         service = RetrofitClient.getClient(BASE_URL).create(APIService.class);
@@ -345,6 +346,24 @@ public class APIUtils {
             }
         });
         return user_rating;
+    }
+
+    public Integer get_current_place() {
+        service.getCurrentPlace().enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                current_place_id = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                current_place_id = -1;
+            }
+        });
+        while (current_place_id==0) {
+
+        }
+        return current_place_id;
     }
 
 
