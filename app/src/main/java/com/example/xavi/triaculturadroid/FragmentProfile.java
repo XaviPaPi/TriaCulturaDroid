@@ -43,13 +43,14 @@ public class FragmentProfile extends Fragment {
     Button btn_cancel;
 
 
-
     public FragmentProfile() {
         // Required empty public constructor
     }
+
     private static final String ARG_SECTION_NUMBER = "section_number";
-    TextView tv_dni,tv_name,tv_email;
+    TextView tv_dni, tv_name, tv_email;
     userTransfer user;
+
     public static FragmentProfile newInstance(int sectionNumber) {
         FragmentProfile fragment = new FragmentProfile();
         Bundle args = new Bundle();
@@ -76,9 +77,9 @@ public class FragmentProfile extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_fragment_profile, container, false);
         rootView.findViewById(R.id.btn_change_mail).setOnClickListener(change_mail_click);
         rootView.findViewById(R.id.btn_change_pass).setOnClickListener(change_pass_click);
-        tv_dni= (TextView)rootView.findViewById(R.id.tv_user_dni);
-        tv_name= (TextView)rootView.findViewById(R.id.tv_user_nom);
-        tv_email= (TextView)rootView.findViewById(R.id.tv_label_mail);
+        tv_dni = (TextView) rootView.findViewById(R.id.tv_user_dni);
+        tv_name = (TextView) rootView.findViewById(R.id.tv_user_nom);
+        tv_email = (TextView) rootView.findViewById(R.id.tv_label_mail);
 
 
         tv_dni.setText(user.getDni());
@@ -95,18 +96,18 @@ public class FragmentProfile extends Fragment {
             View passView;
             LayoutInflater inflater;
 
-            inflater = (LayoutInflater)getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            passView = inflater.inflate(R.layout.dialogstyle,null);
+            inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            passView = inflater.inflate(R.layout.dialogstyle, null);
             passPopUp = new PopupWindow(passView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
 
             //Mostrar PopUpPasswaord
 
-            passPopUp.showAtLocation(view, Gravity.CENTER, 0 ,0);
+            passPopUp.showAtLocation(view, Gravity.CENTER, 0, 0);
 
             //Declarar Buttons del PopUp
 
-            btn_aceptar = (Button)passView.findViewById(R.id.DS_btn_aceptar_pass);
-            btn_cancel = (Button)passView.findViewById(R.id.DS_btn_cancel_pass);
+            btn_aceptar = (Button) passView.findViewById(R.id.DS_btn_aceptar_pass);
+            btn_cancel = (Button) passView.findViewById(R.id.DS_btn_cancel_pass);
 
             btn_aceptar.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -118,6 +119,7 @@ public class FragmentProfile extends Fragment {
                 @Override
                 public void onClick(View v) {
                     //Tancar el PopUp
+
                     passPopUp.dismiss();
                 }
             });
@@ -161,7 +163,7 @@ public class FragmentProfile extends Fragment {
         builder.show();
     }
 
-    private void upDatePass(userTransfer u){
+    private void upDatePass(userTransfer u) {
         APIUtils.update_user(new User(u));
     }
 }
