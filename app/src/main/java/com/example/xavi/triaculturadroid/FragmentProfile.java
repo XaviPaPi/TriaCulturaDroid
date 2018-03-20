@@ -102,7 +102,8 @@ public class FragmentProfile extends Fragment {
             inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             passView = inflater.inflate(R.layout.dialogstyle, null);
             passPopUp = new PopupWindow(passView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
-
+            passPopUp.setFocusable(true);
+            passPopUp.update();
             //Mostrar PopUpPasswaord
 
             passPopUp.showAtLocation(view, Gravity.CENTER, 0, 0);

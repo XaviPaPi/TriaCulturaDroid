@@ -33,4 +33,7 @@
     <string name="userField">El camp Usuari està buit</string>
     <string name="fieldPass">No hi ha cap password introduit</string>
     <string name="errorPassOrUsrInvalid">Que me estas container</string>
+    <string name="insert_old_password">Insert old Password</string>
+    <string name="insert_a_new_password">Insert a new Password</string>
+    <string name="insert_the_new_password_again">Insert the new Password again</string>
 </resources>
