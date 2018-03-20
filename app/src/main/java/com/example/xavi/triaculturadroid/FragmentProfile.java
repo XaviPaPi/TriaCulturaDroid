@@ -18,6 +18,7 @@ import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.xavi.triaculturadroid.Data.Model.User;
 import com.example.xavi.triaculturadroid.Data.Model.userTransfer;
@@ -49,7 +50,8 @@ public class FragmentProfile extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     TextView tv_dni, tv_name, tv_email;
-    userTransfer user;
+    userTransfer userT;
+    User user;
 
     public static FragmentProfile newInstance(int sectionNumber) {
         FragmentProfile fragment = new FragmentProfile();
@@ -62,11 +64,12 @@ public class FragmentProfile extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        user = (userTransfer) getActivity().getIntent().getExtras().getSerializable("Usuari");
+//        userT = (userTransfer) getActivity().getIntent().getExtras().getSerializable("Usuari");
         if (getArguments() != null) {
 
         }
-        user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
+        user = APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari"));
+        userT = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
     }
 
     @Override
@@ -82,9 +85,9 @@ public class FragmentProfile extends Fragment {
         tv_email = (TextView) rootView.findViewById(R.id.tv_label_mail);
 
 
-        tv_dni.setText(user.getDni());
-        tv_email.setText(user.getEmail());
-        tv_name.setText(user.getName());
+        tv_dni.setText(userT.getDni());
+        tv_email.setText(userT.getEmail());
+        tv_name.setText(userT.getName());
 
         return rootView;
     }
@@ -107,14 +110,26 @@ public class FragmentProfile extends Fragment {
             //Declarar Buttons del PopUp
 
             btn_aceptar = (Button) passView.findViewById(R.id.DS_btn_aceptar_pass);
+            btn_aceptar.setText("Accepta");
             btn_cancel = (Button) passView.findViewById(R.id.DS_btn_cancel_pass);
+            btn_cancel.setText("Cancel·la");
 
             btn_aceptar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    upDatePass(user);
+                    // think about it...
+                    // TODO: re-organizar:
+                    // Es necesario que compruebe que
+                    // a) la contraseña nueva 1 y 2 sean las mismas
+                    // b) la contraseña antigua sea la misma que la del usuario
+                    // NO PONER NADA DE ELLO DENTRO DEL LISTENER
+                    // TODO: Pensar si userTransfer es necesario realmente...
+                    // Es posible que podamos poner el user como static en la TabbetsActivity y nos sirva para everything
+                    // al cargar la TabbetsActivity, guardándonos en SharedPreferences o en el Intent el dni, podemos volver a cargar el usuario
+
                 }
             });
+
             btn_cancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -124,8 +139,6 @@ public class FragmentProfile extends Fragment {
                 }
             });
 
-
-            //TODO: CREAR DIÁLOGO PARA RELLENAR NUEVO MAIL
         }
     };
 
@@ -163,7 +176,9 @@ public class FragmentProfile extends Fragment {
         builder.show();
     }
 
-    private void upDatePass(userTransfer u) {
-        APIUtils.update_user(new User(u));
+    private void updatePass(String old_pass) {
+        if (user.getPassword().equals(old_pass)) {
+            APIUtils.update_user(new User(userT));
+        }
     }
 }
