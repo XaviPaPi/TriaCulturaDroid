@@ -206,6 +206,28 @@ public class APIUtils {
         return aux_vote;
     }
 
+    public static Vote get_vote(int user_id, int project_id) {
+        continuar = false;
+        service.getSingleVote(user_id, project_id).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Vote>() {
+            @Override
+            public void onCompleted() {
+                continuar = true;
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                continuar = true;
+            }
+
+            @Override
+            public void onNext(Vote vote) {
+                aux_vote = vote;
+            }
+        });
+        while (!continuar) {}
+        return aux_vote;
+    }
+
     public static void delete_vote(Vote vote) {
 
         continuar = false;

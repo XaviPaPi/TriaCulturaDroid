@@ -54,6 +54,9 @@ public interface APIService {
     Observable<Vote> postNewVote(@Path ("user_id") int user_id,
                                  @Path ("project_id") int project_id);
 
+    @GET("api/vote/{user_id}/{project_id}")
+    Observable<Vote> getSingleVote(@Path ("user_id") int user_id,
+                                   @Path ("project_id") int project_id);
 
     @DELETE("api/votes/{vote_id}")
     Observable<Vote> deleteVote(@Path("vote_id") int vote_id);
