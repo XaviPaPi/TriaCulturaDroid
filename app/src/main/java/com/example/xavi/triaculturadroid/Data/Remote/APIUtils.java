@@ -275,7 +275,7 @@ public class APIUtils {
         return winning_requests;
     }
 
-    public List<File> get_files_from_project(Project p) {
+    public static List<File> get_files_from_project(Project p) {
         continuar = false;
         project_files = new ArrayList<>();
         service.getFilesFromProject(p.getId()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<List<File>>() {
@@ -296,6 +296,9 @@ public class APIUtils {
                 project_files = files;
             }
         });
+        while (!continuar ) {
+            Log.d(TAG, "get_files_from_project: WAITING...");
+        }
         return project_files;
     }
 

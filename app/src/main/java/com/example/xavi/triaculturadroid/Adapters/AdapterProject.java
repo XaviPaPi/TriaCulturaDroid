@@ -2,17 +2,25 @@ package com.example.xavi.triaculturadroid.Adapters;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.xavi.triaculturadroid.Data.Model.File;
 import com.example.xavi.triaculturadroid.Data.Model.Project;
 import com.example.xavi.triaculturadroid.Data.Model.User;
 import com.example.xavi.triaculturadroid.Data.Model.Vote;
@@ -47,6 +55,7 @@ public class AdapterProject extends BaseAdapter {
     static boolean votat;
     static int idProjecVotat;
     static Vote voteUser;
+    static ImageView LIP_image1,LIP_image2,LIP_image3;
     ArrayList<Button> arrButons;
 
     public AdapterProject(Context context, List<Project> model, userTransfer user) {
@@ -115,15 +124,51 @@ public class AdapterProject extends BaseAdapter {
         LIP_textDescriptComplert = (TextView) convertView.findViewById(R.id.ILP_DescriptionComplert);
         LIP_textAuthor = (TextView) convertView.findViewById(R.id.ILP_AuthorName);
         LIP_btnVote = (Button) convertView.findViewById(R.id.ILP_Bnt_vote);
-        arrButons.add(LIP_btnVote);
+        LIP_image1 = (ImageView) convertView.findViewById(R.id.ILP_imageView1);
+        LIP_image2 = (ImageView) convertView.findViewById(R.id.ILP_imageView2);
+        LIP_image3 = (ImageView) convertView.findViewById(R.id.ILP_imageView3);
+
+
+        if(!arrButons.contains(LIP_btnVote))
+            arrButons.add(LIP_btnVote);
 
 
         LIP_textTitle.setText(model.get(position).getTitle());
         LIP_textDescript.setText(model.get(position).getDescript());
         LIP_textDescriptComplert.setText(model.get(position).getDescript());
         LIP_textAuthor.setText(model.get(position).getAuthor().getName());
+        List<File> llistaImatgesProjecte =  APIUtils.get_files_from_project(model.get(position));
 
-
+        for (int i = 0; i < model.get(position).getFiles().size(); i++) {
+            byte[] imageBytes =llistaImatgesProjecte.get(i).getFile_content();
+            Log.d(TAG, "getView: "+imageBytes);
+            if (model.get(position).getFiles().get(i).getExtension().equals(".jpg")){
+                Bitmap image = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
+                switch (i){
+                    case 0:
+                        LIP_image1.setImageBitmap(image);
+                        break;
+                    case 1:
+                        LIP_image2.setImageBitmap(image);
+                        break;
+                    case 2:
+                        LIP_image3.setImageBitmap(image);
+                        break;
+                }
+            }else{
+                switch (i){
+                    case 0:
+                        LIP_image1.setVisibility(View.GONE);
+                        break;
+                    case 1:
+                        LIP_image2.setVisibility(View.GONE);
+                        break;
+                    case 2:
+                        LIP_image3.setVisibility(View.GONE);
+                        break;
+                }
+            }
+        }
         if (votat && idProjecVotat != model.get(position).getId()) {
             LIP_btnVote.setEnabled(false);
         }else{
