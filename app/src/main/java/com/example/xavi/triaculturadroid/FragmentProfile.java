@@ -69,7 +69,7 @@ public class FragmentProfile extends Fragment {
 
         }
         user = APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari"));
-        userT = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
+        userT = new userTransfer(user);
     }
 
     @Override
@@ -114,20 +114,21 @@ public class FragmentProfile extends Fragment {
             btn_aceptar.setText("Accepta");
             btn_cancel = (Button) passView.findViewById(R.id.DS_btn_cancel_pass);
             btn_cancel.setText("Cancel·la");
+            final TextView tv_oldPass = passView.findViewById(R.id.oldpass);
+            final TextView tv_newPass1 = passView.findViewById(R.id.newpass1);
+            final TextView tv_newPass2 = passView.findViewById(R.id.newpass2);
 
             btn_aceptar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // think about it...
-                    // TODO: re-organizar:
-                    // Es necesario que compruebe que
-                    // a) la contraseña nueva 1 y 2 sean las mismas
-                    // b) la contraseña antigua sea la misma que la del usuario
-                    // NO PONER NADA DE ELLO DENTRO DEL LISTENER
+                   boolean changed = check_pass(tv_oldPass.getText().toString(), tv_newPass1.getText().toString(), tv_newPass2.getText().toString());
+
                     // TODO: Pensar si userTransfer es necesario realmente...
                     // Es posible que podamos poner el user como static en la TabbetsActivity y nos sirva para everything
                     // al cargar la TabbetsActivity, guardándonos en SharedPreferences o en el Intent el dni, podemos volver a cargar el usuario
-
+                    if (changed) {
+                        passPopUp.dismiss();
+                    }
                 }
             });
 
@@ -135,13 +136,33 @@ public class FragmentProfile extends Fragment {
                 @Override
                 public void onClick(View v) {
                     //Tancar el PopUp
-
                     passPopUp.dismiss();
                 }
             });
 
         }
     };
+
+    private boolean check_pass(String old_pass, String new_pass_a, String new_pass_b) {
+        boolean new_pass_equals = false;
+        boolean old_pass_is_correct = false;
+        // Check new pass a/b
+        new_pass_equals = new_pass_a.equals(new_pass_b);
+        if (new_pass_equals) {
+            old_pass_is_correct = user.getPassword().equals(old_pass);
+            if (old_pass_is_correct) {
+                user.setPassword(new_pass_a);
+                updateUser(user);
+                return true;
+            } else {
+                Toast.makeText(this.getContext(), "Wrong current password", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+        Toast.makeText(this.getContext(), "New Passwords don't match", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+
+    }
 
     public View.OnClickListener change_mail_click = new View.OnClickListener() {
         @Override
@@ -177,9 +198,8 @@ public class FragmentProfile extends Fragment {
         builder.show();
     }
 
-    private void updatePass(String old_pass) {
-        if (user.getPassword().equals(old_pass)) {
-            APIUtils.update_user(new User(userT));
-        }
+    private void updateUser(User usuari) {
+        user = APIUtils.update_user(usuari);
+
     }
 }
