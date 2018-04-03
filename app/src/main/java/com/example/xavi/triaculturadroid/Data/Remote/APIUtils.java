@@ -151,6 +151,9 @@ public class APIUtils {
                 current_user = user;
             }
         });
+        while (!continuar) {
+            Log.d(TAG, "update_user: QUERY NOT COMPLETED - WAITING FOR RESPONSE FROM SERVER");
+        }
         return current_user;
     }
 
