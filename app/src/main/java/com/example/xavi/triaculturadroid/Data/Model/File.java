@@ -31,6 +31,7 @@ public class File {
     public Project project;
 
     public File() {
+        file_content = new byte[1];
     }
 
     public File(int id, String name, String extension, String path, int proj_id) {
@@ -39,6 +40,7 @@ public class File {
         this.extension = extension;
         this.path = path;
         this.proj_id = proj_id;
+        file_content = new byte[1];
     }
 
     public File(int id, String name, String extension, String path, int proj_id, byte[] file_content) {

@@ -137,10 +137,10 @@ public class AdapterProject extends BaseAdapter {
         LIP_textDescript.setText(model.get(position).getDescript());
         LIP_textDescriptComplert.setText(model.get(position).getDescript());
         LIP_textAuthor.setText(model.get(position).getAuthor().getName());
-        List<File> llistaImatgesProjecte =  APIUtils.get_files_from_project(model.get(position));
+
 
         for (int i = 0; i < model.get(position).getFiles().size(); i++) {
-            byte[] imageBytes =llistaImatgesProjecte.get(i).getFile_content();
+            byte[] imageBytes =APIUtils.get_file_from_id(model.get(position).getFiles().get(i).getId()).getFile_content();
             Log.d(TAG, "getView: "+imageBytes);
             if (model.get(position).getFiles().get(i).getExtension().equals(".jpg")){
                 Bitmap image = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
