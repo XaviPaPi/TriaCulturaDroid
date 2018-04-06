@@ -37,8 +37,8 @@ import org.w3c.dom.Text;
  */
 public class FragmentProfile extends Fragment {
 
-    String new_pass;
-    String confirm_pass;
+    String new_mail;
+    String old_mail;
     PopupWindow passPopUp;
     Button btn_aceptar;
     Button btn_cancel;
@@ -173,19 +173,22 @@ public class FragmentProfile extends Fragment {
 
     public void show_change_pass_dialog(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-        builder.setTitle("Canviar Contrasenya");
+        builder.setTitle("Insereix el nou correu electrònic");
 
 // Set up the input
         final EditText input = new EditText(v.getContext());
 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         builder.setView(input);
 
 // Set up the buttons
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                new_pass = input.getText().toString();
+                new_mail = input.getText().toString();
+                user.setEmail(new_mail);
+                updateUser(user);
+                tv_email.setText(new_mail);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

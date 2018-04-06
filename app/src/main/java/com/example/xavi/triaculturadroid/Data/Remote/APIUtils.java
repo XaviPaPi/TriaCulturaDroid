@@ -38,6 +38,7 @@ public class APIUtils {
     static Double project_avg = 0.0;
     static Rating user_rating = new Rating();
     static Integer current_place_id = 0;
+    static File seeked_file = new File();
 
     public static void init_service() {
         service = RetrofitClient.getClient(BASE_URL).create(APIService.class);
@@ -398,6 +399,32 @@ public class APIUtils {
         while (!continuar) {
         }
         return current_place_id;
+    }
+
+    public static File get_file_by_id(int id) {
+        continuar = false;
+        service.getFileById(id).subscribeOn(Schedulers.io()).subscribe(new Subscriber<File>() {
+            @Override
+            public void onCompleted() {
+                continuar = true;
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                continuar = true;
+//                Log.d(TAG, "onError: "+e.toString());
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(File file) {
+                seeked_file = file;
+            }
+        });
+        while (!continuar) {
+
+        }
+        return seeked_file;
     }
 
 
