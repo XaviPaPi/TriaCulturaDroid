@@ -69,6 +69,10 @@ public interface APIService {
 //    @FormUrlEncoded
     Observable<List<File>> getFilesFromProject(@Path("project_id") int project_id);
 
+    @GET("api/file/{id_file}")
+//    @FormUrlEncoded
+    Observable<File> getFilesFromId(@Path("id_file") int id_file);
+
     @GET("api/author/{project_id}")
 //    @FormUrlEncoded
     Observable<Author> getAuthorFromProject(@Path("project_id") int project_id);

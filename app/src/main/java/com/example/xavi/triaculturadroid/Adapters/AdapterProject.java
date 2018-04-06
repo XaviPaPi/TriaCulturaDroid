@@ -143,6 +143,7 @@ public class AdapterProject extends BaseAdapter {
         if (!arrButons.contains(LIP_btnVote))
             arrButons.add(LIP_btnVote);
 
+
         LIP_textTitle.setText(model.get(position).getTitle());
         LIP_textDescript.setText(model.get(position).getDescript());
         LIP_textDescriptComplert.setText(model.get(position).getDescript());
