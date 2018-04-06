@@ -23,9 +23,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.example.xavi.triaculturadroid.Data.Model.File;
 import com.example.xavi.triaculturadroid.Data.Model.Project;
@@ -36,6 +38,11 @@ import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
 import com.example.xavi.triaculturadroid.R;
 import com.google.gson.internal.bind.CollectionTypeAdapterFactory;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -67,7 +74,7 @@ public class AdapterProject extends BaseAdapter {
     static int id_file;
     List<File> files_from_proj = new ArrayList<>();
 
-    PopupWindow imagePopup;
+    PopupWindow show_file_window;
 
     public AdapterProject(Context context, List<Project> model, userTransfer user) {
         arrButons = new ArrayList<>();
@@ -147,7 +154,7 @@ public class AdapterProject extends BaseAdapter {
         LIP_textTitle.setText(model.get(position).getTitle());
         LIP_textDescript.setText(model.get(position).getDescript());
         LIP_textDescriptComplert.setText(model.get(position).getDescript());
-        LIP_textAuthor.setText(model.get(position).getAuthor().getName());
+        LIP_textAuthor.setText(model.get(position).getAuthor().getName() + " " + model.get(position).getAuthor().getSurname());
 //region listeners image_buttons
         LIP_image1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,7 +191,7 @@ public class AdapterProject extends BaseAdapter {
             LIP_image1.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_music));
         } else if (file_list_from_project.get(0).getExtension().equalsIgnoreCase(".3gp")
                 || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".mp4")
-                || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".wma")
+                || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".webm")
                 ) {
             LIP_image1.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_video));
         }
@@ -200,7 +207,7 @@ public class AdapterProject extends BaseAdapter {
             LIP_image2.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_music));
         } else if (file_list_from_project.get(1).getExtension().equalsIgnoreCase(".3gp")
                 || file_list_from_project.get(1).getExtension().equalsIgnoreCase(".mp4")
-                || file_list_from_project.get(1).getExtension().equalsIgnoreCase(".wma")
+                || file_list_from_project.get(1).getExtension().equalsIgnoreCase(".webm")
                 ) {
             LIP_image2.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_video));
         }
@@ -216,7 +223,7 @@ public class AdapterProject extends BaseAdapter {
             LIP_image3.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_music));
         } else if (file_list_from_project.get(2).getExtension().equalsIgnoreCase(".3gp")
                 || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".mp4")
-                || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".wma")
+                || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".webm")
                 ) {
             LIP_image3.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_video));
         }
@@ -290,6 +297,7 @@ public class AdapterProject extends BaseAdapter {
     public void dl_file(View view) {
         if (id_file >= 0) {
             File f = APIUtils.get_file_by_id(id_file);
+            String temp_path = context.getCacheDir().getPath()+"FILE";
             byte[] fitxer = Base64.decode(f.getFile_content(), Base64.DEFAULT);
             if (f.getExtension().equalsIgnoreCase(".jpg")
                     || f.getExtension().equalsIgnoreCase(".jpeg")
@@ -302,12 +310,12 @@ public class AdapterProject extends BaseAdapter {
                 View imgview = inflater.inflate(R.layout.image_dialog, null);
                 ImageView popupimageView = imgview.findViewById(R.id.dialog_imageview);
                 popupimageView.setImageBitmap(image);
-                imagePopup = new PopupWindow(imgview, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
-                imagePopup.setFocusable(true);
-                imagePopup.setBackgroundDrawable(new BitmapDrawable());
-                imagePopup.setOutsideTouchable(true);
-                imagePopup.update();
-                imagePopup.showAtLocation(view, Gravity.CENTER, 0, 0);
+                show_file_window = new PopupWindow(imgview, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+                show_file_window.setFocusable(true);
+                show_file_window.setBackgroundDrawable(new BitmapDrawable());
+                show_file_window.setOutsideTouchable(true);
+                show_file_window.update();
+                show_file_window.showAtLocation(view, Gravity.CENTER, 0, 0);
 
             }
          else if (f.getExtension().equalsIgnoreCase(".mp3")
@@ -315,10 +323,41 @@ public class AdapterProject extends BaseAdapter {
                 // popupwindow becomes audioplayer
         } else if (f.getExtension().equalsIgnoreCase(".3gp")
                 || f.getExtension().equalsIgnoreCase(".mp4")
-                || f.getExtension().equalsIgnoreCase(".wma")
+                || f.getExtension().equalsIgnoreCase(".webm")
                 ) {
                 //popupwindow becomes mediaplayer
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View vidview = inflater.inflate(R.layout.video_dialog, null);
+                VideoView popupvideoView = vidview.findViewById(R.id.dialog_videoview);
+
+                temp_path +=f.getExtension();
+                try {
+                make_temp_file(fitxer, temp_path);
+                } catch (IOException ex) {
+                }
+                popupvideoView.setVideoPath(temp_path);
+
+                MediaController vidControl = new MediaController(context);
+                vidControl.setAnchorView(popupvideoView);
+                popupvideoView.setMediaController(vidControl);
+
+                show_file_window = new PopupWindow(vidview, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+                show_file_window.setFocusable(true);
+                show_file_window.setBackgroundDrawable(new BitmapDrawable());
+                show_file_window.setOutsideTouchable(true);
+                show_file_window.update();
+                show_file_window.showAtLocation(view, Gravity.CENTER, 0, 0);
+                popupvideoView.start();
             }
+        }
+    }
+    public void make_temp_file (byte[] buf, String path) throws IOException {
+        ByteArrayInputStream bis = new ByteArrayInputStream(buf);
+        FileOutputStream fos = new FileOutputStream(path);
+        byte[] b = new byte[1024];
+
+        for (int readNum; (readNum = bis.read(b)) != -1;) {
+            fos.write(b, 0, readNum);
         }
     }
 }

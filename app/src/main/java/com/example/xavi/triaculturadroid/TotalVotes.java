@@ -76,27 +76,27 @@ public class TotalVotes extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View viewHistorial = inflater.inflate(R.layout.activity_item_historial_projects, container, false);
+        return inflater.inflate(R.layout.activity_item_historial_projects, container, false);
 
-        historialList = (ListView) viewHistorial.findViewById(R.id.ListVotes);
+//        historialList = (ListView) viewHistorial.findViewById(R.id.ListVotes);
 
-        List<Request> request_List = APIUtils.get_winning_requests();
-        for (Request r : request_List) {
-            historial = new Historial();
-            historial.setRating(APIUtils.get_project_avg(r.getProject()));
-            historial.setData(r.getData_proposta());
-            historial.setTitle(r.getProject().getTitle());
+//        List<Request> request_List = APIUtils.get_winning_requests();
+//        for (Request r : request_List) {
+//            historial = new Historial();
+//            historial.setRating(APIUtils.get_project_avg(r.getProject()));
+//            historial.setData(r.getData_proposta());
+//            historial.setTitle(r.getProject().getTitle());
+//
+//            historial_Projects_List.add(historial);
+//        }
+//
+//
+//        AdapterHistorial adapter = new AdapterHistorial(getActivity(), historial_Projects_List);
+//
+//        historialList.setItemsCanFocus(true);
+//        historialList.setAdapter(adapter);
 
-            historial_Projects_List.add(historial);
-        }
-
-
-        AdapterHistorial adapter = new AdapterHistorial(getActivity(), historial_Projects_List);
-
-        historialList.setItemsCanFocus(true);
-        historialList.setAdapter(adapter);
-
-        return viewHistorial;
+//        return viewHistorial;
     }
 
 }
