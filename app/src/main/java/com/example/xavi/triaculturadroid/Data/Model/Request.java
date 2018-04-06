@@ -30,6 +30,8 @@ public class Request {
 
     private Place place;
 
+    private Project project;
+
     public Request() {
     }
 
@@ -87,5 +89,13 @@ public class Request {
 
     public void setPlace(Place place) {
         this.place = place;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }
