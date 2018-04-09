@@ -7,6 +7,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.example.xavi.triaculturadroid.Adapters.AdapterHistorial;
+import com.example.xavi.triaculturadroid.Adapters.AdapterProject;
+import com.example.xavi.triaculturadroid.Data.Model.Historial;
+import com.example.xavi.triaculturadroid.Data.Model.Project;
+import com.example.xavi.triaculturadroid.Data.Model.Request;
+import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
+
+import java.util.List;
 
 
 /**
@@ -20,6 +30,15 @@ import android.view.ViewGroup;
 public class TotalVotes extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private ListView historialList;
+
+    List<Historial> historial_Projects_List;
+    List<Project> project_List;
+    Historial historial;
+
+    String data;
+    String title;
+    double rating_from_Service;
 
     // TODO: Rename and change types of parameters
     public TotalVotes() {
@@ -36,6 +55,7 @@ public class TotalVotes extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     private static final String ARG_SECTION_NUMBER = "section_number";
+
     public static TotalVotes newInstance(int sectionNumber) {
         TotalVotes fragment = new TotalVotes();
         Bundle args = new Bundle();
@@ -43,6 +63,7 @@ public class TotalVotes extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +76,27 @@ public class TotalVotes extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_total_votes, container, false);
+        return inflater.inflate(R.layout.activity_item_historial_projects, container, false);
+
+//        historialList = (ListView) viewHistorial.findViewById(R.id.ListVotes);
+
+//        List<Request> request_List = APIUtils.get_winning_requests();
+//        for (Request r : request_List) {
+//            historial = new Historial();
+//            historial.setRating(APIUtils.get_project_avg(r.getProject()));
+//            historial.setData(r.getData_proposta());
+//            historial.setTitle(r.getProject().getTitle());
+//
+//            historial_Projects_List.add(historial);
+//        }
+//
+//
+//        AdapterHistorial adapter = new AdapterHistorial(getActivity(), historial_Projects_List);
+//
+//        historialList.setItemsCanFocus(true);
+//        historialList.setAdapter(adapter);
+
+//        return viewHistorial;
     }
 
 }

@@ -1,16 +1,20 @@
 package com.example.xavi.triaculturadroid.Adapters;
 
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.provider.ContactsContract;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +23,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
+import android.widget.PopupWindow;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.example.xavi.triaculturadroid.Data.Model.File;
 import com.example.xavi.triaculturadroid.Data.Model.Project;
@@ -28,10 +36,13 @@ import com.example.xavi.triaculturadroid.Data.Model.Vote;
 import com.example.xavi.triaculturadroid.Data.Model.userTransfer;
 import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
 import com.example.xavi.triaculturadroid.R;
-
-import com.example.xavi.triaculturadroid.ViewProject;
 import com.google.gson.internal.bind.CollectionTypeAdapterFactory;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -58,8 +69,12 @@ public class AdapterProject extends BaseAdapter {
     static boolean votat;
     static int idProjecVotat;
     static Vote voteUser;
-    static ImageView LIP_image1,LIP_image2,LIP_image3;
+    static ImageView LIP_image1, LIP_image2, LIP_image3;
     ArrayList<Button> arrButons;
+    static int id_file;
+    List<File> files_from_proj = new ArrayList<>();
+
+    PopupWindow show_file_window;
 
     public AdapterProject(Context context, List<Project> model, userTransfer user) {
         arrButons = new ArrayList<>();
@@ -75,7 +90,7 @@ public class AdapterProject extends BaseAdapter {
                 if (p.getId() == vote.getProj_id()) {
                     votat = true;
                     idProjecVotat = p.getId();
-                    id_vote= vote.getId();
+                    id_vote = vote.getId();
                 }
         }
         Log.d(TAG, "ADAPTER COUNT: " + model.size());
@@ -121,7 +136,8 @@ public class AdapterProject extends BaseAdapter {
             convertView = inflator.inflate(R.layout.activity_item_list_projects, parent, false);
         }
 
-        //Project item = model.get(position);
+        final List<File> file_list_from_project = APIUtils.get_files_from_project(model.get(position));
+
         LIP_textTitle = (TextView) convertView.findViewById(R.id.ILP_Title);
         LIP_textDescript = (TextView) convertView.findViewById(R.id.ILP_DescriptionLimitat);
         LIP_textDescriptComplert = (TextView) convertView.findViewById(R.id.ILP_DescriptionComplert);
@@ -131,54 +147,96 @@ public class AdapterProject extends BaseAdapter {
         LIP_image2 = (ImageView) convertView.findViewById(R.id.ILP_imageView2);
         LIP_image3 = (ImageView) convertView.findViewById(R.id.ILP_imageView3);
 
-
-        if(!arrButons.contains(LIP_btnVote))
+        if (!arrButons.contains(LIP_btnVote))
             arrButons.add(LIP_btnVote);
 
 
         LIP_textTitle.setText(model.get(position).getTitle());
         LIP_textDescript.setText(model.get(position).getDescript());
         LIP_textDescriptComplert.setText(model.get(position).getDescript());
-        LIP_textAuthor.setText(model.get(position).getAuthor().getName());
-
-       /* for (int i = 0; i < model.get(position).getFiles().size(); i++) {
-            byte[] imageBytes =APIUtils.get_file_from_id(model.get(position).getFiles().get(i).getId()).getFile_content();
-            Log.d(TAG, "getView: "+imageBytes);
-            if (model.get(position).getFiles().get(i).getExtension().equals(".jpg")){
-                Bitmap image = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
-                switch (i){
-                    case 0:
-                        LIP_image1.setImageBitmap(image);
-                        break;
-                    case 1:
-                        LIP_image2.setImageBitmap(image);
-                        break;
-                    case 2:
-                        LIP_image3.setImageBitmap(image);
-                        break;
-                }
-            }else{
-                switch (i){
-                    case 0:
-                        LIP_image1.setVisibility(View.GONE);
-                        break;
-                    case 1:
-                        LIP_image2.setVisibility(View.GONE);
-                        break;
-                    case 2:
-                        LIP_image3.setVisibility(View.GONE);
-                        break;
-                }
+        LIP_textAuthor.setText(model.get(position).getAuthor().getName() + " " + model.get(position).getAuthor().getSurname());
+//region listeners image_buttons
+        LIP_image1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                id_file = file_list_from_project.get(0).getId();
+                dl_file(view);
             }
-        }*/
+        });
+        LIP_image2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                id_file = file_list_from_project.get(1).getId();
+                dl_file(view);
+            }
+        });
+        LIP_image3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                id_file = file_list_from_project.get(2).getId();
+                dl_file(view);
+            }
+        });
+//endregion
+        //region set icons on buttons
+        //primer file
+        if (file_list_from_project.get(0).getExtension().equalsIgnoreCase(".jpg")
+                || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".png")
+                || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".gif")
+                || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".jpeg")
+                ) {
+            LIP_image1.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_image));
+        } else if (file_list_from_project.get(0).getExtension().equalsIgnoreCase(".mp3")
+                || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".ogg")) {
+            LIP_image1.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_music));
+        } else if (file_list_from_project.get(0).getExtension().equalsIgnoreCase(".3gp")
+                || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".mp4")
+                || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".webm")
+                ) {
+            LIP_image1.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_video));
+        }
+        //segon file
+        if (file_list_from_project.get(1).getExtension().equalsIgnoreCase(".jpg")
+                || file_list_from_project.get(1).getExtension().equalsIgnoreCase(".png")
+                || file_list_from_project.get(1).getExtension().equalsIgnoreCase(".gif")
+                || file_list_from_project.get(1).getExtension().equalsIgnoreCase(".jpeg")
+                ) {
+            LIP_image2.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_image));
+        } else if (file_list_from_project.get(1).getExtension().equalsIgnoreCase(".mp3")
+                || file_list_from_project.get(1).getExtension().equalsIgnoreCase(".ogg")) {
+            LIP_image2.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_music));
+        } else if (file_list_from_project.get(1).getExtension().equalsIgnoreCase(".3gp")
+                || file_list_from_project.get(1).getExtension().equalsIgnoreCase(".mp4")
+                || file_list_from_project.get(1).getExtension().equalsIgnoreCase(".webm")
+                ) {
+            LIP_image2.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_video));
+        }
+        //tercer file
+        if (file_list_from_project.get(2).getExtension().equalsIgnoreCase(".jpg")
+                || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".png")
+                || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".gif")
+                || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".jpeg")
+                ) {
+            LIP_image3.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_image));
+        } else if (file_list_from_project.get(2).getExtension().equalsIgnoreCase(".mp3")
+                || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".ogg")) {
+            LIP_image3.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_music));
+        } else if (file_list_from_project.get(2).getExtension().equalsIgnoreCase(".3gp")
+                || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".mp4")
+                || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".webm")
+                ) {
+            LIP_image3.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_video));
+        }
+//endregion
         if (votat && idProjecVotat != model.get(position).getId()) {
             LIP_btnVote.setEnabled(false);
-        }else{
+        } else {
             LIP_btnVote.setEnabled(true);
         }
 
 
         final View finalConvertView = convertView;
+        //region onclick text description
         LIP_textDescript.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,6 +255,8 @@ public class AdapterProject extends BaseAdapter {
                 LIP_textDescriptComplert.setVisibility(View.GONE);
             }
         });
+        //endregion
+        //region vote
         LIP_btnVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,13 +268,13 @@ public class AdapterProject extends BaseAdapter {
                     for (int i = 0; i < arrButons.size(); i++) {
                         if (i != position) {
                             arrButons.get(i).setEnabled(false);
-                            idProjecVotat=model.get(position).getId();
+                            idProjecVotat = model.get(position).getId();
                         }
                     }
                     voteUser = APIUtils.post_new_vote(vote);
                     votat = true;
                 } else {
-                    vote = APIUtils.get_vote(vote.getUser_id(),vote.getProj_id());
+                    vote = APIUtils.get_vote(vote.getUser_id(), vote.getProj_id());
                     APIUtils.delete_vote(vote);
                     votat = false;
                     for (int i = 0; i < arrButons.size(); i++) {
@@ -225,11 +285,79 @@ public class AdapterProject extends BaseAdapter {
                 }
             }
         });
+        //endregion
         return convertView;
     }
 
     @Override
     public boolean hasStableIds() {
         return true;
+    }
+
+    public void dl_file(View view) {
+        if (id_file >= 0) {
+            File f = APIUtils.get_file_by_id(id_file);
+            String temp_path = context.getCacheDir().getPath()+"FILE";
+            byte[] fitxer = Base64.decode(f.getFile_content(), Base64.DEFAULT);
+            if (f.getExtension().equalsIgnoreCase(".jpg")
+                    || f.getExtension().equalsIgnoreCase(".jpeg")
+                    || f.getExtension().equalsIgnoreCase(".gif")
+                    || f.getExtension().equalsIgnoreCase(".png")) {
+                // popupwindow becomes image
+                Bitmap image = BitmapFactory.decodeByteArray(fitxer, 0, fitxer.length);
+
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View imgview = inflater.inflate(R.layout.image_dialog, null);
+                ImageView popupimageView = imgview.findViewById(R.id.dialog_imageview);
+                popupimageView.setImageBitmap(image);
+                show_file_window = new PopupWindow(imgview, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+                show_file_window.setFocusable(true);
+                show_file_window.setBackgroundDrawable(new BitmapDrawable());
+                show_file_window.setOutsideTouchable(true);
+                show_file_window.update();
+                show_file_window.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+            }
+         else if (f.getExtension().equalsIgnoreCase(".mp3")
+                || f.getExtension().equalsIgnoreCase(".ogg")) {
+                // popupwindow becomes audioplayer
+        } else if (f.getExtension().equalsIgnoreCase(".3gp")
+                || f.getExtension().equalsIgnoreCase(".mp4")
+                || f.getExtension().equalsIgnoreCase(".webm")
+                ) {
+                //popupwindow becomes mediaplayer
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View vidview = inflater.inflate(R.layout.video_dialog, null);
+                VideoView popupvideoView = vidview.findViewById(R.id.dialog_videoview);
+
+                temp_path +=f.getExtension();
+                try {
+                make_temp_file(fitxer, temp_path);
+                } catch (IOException ex) {
+                }
+                popupvideoView.setVideoPath(temp_path);
+
+                MediaController vidControl = new MediaController(context);
+                vidControl.setAnchorView(popupvideoView);
+                popupvideoView.setMediaController(vidControl);
+
+                show_file_window = new PopupWindow(vidview, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+                show_file_window.setFocusable(true);
+                show_file_window.setBackgroundDrawable(new BitmapDrawable());
+                show_file_window.setOutsideTouchable(true);
+                show_file_window.update();
+                show_file_window.showAtLocation(view, Gravity.CENTER, 0, 0);
+                popupvideoView.start();
+            }
+        }
+    }
+    public void make_temp_file (byte[] buf, String path) throws IOException {
+        ByteArrayInputStream bis = new ByteArrayInputStream(buf);
+        FileOutputStream fos = new FileOutputStream(path);
+        byte[] b = new byte[1024];
+
+        for (int readNum; (readNum = bis.read(b)) != -1;) {
+            fos.write(b, 0, readNum);
+        }
     }
 }

@@ -38,7 +38,8 @@ public class APIUtils {
     static Double project_avg = 0.0;
     static Rating user_rating = new Rating();
     static Integer current_place_id = 0;
-    static File current_file;
+    static File seeked_file = new File();
+
     public static void init_service() {
         service = RetrofitClient.getClient(BASE_URL).create(APIService.class);
     }
@@ -305,31 +306,6 @@ public class APIUtils {
         return project_files;
     }
 
-    public static File get_file_from_id(int id) {
-        continuar = false;
-        service.getFilesFromId(id).subscribeOn(Schedulers.io()).subscribe(new Subscriber<File>() {
-            @Override
-            public void onCompleted() {
-                Log.d(TAG, "Files retrieved.");
-                continuar = true;
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                continuar = true;
-                Log.d(TAG, "onError:" + e.toString());
-            }
-
-            @Override
-            public void onNext(File file) {
-                current_file = file;
-            }
-        });
-        while (!continuar ) {
-            Log.d(TAG, "get_files_from_project: WAITING...");
-        }
-        return current_file;
-    }
     public static Author get_author_from_project(Project p) {
         continuar = false;
         project_author = null;
@@ -423,6 +399,32 @@ public class APIUtils {
         while (!continuar) {
         }
         return current_place_id;
+    }
+
+    public static File get_file_by_id(int id) {
+        continuar = false;
+        service.getFileById(id).subscribeOn(Schedulers.io()).subscribe(new Subscriber<File>() {
+            @Override
+            public void onCompleted() {
+                continuar = true;
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                continuar = true;
+//                Log.d(TAG, "onError: "+e.toString());
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(File file) {
+                seeked_file = file;
+            }
+        });
+        while (!continuar) {
+
+        }
+        return seeked_file;
     }
 
 

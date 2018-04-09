@@ -89,5 +89,8 @@ public interface APIService {
     @GET("api/current")
     Observable<Integer> getCurrentPlace();
 
+    @GET("api/file/{file_id}")
+    Observable<File> getFileById(@Path("file_id") int file_id);
+
 }
 

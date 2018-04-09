@@ -26,12 +26,11 @@ public class File {
     private int proj_id;
     @SerializedName("file_content")
     @Expose
-    private byte[] file_content = new byte[1];
+    private String file_content;
 
     public Project project;
 
     public File() {
-        file_content = new byte[1];
     }
 
     public File(int id, String name, String extension, String path, int proj_id) {
@@ -40,10 +39,9 @@ public class File {
         this.extension = extension;
         this.path = path;
         this.proj_id = proj_id;
-        file_content = new byte[1];
     }
 
-    public File(int id, String name, String extension, String path, int proj_id, byte[] file_content) {
+    public File(int id, String name, String extension, String path, int proj_id, String file_content) {
         this.id = id;
         this.name = name;
         this.extension = extension;
@@ -52,11 +50,11 @@ public class File {
         this.file_content=file_content;
     }
 
-    public byte[] getFile_content() {
+    public String getFile_content() {
         return file_content;
     }
 
-    public void setFile_content(byte[] file_content) {
+    public void setFile_content(String file_content) {
         this.file_content = file_content;
     }
 
