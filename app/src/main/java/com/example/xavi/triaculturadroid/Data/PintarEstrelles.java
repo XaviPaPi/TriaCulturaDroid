@@ -49,10 +49,9 @@ public class PintarEstrelles extends View {
     Drawable estrella1,estrella2,estrella3,estrella4,estrella5;
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawColor(Color.WHITE);
         //float llargada = this.getWidth()/5;
-        float llargada = this.getWidth()/2-250;
-        int estrella = 50;
+        float llargada = this.getWidth()/2-325/2;
+        int estrella = 65;
 
         //CODE CODE CODE
 
@@ -158,7 +157,8 @@ public class PintarEstrelles extends View {
     }
     boolean tocat = true;
     public boolean onTouchEvent(MotionEvent event) {
-        float llargada = this.getWidth()/5;
+        float llargada = this.getWidth()/2-325/2;
+        int estrella = 65;
         int maskedAction = event.getAction() & MotionEvent.ACTION_MASK;
         switch (maskedAction) {
             case MotionEvent.ACTION_DOWN:
@@ -169,10 +169,10 @@ public class PintarEstrelles extends View {
 
                 x = initialX + event.getX() - offsetX;
                 y = initialY + event.getY() - offsetY;
-                if ((offsetX > 0 && offsetX <= llargada && !primer)||(offsetX >llargada && offsetX <= llargada*2 && !segon)
-                        ||(offsetX >llargada*2 && offsetX <= llargada*2 && !tercer)||(offsetX >llargada*3 && offsetX <= llargada*4 && !quart)
-                        ||(offsetX >llargada*4 && offsetX <= llargada*5 && !cinque)) {
-                    if  (offsetX > 0 && offsetX <= llargada && !primer) {
+                if ((offsetX > (int)llargada && offsetX <= (int)llargada+estrella && !primer)||(offsetX >llargada+estrella && offsetX <= llargada+estrella*2 && !segon)
+                        ||(offsetX >llargada+estrella*2 && offsetX <= llargada+estrella*3 && !tercer)||(offsetX >llargada+estrella*3 && offsetX <= llargada+estrella*4 && !quart)
+                        ||(offsetX >llargada+estrella*4 && offsetX <= llargada+estrella*5 && !cinque)) {
+                    if  (offsetX > llargada && offsetX <= llargada+estrella && !primer) {
                         if (segon) {
                             primer = true;
                             segon = true;
@@ -188,7 +188,7 @@ public class PintarEstrelles extends View {
                             cinque = true;
                             estat=1;
                         }
-                    }else if(offsetX >llargada && offsetX <= llargada*2 && !segon){
+                    }else if(offsetX >llargada+estrella && offsetX <= llargada+estrella*2 && !segon){
                         if (tercer) {
                             primer = true;
                             segon = true;
@@ -204,7 +204,7 @@ public class PintarEstrelles extends View {
                             cinque = true;
                             estat=2;
                         }
-                    }else if(offsetX >llargada*2 && offsetX <= llargada*3 && !tercer){
+                    }else if(offsetX >llargada+estrella*2 && offsetX <= llargada+estrella*3 && !tercer){
                         if (quart) {
                             primer = true;
                             segon = true;
@@ -220,7 +220,7 @@ public class PintarEstrelles extends View {
                             cinque = true;
                             estat=3;
                         }
-                    }else if(offsetX >llargada*3 && offsetX<= llargada*4 && !quart){
+                    }else if(offsetX >llargada+estrella*3 && offsetX<= llargada+estrella*4 && !quart){
                         if (cinque) {
                             primer = true;
                             segon = true;
@@ -244,29 +244,29 @@ public class PintarEstrelles extends View {
                         cinque = true;
                         estat = 0;
                     }
-                }else if (offsetX > 0 &&  offsetX < llargada&&primer) {
+                }else if (offsetX > llargada &&  offsetX < llargada+estrella&&primer) {
                     tocat = true;
                     primer = false;
                     estat=1;
-                } else if (offsetX > llargada && offsetX < llargada*2 &&segon) {
+                } else if (offsetX > llargada+estrella && offsetX < llargada+estrella*2 &&segon) {
                     tocat = true;
                     primer = false;
                     segon = false;
                     estat=2;
-                } else if (offsetX > llargada*2 && offsetX < llargada*3 && tercer) {
+                } else if (offsetX > llargada+estrella*2 && offsetX < llargada+estrella*3 && tercer) {
                     tocat = true;
                     primer = false;
                     segon = false;
                     tercer = false;
                     estat=3;
-                } else if (offsetX > llargada*3 && offsetX < llargada*4 && quart) {
+                } else if (offsetX > llargada+estrella*3 && offsetX < llargada+estrella*4 && quart) {
                     tocat = true;
                     primer = false;
                     segon = false;
                     tercer = false;
                     quart = false;
                     estat=4;
-                } else if (offsetX > llargada*4 && offsetX < llargada*5 && cinque) {
+                } else if (offsetX > llargada+estrella*4 && offsetX < llargada+estrella*5 && cinque) {
                     tocat = true;
                     primer = false;
                     segon = false;
@@ -275,35 +275,34 @@ public class PintarEstrelles extends View {
                     cinque = false;
                     estat=5;
                 }
-
                 break;
             case MotionEvent.ACTION_MOVE:
                 x = initialX + event.getX();
                 y = initialY + event.getY();
 
-                if (x > 0 && x < llargada && initialX < offsetX&&initialX<x) {
+                if (x > llargada && x < llargada+estrella && initialX < offsetX&&initialX<x) {
                     tocat = true;
                     primer = false;
                     estat=1;
-                } else if (x > llargada && x < llargada*2 && initialX < offsetX&&initialX<x) {
+                } else if (x > llargada+estrella && x < llargada+estrella*2 && initialX < offsetX&&initialX<x) {
                     tocat = true;
                     primer = false;
                     segon = false;
                     estat=2;
-                } else if (x > llargada*2 && x < llargada*3 && initialX < offsetX&&initialX<x) {
+                } else if (x > llargada+estrella*2 && x < llargada+estrella*3 && initialX < offsetX&&initialX<x) {
                     tocat = true;
                     primer = false;
                     segon = false;
                     tercer = false;
                     estat=3;
-                } else if (x > llargada*3 && x < llargada*4 && initialX < offsetX&&initialX<x) {
+                } else if (x > llargada+estrella*3 && x < llargada+estrella*4 && initialX < offsetX&&initialX<x) {
                     tocat = true;
                     primer = false;
                     segon = false;
                     tercer = false;
                     quart = false;
                     estat=4;
-                } else if (x > llargada*4 && x < llargada*5 && initialX < offsetX &&initialX<x) {
+                } else if (x > llargada+estrella*4 && x < llargada+estrella*5 && initialX < offsetX &&initialX<x) {
                     tocat = true;
                     primer = false;
                     segon = false;
@@ -312,15 +311,15 @@ public class PintarEstrelles extends View {
                     cinque = false;
                     estat=5;
                 }
-                if(x<0){
-                    tocat=true;
-                    primer=true;
-                    segon=true;
-                    tercer=true;
-                    quart=true;
-                    cinque=true;
-                    estat=0;
-                }else if(x<llargada){
+                if(x<llargada||x>llargada+estrella*6){
+                        tocat=true;
+                        primer=true;
+                        segon=true;
+                        tercer=true;
+                        quart=true;
+                        cinque=true;
+                        estat=0;
+                }else if(x<llargada+estrella){
                     tocat=true;
                     primer=false;
                     segon=true;
@@ -328,7 +327,7 @@ public class PintarEstrelles extends View {
                     quart=true;
                     cinque=true;
                     estat=1;
-                }else if(x<llargada*2){
+                }else if(x<llargada+estrella*2){
                     tocat=true;
                     primer=false;
                     segon=false;
@@ -336,7 +335,7 @@ public class PintarEstrelles extends View {
                     quart=true;
                     cinque=true;
                     estat=2;
-                }else if(x<llargada*3){
+                }else if(x<llargada+estrella*3){
                     tocat=true;
                     primer=false;
                     segon=false;
@@ -344,7 +343,7 @@ public class PintarEstrelles extends View {
                     quart=true;
                     cinque=true;
                     estat=3;
-                }else if(x<llargada*4){
+                }else if(x<llargada+estrella*4){
                     tocat=true;
                     primer=false;
                     segon=false;
@@ -352,7 +351,7 @@ public class PintarEstrelles extends View {
                     quart=false;
                     cinque=true;
                     estat=4;
-                }else if(x<llargada*5){
+                }else if(x<llargada+estrella*5){
                     tocat=true;
                     primer=false;
                     segon=false;
@@ -360,6 +359,14 @@ public class PintarEstrelles extends View {
                     quart=false;
                     cinque = false;
                     estat=5;
+                }else if (x>llargada+estrella*5 && cinque) {
+                    tocat = true;
+                    primer = true;
+                    segon = true;
+                    tercer = true;
+                    quart = true;
+                    cinque = true;
+                    estat = 0;
                 }
             case MotionEvent.ACTION_CANCEL: {
 

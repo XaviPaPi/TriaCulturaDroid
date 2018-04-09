@@ -36,7 +36,6 @@ import org.w3c.dom.Text;
  * create an instance of this fragment.
  */
 public class FragmentProfile extends Fragment {
-
     String new_mail;
     String old_mail;
     PopupWindow passPopUp;

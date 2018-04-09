@@ -25,8 +25,8 @@
 
     <com.example.xavi.triaculturadroid.Data.PintarEstrelles
         android:id="@+id/P_estrelles"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp" />
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
         <!--<ImageButton
             android:id="@+id/P_star1"
