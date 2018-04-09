@@ -2,6 +2,7 @@ package com.example.xavi.triaculturadroid.Adapters;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
@@ -27,6 +28,8 @@ import com.example.xavi.triaculturadroid.Data.Model.Vote;
 import com.example.xavi.triaculturadroid.Data.Model.userTransfer;
 import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
 import com.example.xavi.triaculturadroid.R;
+
+import com.example.xavi.triaculturadroid.ViewProject;
 import com.google.gson.internal.bind.CollectionTypeAdapterFactory;
 
 import java.text.DateFormat;
@@ -138,8 +141,7 @@ public class AdapterProject extends BaseAdapter {
         LIP_textDescriptComplert.setText(model.get(position).getDescript());
         LIP_textAuthor.setText(model.get(position).getAuthor().getName());
 
-
-        for (int i = 0; i < model.get(position).getFiles().size(); i++) {
+       /* for (int i = 0; i < model.get(position).getFiles().size(); i++) {
             byte[] imageBytes =APIUtils.get_file_from_id(model.get(position).getFiles().get(i).getId()).getFile_content();
             Log.d(TAG, "getView: "+imageBytes);
             if (model.get(position).getFiles().get(i).getExtension().equals(".jpg")){
@@ -168,7 +170,7 @@ public class AdapterProject extends BaseAdapter {
                         break;
                 }
             }
-        }
+        }*/
         if (votat && idProjecVotat != model.get(position).getId()) {
             LIP_btnVote.setEnabled(false);
         }else{

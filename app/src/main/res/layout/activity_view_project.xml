@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/P_LinearGeneral"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
     tools:context="com.example.xavi.triaculturadroid.ViewProject">
@@ -22,6 +22,63 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:text="AUTHOR NAME" />
+
+    <com.example.xavi.triaculturadroid.Data.PintarEstrelles
+        android:id="@+id/P_estrelles"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp" />
+
+        <!--<ImageButton
+            android:id="@+id/P_star1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/star"
+            android:clickable="true"
+            android:focusable="true"
+            app:srcCompat="@drawable/star" />
+
+        <ImageButton
+            android:id="@+id/P_star2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/star"
+            android:clickable="true"
+            android:focusable="true"
+            app:srcCompat="@drawable/star" />
+
+        <ImageButton
+            android:id="@+id/P_star3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/star"
+            android:clickable="true"
+            android:focusable="true"
+            app:srcCompat="@drawable/star" />
+
+        <ImageButton
+            android:id="@+id/P_star4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/star"
+            android:clickable="true"
+            android:focusable="true"
+            app:srcCompat="@drawable/star" />
+
+        <ImageButton
+            android:id="@+id/P_star5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/star"
+            android:clickable="true"
+            android:focusable="true"
+            app:srcCompat="@drawable/star" />-->
 
     <TextView
         android:id="@+id/P_Description"
