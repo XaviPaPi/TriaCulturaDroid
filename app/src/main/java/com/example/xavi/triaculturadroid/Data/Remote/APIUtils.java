@@ -258,7 +258,7 @@ public class APIUtils {
     public static List<Request> get_winning_requests() {
         continuar = false;
         winning_requests = new ArrayList<>();
-        service.getWinningRequests().subscribeOn(Schedulers.io()).subscribe(new Subscriber<java.util.List<com.example.xavi.triaculturadroid.Data.Model.Request>>() {
+        service.getWinningRequests().subscribeOn(Schedulers.io()).subscribe(new Subscriber<List<Request>>() {
             @Override
             public void onCompleted() {
                 Log.d(TAG, "Requests retrieved.");
@@ -272,10 +272,13 @@ public class APIUtils {
             }
 
             @Override
-            public void onNext(List<com.example.xavi.triaculturadroid.Data.Model.Request> requests) {
+            public void onNext(List<Request> requests) {
                 winning_requests = requests;
             }
         });
+        while (!continuar ) {
+            Log.d(TAG, "get_winning_requests: WAITING...");
+        }
         return winning_requests;
     }
 
