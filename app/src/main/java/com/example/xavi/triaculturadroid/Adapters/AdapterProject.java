@@ -297,7 +297,7 @@ public class AdapterProject extends BaseAdapter {
     public void dl_file(View view) {
         if (id_file >= 0) {
             File f = APIUtils.get_file_by_id(id_file);
-            String temp_path = context.getCacheDir().getPath()+"FILE";
+            String temp_path = context.getCacheDir().getPath()+"/FILE";
             byte[] fitxer = Base64.decode(f.getFile_content(), Base64.DEFAULT);
             if (f.getExtension().equalsIgnoreCase(".jpg")
                     || f.getExtension().equalsIgnoreCase(".jpeg")
@@ -336,18 +336,18 @@ public class AdapterProject extends BaseAdapter {
                 } catch (IOException ex) {
                 }
                 popupvideoView.setVideoPath(temp_path);
+                popupvideoView.setVisibility(View.VISIBLE);
 
                 MediaController vidControl = new MediaController(context);
                 vidControl.setAnchorView(popupvideoView);
                 popupvideoView.setMediaController(vidControl);
-
                 show_file_window = new PopupWindow(vidview, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
                 show_file_window.setFocusable(true);
                 show_file_window.setBackgroundDrawable(new BitmapDrawable());
                 show_file_window.setOutsideTouchable(true);
                 show_file_window.update();
                 show_file_window.showAtLocation(view, Gravity.CENTER, 0, 0);
-                popupvideoView.start();
+                popupvideoView.requestFocus();
             }
         }
     }
