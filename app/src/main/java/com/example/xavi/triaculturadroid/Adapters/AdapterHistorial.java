@@ -62,7 +62,7 @@ public class AdapterHistorial extends BaseAdapter {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflator = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflator.inflate(R.layout.activity_item_list_projects, parent, false);
+            convertView = inflator.inflate(R.layout.activity_item_historial_projects, parent, false);
         }
 
         int id_project;
