@@ -34,7 +34,7 @@ public class TotalVotes extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private ListView historialList;
 
-    List<Historial> historial_Projects_List;
+    List<Historial> historial_Projects_List = new ArrayList<Historial>();
     List<Project> project_List;
     Historial historial;
     userTransfer user;
@@ -70,6 +70,8 @@ public class TotalVotes extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
+
+        historialList
     }
 
     @Override
@@ -83,6 +85,7 @@ public class TotalVotes extends Fragment {
         historial_Projects_List = new ArrayList<>();
 
         List<Request> request_List = APIUtils.get_winning_requests();
+
         for (Request r : request_List) {
             historial = new Historial();
             historial.setId(r.getId());
