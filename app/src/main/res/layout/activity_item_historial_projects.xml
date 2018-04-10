@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -35,12 +36,11 @@
         android:gravity="center"
         android:layout_margin="2dp">
 
-        <TextView
-            android:id="@+id/IHP_valoracio"
+        <ImageView
+            android:id="@+id/IHP_stars"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="textView"
-            android:textAlignment="center"/>
+            app:srcCompat="@drawable/star_greys" />
     </LinearLayout>
 
 </android.support.v7.widget.LinearLayoutCompat>

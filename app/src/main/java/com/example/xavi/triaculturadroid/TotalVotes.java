@@ -83,13 +83,14 @@ public class TotalVotes extends Fragment {
                 false);
         historialList = (ListView) viewHistorial.findViewById(R.id.ListVotes);
 
+
         historial_Projects_List = new ArrayList<>();
 
         List<Request> request_List = APIUtils.get_winning_requests();
 
         for (Request r : request_List) {
             historial = new Historial();
-            historial.setId(r.getProj_id());
+            historial.setId(r.getId());
             historial.setRating(APIUtils.get_project_avg(r.getProject()));
             historial.setData(r.getData_proposta());
             historial.setTitle(r.getProject().getTitle());

@@ -180,13 +180,13 @@ public class AdapterProject extends BaseAdapter {
 //endregion
         //region set icons on buttons
         //primer file
-        if (file_list_from_project.size()>0&&file_list_from_project.get(0).getExtension().equalsIgnoreCase(".jpg")
+        if (file_list_from_project.get(0).getExtension().equalsIgnoreCase(".jpg")
                 || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".png")
                 || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".gif")
                 || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".jpeg")
                 ) {
             LIP_image1.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_image));
-        } else if (file_list_from_project.size()>0&&file_list_from_project.get(0).getExtension().equalsIgnoreCase(".mp3")
+        } else if (file_list_from_project.get(0).getExtension().equalsIgnoreCase(".mp3")
                 || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".ogg")) {
             LIP_image1.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_music));
         } else if (file_list_from_project.get(0).getExtension().equalsIgnoreCase(".3gp")
@@ -196,32 +196,32 @@ public class AdapterProject extends BaseAdapter {
             LIP_image1.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_video));
         }
         //segon file
-        if (file_list_from_project.size()>0&&file_list_from_project.get(1).getExtension().equalsIgnoreCase(".jpg")
+        if (file_list_from_project.get(1).getExtension().equalsIgnoreCase(".jpg")
                 || file_list_from_project.get(1).getExtension().equalsIgnoreCase(".png")
                 || file_list_from_project.get(1).getExtension().equalsIgnoreCase(".gif")
                 || file_list_from_project.get(1).getExtension().equalsIgnoreCase(".jpeg")
                 ) {
             LIP_image2.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_image));
-        } else if (file_list_from_project.size()>0&&file_list_from_project.get(1).getExtension().equalsIgnoreCase(".mp3")
+        } else if (file_list_from_project.get(1).getExtension().equalsIgnoreCase(".mp3")
                 || file_list_from_project.get(1).getExtension().equalsIgnoreCase(".ogg")) {
             LIP_image2.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_music));
-        } else if (file_list_from_project.size()>0&&file_list_from_project.get(1).getExtension().equalsIgnoreCase(".3gp")
+        } else if (file_list_from_project.get(1).getExtension().equalsIgnoreCase(".3gp")
                 || file_list_from_project.get(1).getExtension().equalsIgnoreCase(".mp4")
                 || file_list_from_project.get(1).getExtension().equalsIgnoreCase(".webm")
                 ) {
             LIP_image2.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_video));
         }
         //tercer file
-        if (file_list_from_project.size()>0&&file_list_from_project.get(2).getExtension().equalsIgnoreCase(".jpg")
+        if (file_list_from_project.get(2).getExtension().equalsIgnoreCase(".jpg")
                 || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".png")
                 || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".gif")
                 || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".jpeg")
                 ) {
             LIP_image3.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_image));
-        } else if (file_list_from_project.size()>0&&file_list_from_project.get(2).getExtension().equalsIgnoreCase(".mp3")
+        } else if (file_list_from_project.get(2).getExtension().equalsIgnoreCase(".mp3")
                 || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".ogg")) {
             LIP_image3.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_music));
-        } else if (file_list_from_project.size()>0&&file_list_from_project.get(2).getExtension().equalsIgnoreCase(".3gp")
+        } else if (file_list_from_project.get(2).getExtension().equalsIgnoreCase(".3gp")
                 || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".mp4")
                 || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".webm")
                 ) {
