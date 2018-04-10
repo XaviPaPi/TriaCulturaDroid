@@ -1,12 +1,14 @@
 package com.example.xavi.triaculturadroid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.xavi.triaculturadroid.Adapters.AdapterHistorial;
@@ -32,8 +34,10 @@ import java.util.List;
 public class TotalVotes extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private ListView historialList;
 
+    int idProjecteWin;
     List<Historial> historial_Projects_List = new ArrayList<Historial>();
     List<Project> project_List;
     Historial historial;
@@ -71,7 +75,16 @@ public class TotalVotes extends Fragment {
         super.onCreate(savedInstanceState);
         user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
 
-        historialList
+        historialList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intentProject = new Intent(getActivity(), ViewProject.class);
+                idProjecteWin = historial_Projects_List.get(position).getId();
+                intentProject.putExtra("idProjecte", idProjecteWin);
+                intentProject.putExtra("Usuari", user);
+                startActivity(intentProject);
+            }
+        });
     }
 
     @Override
