@@ -69,8 +69,8 @@ public class ProjectFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Intent intent = new Intent();
-        user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
+        Intent intent = new Intent();
+        user = (userTransfer) intent.getExtras().getSerializable("Usuari");
 
     }
 
