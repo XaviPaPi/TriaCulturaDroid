@@ -75,16 +75,7 @@ public class TotalVotes extends Fragment {
         super.onCreate(savedInstanceState);
         user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
 
-        historialList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intentProject = new Intent(getActivity(), ViewProject.class);
-                idProjecteWin = historial_Projects_List.get(position).getId();
-                intentProject.putExtra("idProjecte", idProjecteWin);
-                intentProject.putExtra("Usuari", user);
-                startActivity(intentProject);
-            }
-        });
+
     }
 
     @Override
@@ -110,11 +101,22 @@ public class TotalVotes extends Fragment {
         }
 
 
+
         AdapterHistorial adapter = new AdapterHistorial(getActivity(), historial_Projects_List);
 
         historialList.setItemsCanFocus(true);
         historialList.setAdapter(adapter);
 
+        historialList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intentProject = new Intent(getActivity(), ViewProject.class);
+                idProjecteWin = historial_Projects_List.get(position).getId();
+                intentProject.putExtra("idProjecte", idProjecteWin);
+                intentProject.putExtra("Usuari", user);
+                startActivity(intentProject);
+            }
+        });
         return viewHistorial;
     }
 
