@@ -39,6 +39,7 @@ public class APIUtils {
     static Rating user_rating = new Rating();
     static Integer current_place_id = 0;
     static File seeked_file = new File();
+    static Project selected_project = new Project();
 
     public static void init_service() {
         service = RetrofitClient.getClient(BASE_URL).create(APIService.class);
@@ -129,6 +130,29 @@ public class APIUtils {
         return current_user;
     }
 
+    public static Project get_Project(int id) {
+        continuar = false;
+        service.getProjectById(id).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Project>() {
+            @Override
+            public void onCompleted() {
+                continuar = true;
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                continuar = true;
+            }
+
+            @Override
+            public void onNext(Project project) {
+                selected_project = project;
+            }
+        });
+        while (!continuar) {
+        }
+        return selected_project;
+    }
+
     public static User update_user(User u) {
         continuar = false;
         service.postNewPass(u.getId(), u.getPassword(), u.getEmail(), u.getName()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<User>() {
@@ -188,7 +212,7 @@ public class APIUtils {
     public static Vote post_new_vote(Vote vote) {
         continuar = false;
         aux_vote = null;
-        service.postNewVote(vote.getUser_id(),vote.getProj_id()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Vote>() {
+        service.postNewVote(vote.getUser_id(), vote.getProj_id()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Vote>() {
             @Override
             public void onCompleted() {
                 continuar = true;
@@ -198,7 +222,7 @@ public class APIUtils {
             @Override
             public void onError(Throwable e) {
                 continuar = true;
-                Log.d(TAG, "onError:" +e.toString() );
+                Log.d(TAG, "onError:" + e.toString());
             }
 
             @Override
@@ -206,7 +230,8 @@ public class APIUtils {
                 aux_vote = vote;
             }
         });
-        while (!continuar) {}
+        while (!continuar) {
+        }
         return aux_vote;
     }
 
@@ -228,7 +253,8 @@ public class APIUtils {
                 aux_vote = vote;
             }
         });
-        while (!continuar) {}
+        while (!continuar) {
+        }
         return aux_vote;
     }
 
@@ -276,7 +302,7 @@ public class APIUtils {
                 winning_requests = requests;
             }
         });
-        while (!continuar ) {
+        while (!continuar) {
             Log.d(TAG, "get_files_from_project: WAITING...");
         }
         return winning_requests;
@@ -303,7 +329,7 @@ public class APIUtils {
                 project_files = files;
             }
         });
-        while (!continuar ) {
+        while (!continuar) {
             Log.d(TAG, "get_files_from_project: WAITING...");
         }
         return project_files;

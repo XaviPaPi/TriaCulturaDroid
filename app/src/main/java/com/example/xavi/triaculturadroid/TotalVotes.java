@@ -74,17 +74,6 @@ public class TotalVotes extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
-
-        historialList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intentProject = new Intent(getActivity(), ViewProject.class);
-                idProjecteWin = historial_Projects_List.get(position).getId();
-                intentProject.putExtra("idProjecte", idProjecteWin);
-                intentProject.putExtra("Usuari", user);
-                startActivity(intentProject);
-            }
-        });
     }
 
     @Override
@@ -94,14 +83,13 @@ public class TotalVotes extends Fragment {
                 false);
         historialList = (ListView) viewHistorial.findViewById(R.id.ListVotes);
 
-
         historial_Projects_List = new ArrayList<>();
 
         List<Request> request_List = APIUtils.get_winning_requests();
 
         for (Request r : request_List) {
             historial = new Historial();
-            historial.setId(r.getId());
+            historial.setId(r.getProj_id());
             historial.setRating(APIUtils.get_project_avg(r.getProject()));
             historial.setData(r.getData_proposta());
             historial.setTitle(r.getProject().getTitle());
@@ -114,6 +102,17 @@ public class TotalVotes extends Fragment {
 
         historialList.setItemsCanFocus(true);
         historialList.setAdapter(adapter);
+
+        historialList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intentProject = new Intent(getActivity(), ViewProject.class);
+                idProjecteWin = historial_Projects_List.get(position).getId();
+                intentProject.putExtra("idProject", idProjecteWin);
+                intentProject.putExtra("Usuari", user);
+                startActivity(intentProject);
+            }
+        });
 
         return viewHistorial;
     }

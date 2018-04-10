@@ -92,5 +92,8 @@ public interface APIService {
     @GET("api/file/{file_id}")
     Observable<File> getFileById(@Path("file_id") int file_id);
 
+    @GET("api/project/{project_id}")
+    Observable<Project> getProjectById(@Path("project_id") int project_id);
+
 }
 

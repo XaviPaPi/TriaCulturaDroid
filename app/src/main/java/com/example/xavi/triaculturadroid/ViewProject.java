@@ -20,7 +20,9 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.xavi.triaculturadroid.Data.Model.Project;
 import com.example.xavi.triaculturadroid.Data.Model.userTransfer;
 import com.example.xavi.triaculturadroid.Data.PintarEstrelles;
 import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
@@ -32,19 +34,31 @@ import java.util.Random;
 
 public class ViewProject extends AppCompatActivity {
 
+    Project p;
     userTransfer user;
     int idProjecte;
     PintarEstrelles pintarEstrelles;
+    TextView txt_Author;
+    TextView txt_Title;
+    TextView txt_Description;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_project);
 
         Intent intent = new Intent();
+        //(UserNormal) getIntent().getExtras().getSerializable("User");
+        user = (userTransfer) getIntent().getExtras().getSerializable("Usuari");
+        idProjecte = (int) getIntent().getExtras().getInt("idProject");
+        p = APIUtils.get_Project(idProjecte);
 
-        user = new userTransfer(APIUtils.get_user_by_dni(this.getIntent().getExtras().getString("Usuari")));
-        idProjecte = this.getIntent().getExtras().getInt("idProjecte");
+        txt_Author = (TextView)findViewById(R.id.P_AuthorName);
+        txt_Title = (TextView)findViewById(R.id.P_Title);
+        txt_Description = (TextView)findViewById(R.id.P_Description);
 
+        txt_Author.setText(p.getAuthor().getName().toString());
+        txt_Title.setText(p.getTitle().toString());
+        txt_Description.setText(p.getDescript().toString());
 
         pintarEstrelles=(PintarEstrelles)findViewById(R.id.P_estrelles);
     }
