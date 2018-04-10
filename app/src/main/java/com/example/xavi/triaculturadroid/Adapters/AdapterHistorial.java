@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.xavi.triaculturadroid.Data.Model.Historial;
+import com.example.xavi.triaculturadroid.Data.Model.Project;
 import com.example.xavi.triaculturadroid.R;
 
 import java.util.List;
@@ -22,34 +23,43 @@ public class AdapterHistorial extends BaseAdapter {
     Context context;
     List<Historial> list_histo;
     private Historial histo;
-
+    int mode;
 
     public AdapterHistorial(Context context, List<Historial> list_histo){
-
         this.context = context;
         this.list_histo = list_histo;
+        mode =1;
     }
 
 
     @Override
     public int getCount() {
-        return 0;
+        if (mode == 1)
+            return list_histo.size();
+        else
+            return 1;
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public Historial getItem(int position) {
+        if (mode == 1) {
+            return list_histo.get(position);
+        } else {
+            return histo;
+        }
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        if (mode == 1)
+            return getItem(position).getId();
+        else
+            return 0;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
         if (convertView == null) {
             LayoutInflater inflator = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflator.inflate(R.layout.activity_item_list_projects, parent, false);

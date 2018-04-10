@@ -14,8 +14,10 @@ import com.example.xavi.triaculturadroid.Adapters.AdapterProject;
 import com.example.xavi.triaculturadroid.Data.Model.Historial;
 import com.example.xavi.triaculturadroid.Data.Model.Project;
 import com.example.xavi.triaculturadroid.Data.Model.Request;
+import com.example.xavi.triaculturadroid.Data.Model.userTransfer;
 import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,7 +37,7 @@ public class TotalVotes extends Fragment {
     List<Historial> historial_Projects_List;
     List<Project> project_List;
     Historial historial;
-
+    userTransfer user;
     String data;
     String title;
     double rating_from_Service;
@@ -67,23 +69,23 @@ public class TotalVotes extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
+        user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.activity_item_historial_projects, container, false);
-        View viewHistorial = inflater.inflate(R.layout.fragment_project, container,
+        View viewHistorial = inflater.inflate(R.layout.fragment_total_votes, container,
                 false);
         historialList = (ListView) viewHistorial.findViewById(R.id.ListVotes);
+
+
+        historial_Projects_List = new ArrayList<>();
 
         List<Request> request_List = APIUtils.get_winning_requests();
         for (Request r : request_List) {
             historial = new Historial();
+            historial.setId(r.getId());
             historial.setRating(APIUtils.get_project_avg(r.getProject()));
             historial.setData(r.getData_proposta());
             historial.setTitle(r.getProject().getTitle());

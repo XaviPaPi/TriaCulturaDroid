@@ -277,7 +277,7 @@ public class APIUtils {
             }
         });
         while (!continuar ) {
-            Log.d(TAG, "get_winning_requests: WAITING...");
+            Log.d(TAG, "get_files_from_project: WAITING...");
         }
         return winning_requests;
     }
