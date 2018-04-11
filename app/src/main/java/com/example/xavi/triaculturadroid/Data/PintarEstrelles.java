@@ -13,6 +13,8 @@ import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 
 import com.example.xavi.triaculturadroid.R;
 
@@ -34,8 +36,18 @@ public class PintarEstrelles extends View {
     private boolean tercer =true;
     private boolean quart = true;
     private boolean cinque =true;
+    private int estat=0;
+    private int estatPosterior=0;
     //endregion
 
+
+    public int getEstat() {
+        return estat;
+    }
+
+    public void setEstat(int estat) {
+        this.estat = estat;
+    }
 
     public PintarEstrelles(Context context) {
         super(context);
@@ -44,8 +56,7 @@ public class PintarEstrelles extends View {
         super(context, null);
     }
 
-    int estat=0;
-    int estatPosterior=0;
+
     Drawable estrella1,estrella2,estrella3,estrella4,estrella5;
     @Override
     protected void onDraw(Canvas canvas) {
@@ -381,107 +392,4 @@ public class PintarEstrelles extends View {
         invalidate();
         return true;
     }
-
-
-
-
-
-
-
-    private class CLine {
-        private float height;
-        private float width;
-        private float x;
-        private float y;
-        private float margin;
-
-        public float getX() {
-            return x;
-        }
-
-        public void setX(float x) {
-            this.x = x;
-        }
-
-        public float getY() {
-            return y;
-        }
-
-        public void setY(float y) {
-            this.y = y;
-        }
-
-        public float getHeight() {
-            return height;
-        }
-
-        public void setHeight(float height) {
-            this.height = height;
-        }
-
-        public float getWidth() {
-            return width;
-        }
-
-
-        public void setWidth(float width) {
-            this.width = width;
-        }
-
-        public float getDrawX() {
-            return 0 + margin;
-        }
-
-        public float getDrawY() {
-            return (y + margin);
-        }
-
-        public float getDrawHeight() {
-            return height - margin;
-        }
-
-        public float getDrawWidth() {
-            return width - margin;
-        }
-
-
-        public float getMargin() {
-            return margin;
-        }
-
-        public void setMargin(float margin) {
-            this.margin = margin;
-        }
-
-        public CLine() {
-            this.x = this.y = 0f;
-        }
-
-        public CLine(float x, float y, float width, float height) {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-        }
-
-        public CLine(float x, float y, float width, float height, float margin) {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-            this.margin = margin;
-        }
-
-        public CLine(float width, float height, float margin) {
-            this.x = 0;
-            this.y = height;
-            this.width = width;
-            this.height = height;
-            this.margin = margin;
-        }
-
-    }
-
-
-
 }

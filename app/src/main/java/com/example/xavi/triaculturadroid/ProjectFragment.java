@@ -50,7 +50,7 @@ public class ProjectFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    userTransfer user;
+    String user;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -69,8 +69,8 @@ public class ProjectFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  Intent intent = new Intent();
-    //    user = (userTransfer) intent.getExtras().getSerializable("Usuari");
+        Intent intent = new Intent();
+        user = intent.getStringExtra("Usuari");
 
     }
 

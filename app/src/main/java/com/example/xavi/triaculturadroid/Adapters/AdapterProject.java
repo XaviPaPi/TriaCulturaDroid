@@ -61,9 +61,10 @@ public class AdapterProject extends BaseAdapter {
     Context context;
     Project projct;
     userTransfer user;
+    User usuari;
+    String dniUser;
     int mode;
     int id_vote;
-
     TextView LIP_textAuthor, LIP_textDescript, LIP_textTitle, LIP_textDescriptComplert;
     Button LIP_btnVote;
     static boolean votat;
@@ -95,7 +96,26 @@ public class AdapterProject extends BaseAdapter {
         }
         Log.d(TAG, "ADAPTER COUNT: " + model.size());
     }
-
+    public AdapterProject(Context context, List<Project> model, String dni) {
+        arrButons = new ArrayList<>();
+        this.dniUser = dni;
+        this.model = model;
+        mode = 1;
+        this.context = context;
+        usuari = APIUtils.get_user_by_dni(dniUser);
+        user = new userTransfer(usuari);
+        votes = APIUtils.get_votes(user.getId());
+        if (votes != null && votes.size() > 0) {
+            Vote vote = votes.get(votes.size() - 1);
+            for (Project p : model)
+                if (p.getId() == vote.getProj_id()) {
+                    votat = true;
+                    idProjecVotat = p.getId();
+                    id_vote = vote.getId();
+                }
+        }
+        Log.d(TAG, "ADAPTER COUNT: " + model.size());
+    }
     public AdapterProject(Context context, Project project) {
 
         this.projct = project;

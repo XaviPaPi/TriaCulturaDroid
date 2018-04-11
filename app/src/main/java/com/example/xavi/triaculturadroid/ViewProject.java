@@ -61,6 +61,9 @@ public class ViewProject extends AppCompatActivity {
         txt_Description.setText(p.getDescript().toString());
 
         pintarEstrelles=(PintarEstrelles)findViewById(R.id.P_estrelles);
+
+
+        //pintarEstrelles.getEstat();
     }
 
 }
