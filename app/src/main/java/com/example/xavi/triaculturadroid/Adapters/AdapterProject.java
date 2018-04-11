@@ -200,7 +200,7 @@ public class AdapterProject extends BaseAdapter {
 //endregion
         //region set icons on buttons
         //primer file
-        if (file_list_from_project.get(0).getExtension().equalsIgnoreCase(".jpg")
+      /*  if (file_list_from_project.get(0).getExtension().equalsIgnoreCase(".jpg")
                 || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".png")
                 || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".gif")
                 || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".jpeg")
@@ -246,7 +246,7 @@ public class AdapterProject extends BaseAdapter {
                 || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".webm")
                 ) {
             LIP_image3.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_video));
-        }
+        }*/
 //endregion
         if (votat && idProjecVotat != model.get(position).getId()) {
             LIP_btnVote.setEnabled(false);

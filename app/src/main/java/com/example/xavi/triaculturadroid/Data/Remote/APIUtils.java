@@ -150,6 +150,7 @@ public class APIUtils {
             }
         });
         while (!continuar) {
+            Log.d(TAG, "get_Project: QUERY NOT COMPLETED - WAITING FOR RESPONSE FROM SERVER");
         }
         return selected_project;
     }

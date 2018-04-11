@@ -90,7 +90,7 @@ public class TotalVotes extends Fragment {
 
         for (Request r : request_List) {
             historial = new Historial();
-            historial.setId(r.getId());
+            historial.setId(r.getProject().getId());
             historial.setRating(APIUtils.get_project_avg(r.getProject()));
             historial.setData(r.getData_proposta());
             historial.setTitle(r.getProject().getTitle());
@@ -110,7 +110,7 @@ public class TotalVotes extends Fragment {
                 Intent intentProject = new Intent(getActivity(), ViewProject.class);
                 idProjecteWin = historial_Projects_List.get(position).getId();
                 intentProject.putExtra("idProject", idProjecteWin);
-                intentProject.putExtra("Usuari", user);
+                intentProject.putExtra("Usuari", user.getDni());
                 startActivity(intentProject);
             }
         });

@@ -48,9 +48,10 @@ public class ViewProject extends AppCompatActivity {
 
         Intent intent = new Intent();
         //(UserNormal) getIntent().getExtras().getSerializable("User");
-        user = (userTransfer) getIntent().getExtras().getSerializable("Usuari");
+        user = new userTransfer(APIUtils.get_user_by_dni(this.getIntent().getExtras().getString("Usuari")));
         idProjecte = (int) getIntent().getExtras().getInt("idProject");
         p = APIUtils.get_Project(idProjecte);
+
 
         txt_Author = (TextView)findViewById(R.id.P_AuthorName);
         txt_Title = (TextView)findViewById(R.id.P_Title);
