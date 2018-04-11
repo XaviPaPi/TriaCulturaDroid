@@ -33,6 +33,16 @@ public interface APIService {
             @Field("name") String name
     );
 
+    @PUT("api/rating/")
+    @FormUrlEncoded
+    Observable<Rating> postNewRating(
+            @Field("id_rating") int id_rating,
+            @Field("user_id") int user_id,
+            @Field("project_id") int project_id,
+            @Field("rate") int rate
+            //@Field("comment") String comment
+    );
+
     @GET("api/usuari/{dni}")
 //    @FormUrlEncoded
     Observable<User> getUserByDni(@Path("dni") String dni);

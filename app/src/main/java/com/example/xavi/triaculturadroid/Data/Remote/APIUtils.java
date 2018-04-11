@@ -40,6 +40,7 @@ public class APIUtils {
     static Integer current_place_id = 0;
     static File seeked_file = new File();
     static Project selected_project = new Project();
+    static Rating user_rate = new Rating();
 
     public static void init_service() {
         service = RetrofitClient.getClient(BASE_URL).create(APIService.class);
@@ -161,7 +162,6 @@ public class APIUtils {
                 continuar = true;
                 Log.d(TAG, "User modified.");
             }
-
 
             @Override
             public void onError(Throwable e) {
@@ -454,6 +454,33 @@ public class APIUtils {
 
         }
         return seeked_file;
+    }
+
+    public static Rating update_rate(Rating r) {
+        continuar = false;
+        service.postNewRating(r.getId(), r.getUser_id(), r.getProj_id(), r.getRate()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Rating>() {
+            @Override
+            public void onCompleted() {
+                continuar = true;
+                Log.d(TAG, "Rate modifie.");
+            }
+            @Override
+            public void onError(Throwable e) {
+                user_rate = null;
+                continuar = true;
+                Log.d(TAG, "onError:" + e.toString());
+            }
+
+            @Override
+            public void onNext(Rating rating) {
+                Log.d(TAG, "onNext: USER RETRIEVED - " + rating.getId());
+                user_rate = rating;
+            }
+        });
+        while (!continuar) {
+            Log.d(TAG, "update_rate: QUERY NOT COMPLETED - WAITING FOR RESPONSE FROM SERVER");
+        }
+        return user_rate;
     }
 
 
