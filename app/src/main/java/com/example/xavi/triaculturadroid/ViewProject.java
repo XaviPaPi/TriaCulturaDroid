@@ -21,8 +21,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.xavi.triaculturadroid.Data.Model.Project;
+import com.example.xavi.triaculturadroid.Data.Model.Rating;
+import com.example.xavi.triaculturadroid.Data.Model.User;
 import com.example.xavi.triaculturadroid.Data.Model.userTransfer;
 import com.example.xavi.triaculturadroid.Data.PintarEstrelles;
 import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
@@ -33,11 +36,12 @@ import java.util.List;
 import java.util.Random;
 
 public class ViewProject extends AppCompatActivity {
-
+    public static int estat;
     Project p;
+    Rating ratingAnterior;
     userTransfer user;
     int idProjecte;
-    PintarEstrelles pintarEstrelles;
+    View pintarEstrelles;
     TextView txt_Author;
     TextView txt_Title;
     TextView txt_Description;
@@ -49,10 +53,13 @@ public class ViewProject extends AppCompatActivity {
         Intent intent = new Intent();
         //(UserNormal) getIntent().getExtras().getSerializable("User");
         user = new userTransfer(APIUtils.get_user_by_dni(this.getIntent().getExtras().getString("Usuari")));
+
         idProjecte = (int) getIntent().getExtras().getInt("idProject");
         p = APIUtils.get_Project(idProjecte);
 
-
+        ratingAnterior = APIUtils.get_rating_where_user(user.getId(),idProjecte);
+        if (ratingAnterior!=null)
+            estat=ratingAnterior.getRate();
         txt_Author = (TextView)findViewById(R.id.P_AuthorName);
         txt_Title = (TextView)findViewById(R.id.P_Title);
         txt_Description = (TextView)findViewById(R.id.P_Description);
@@ -61,10 +68,39 @@ public class ViewProject extends AppCompatActivity {
         txt_Title.setText(p.getTitle().toString());
         txt_Description.setText(p.getDescript().toString());
 
-        pintarEstrelles=(PintarEstrelles)findViewById(R.id.P_estrelles);
-
-
-        //pintarEstrelles.getEstat();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        int count=0;
+        for (Rating r :user.getRatings()) {
+            if (r.getProj_id()==idProjecte)
+                break;
+            count++;
+        }
+        Rating rating = new Rating();
+        if (user.getRatings().size()>count) {
+            rating.setId(user.getRatings().get(count).getId());
+        }
+        rating.setProj_id(idProjecte);
+        rating.setRate(estat);
+        rating.setUser_id(user.getId());
+        APIUtils.update_rate(rating);
+       // Toast.makeText(this,""+estat,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

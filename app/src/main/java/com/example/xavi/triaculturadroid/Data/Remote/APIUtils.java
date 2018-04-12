@@ -10,6 +10,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.PUT;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
 
@@ -381,6 +382,9 @@ public class APIUtils {
                 project_avg = aDouble;
             }
         });
+        while (!continuar) {
+            Log.d(TAG, "get_project_avg: WAITING...");
+        }
         return project_avg;
     }
 
@@ -405,6 +409,9 @@ public class APIUtils {
                 user_rating = rating;
             }
         });
+        while (!continuar) {
+            Log.d(TAG, "get_rating_where_user: WAITING...");
+        }
         return user_rating;
     }
 
@@ -457,14 +464,15 @@ public class APIUtils {
         return seeked_file;
     }
 
-    public static Rating update_rate(Rating r) {
+    public static Rating update_rate (Rating r) {
         continuar = false;
-        service.postNewRating(r.getId(), r.getUser_id(), r.getProj_id(), r.getRate()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<Rating>() {
+        service.postNewRating(r.getId(),r.getUser_id(),r.getProj_id(),r.getRate()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<PUT>() {
             @Override
             public void onCompleted() {
                 continuar = true;
                 Log.d(TAG, "Rate modifie.");
             }
+
             @Override
             public void onError(Throwable e) {
                 user_rate = null;
@@ -473,15 +481,12 @@ public class APIUtils {
             }
 
             @Override
-            public void onNext(Rating rating) {
-                Log.d(TAG, "onNext: USER RETRIEVED - " + rating.getId());
-                user_rate = rating;
+            public void onNext(PUT put) {
+                Log.d(TAG, "onNext: "+put.toString());
             }
         });
-        while (!continuar) {
-            Log.d(TAG, "update_rate: QUERY NOT COMPLETED - WAITING FOR RESPONSE FROM SERVER");
-        }
-        return user_rate;
+    while (!continuar) {}
+    return r;
     }
 
 

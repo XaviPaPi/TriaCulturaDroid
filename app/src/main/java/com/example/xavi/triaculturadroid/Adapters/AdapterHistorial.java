@@ -85,37 +85,37 @@ public class AdapterHistorial extends BaseAdapter {
 
         String puntuacio=String.valueOf(punts);
         switch (puntuacio){
-            case "0":
+            case "0.0":
                 LHP_valoracio.setImageDrawable( context.getResources().getDrawable(R.drawable.star_greys));
                 break;
             case "0.5":
                 LHP_valoracio.setImageDrawable( context.getResources().getDrawable(R.drawable.star_grey_1_2star));
                 break;
-            case "1":
+            case "1.0":
                 LHP_valoracio.setImageDrawable( context.getResources().getDrawable(R.drawable.star_grey_1star));
                 break;
             case "1.5":
                 LHP_valoracio.setImageDrawable( context.getResources().getDrawable(R.drawable.star_grey_2_2star));
                 break;
-            case "2":
+            case "2.0":
                 LHP_valoracio.setImageDrawable( context.getResources().getDrawable(R.drawable.star_grey_2star_));
                 break;
             case "2.5":
                 LHP_valoracio.setImageDrawable( context.getResources().getDrawable(R.drawable.star_grey_3_2star_));
                 break;
-            case "3":
+            case "3.0":
                 LHP_valoracio.setImageDrawable( context.getResources().getDrawable(R.drawable.star_grey_3star_));
                 break;
             case "3.5":
                 LHP_valoracio.setImageDrawable( context.getResources().getDrawable(R.drawable.star_grey_4_2star));
                 break;
-            case "4":
+            case "4.0":
                 LHP_valoracio.setImageDrawable( context.getResources().getDrawable(R.drawable.star_grey_4star));
                 break;
             case "4.5":
                 LHP_valoracio.setImageDrawable( context.getResources().getDrawable(R.drawable.star_grey_5_2star));
                 break;
-            case "5":
+            case "5.0":
                 LHP_valoracio.setImageDrawable( context.getResources().getDrawable(R.drawable.star_grey_5star));
                 break;
         }

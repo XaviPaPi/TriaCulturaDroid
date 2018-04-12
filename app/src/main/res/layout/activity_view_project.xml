@@ -23,62 +23,10 @@
         android:layout_margin="5dp"
         android:text="AUTHOR NAME" />
 
-    <com.example.xavi.triaculturadroid.Data.PintarEstrelles
-        android:id="@+id/P_estrelles"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
-
-        <!--<ImageButton
-            android:id="@+id/P_star1"
+        <com.example.xavi.triaculturadroid.Data.PintarEstrelles
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/star"
-            android:clickable="true"
-            android:focusable="true"
-            app:srcCompat="@drawable/star" />
-
-        <ImageButton
-            android:id="@+id/P_star2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/star"
-            android:clickable="true"
-            android:focusable="true"
-            app:srcCompat="@drawable/star" />
-
-        <ImageButton
-            android:id="@+id/P_star3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/star"
-            android:clickable="true"
-            android:focusable="true"
-            app:srcCompat="@drawable/star" />
-
-        <ImageButton
-            android:id="@+id/P_star4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/star"
-            android:clickable="true"
-            android:focusable="true"
-            app:srcCompat="@drawable/star" />
-
-        <ImageButton
-            android:id="@+id/P_star5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/star"
-            android:clickable="true"
-            android:focusable="true"
-            app:srcCompat="@drawable/star" />-->
+            android:id="@+id/P_estrelles"
+            android:layout_height="50dp" />
 
     <TextView
         android:id="@+id/P_Description"

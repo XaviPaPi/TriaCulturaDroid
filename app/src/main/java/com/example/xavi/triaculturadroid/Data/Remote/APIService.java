@@ -35,7 +35,7 @@ public interface APIService {
 
     @PUT("api/rating/")
     @FormUrlEncoded
-    Observable<Rating> postNewRating(
+    Observable<PUT> postNewRating(
             @Field("id_rating") int id_rating,
             @Field("user_id") int user_id,
             @Field("project_id") int project_id,
