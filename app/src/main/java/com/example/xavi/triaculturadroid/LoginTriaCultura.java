@@ -1,6 +1,7 @@
 package com.example.xavi.triaculturadroid;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +33,6 @@ public class LoginTriaCultura extends AppCompatActivity {
     ProgressDialog progressDialog;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +46,7 @@ public class LoginTriaCultura extends AppCompatActivity {
         nom = config.getString("name", null);
 
         boolean cheked = config.getBoolean("checked", false);
-        if(cheked){
+        if (cheked) {
             cbRememberMe.setChecked(true);
         }
 
@@ -67,7 +67,7 @@ public class LoginTriaCultura extends AppCompatActivity {
         mPasswordView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus) {
+                if (!hasFocus) {
                     verificarPasswordBuit();
                 }
             }
@@ -77,13 +77,12 @@ public class LoginTriaCultura extends AppCompatActivity {
         btn_Acces.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!mUserView.getText().toString().isEmpty() && !mPasswordView.getText().toString().isEmpty()) {
-
+                if (!mUserView.getText().toString().isEmpty() && !mPasswordView.getText().toString().isEmpty()) {
 
 
                     log_in();
 
-                }else {
+                } else {
                     Toast.makeText(LoginTriaCultura.this, "Els camps estan buits", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -96,7 +95,7 @@ public class LoginTriaCultura extends AppCompatActivity {
         if (exists) {
             Intent intent = new Intent(getApplication(), TabbetsActivity.class);
 //            userTransfer usuari= new userTransfer(retrieved_user);
-            intent.putExtra("Usuari",""+retrieved_user.getDni());
+            intent.putExtra("Usuari", "" + retrieved_user.getDni());
             sharedPreferences();
             startActivity(intent);
         } else {
@@ -106,7 +105,7 @@ public class LoginTriaCultura extends AppCompatActivity {
 
     private boolean verificarUsuariAndPass(String user_dni) {
 
-        progressDialog= new ProgressDialog(LoginTriaCultura.this);
+        progressDialog = new ProgressDialog(LoginTriaCultura.this);
         progressDialog.setIcon(R.mipmap.ic_launcher);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage("Carregant...");
@@ -116,6 +115,9 @@ public class LoginTriaCultura extends AppCompatActivity {
         retrieved_user = APIUtils.get_user_by_dni(user_dni);
         new Thread(new Runnable() {
             public void run() {
+                while (APIUtils.continuar == false) {
+                    retrieved_user = APIUtils.current_user;
+                }
                 progressDialog.dismiss();
             }
         }).start();
@@ -123,8 +125,6 @@ public class LoginTriaCultura extends AppCompatActivity {
             boolean correct = retrieved_user.getPassword().equals(mPasswordView.getText().toString());
             return correct;
         }
-
-
         return false;
     }
 
@@ -134,13 +134,13 @@ public class LoginTriaCultura extends AppCompatActivity {
         }
     }
 
-    private void verificarPasswordBuit(){
-        if(mPasswordView.getText().toString().isEmpty()){
+    private void verificarPasswordBuit() {
+        if (mPasswordView.getText().toString().isEmpty()) {
             Toast.makeText(this, "El camp del password és buit", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void sharedPreferences(){
+    private void sharedPreferences() {
 
         //obtenir fitxer PREFS_NAME al SharedPreferences (SP)
         config = getSharedPreferences(PREFS_NAME, 0);
@@ -148,9 +148,9 @@ public class LoginTriaCultura extends AppCompatActivity {
         editor = config.edit();
         String etName = mUserView.getText().toString();
         editor.putString("name", etName);
-        if(cbRememberMe.isChecked()) {
+        if (cbRememberMe.isChecked()) {
             editor.putBoolean("checked", true);
-        }else {
+        } else {
             editor.putBoolean("checked", false);
         }
         editor.commit();

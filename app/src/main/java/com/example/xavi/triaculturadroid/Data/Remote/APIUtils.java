@@ -27,22 +27,22 @@ public class APIUtils {
     static APIService service;
 
     // por si hay que detenerlo internamente
-    static boolean continuar;
+    public static boolean continuar;
 
     // variables para devolver los valores
-    static List<Project> projectList = new ArrayList<>();
-    static User current_user = new User();
-    static List<Vote> user_votes = new ArrayList<>();
-    static Vote aux_vote = new Vote();
-    static List<Request> winning_requests = new ArrayList<>();
-    static List<File> project_files = new ArrayList<>();
-    static Author project_author = new Author();
-    static Double project_avg = 0.0;
-    static Rating user_rating = new Rating();
-    static Integer current_place_id = 0;
-    static File seeked_file = new File();
-    static Project selected_project = new Project();
-    static Rating user_rate = new Rating();
+    public static List<Project> projectList = new ArrayList<>();
+    public static User current_user = new User();
+    public static List<Vote> user_votes = new ArrayList<>();
+    public static Vote aux_vote = new Vote();
+    public static List<Request> winning_requests = new ArrayList<>();
+    public static List<File> project_files = new ArrayList<>();
+    public static Author project_author = new Author();
+    public static Double project_avg = 0.0;
+    public static Rating user_rating = new Rating();
+    public static Integer current_place_id = 0;
+    public static File seeked_file = new File();
+    public static Project selected_project = new Project();
+    public static Rating user_rate = new Rating();
 
     public static void init_service() {
         service = RetrofitClient.getClient(BASE_URL).create(APIService.class);
@@ -127,9 +127,6 @@ public class APIUtils {
                 current_user = user;
             }
         });
-        while (!continuar) {
-            Log.d(TAG, "get_user_by_dni: QUERY NOT COMPLETED - WAITING FOR RESPONSE FROM SERVER");
-        }
 
         return current_user;
     }
@@ -466,9 +463,9 @@ public class APIUtils {
         return seeked_file;
     }
 
-    public static Rating update_rate (Rating r) {
+    public static Rating update_rate(Rating r) {
         continuar = false;
-        service.postNewRating(r.getId(),r.getUser_id(),r.getProj_id(),r.getRate()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<PUT>() {
+        service.postNewRating(r.getId(), r.getUser_id(), r.getProj_id(), r.getRate()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<PUT>() {
             @Override
             public void onCompleted() {
                 continuar = true;
@@ -484,11 +481,12 @@ public class APIUtils {
 
             @Override
             public void onNext(PUT put) {
-                Log.d(TAG, "onNext: "+put.toString());
+                Log.d(TAG, "onNext: " + put.toString());
             }
         });
-    while (!continuar) {}
-    return r;
+        while (!continuar) {
+        }
+        return r;
     }
 
 

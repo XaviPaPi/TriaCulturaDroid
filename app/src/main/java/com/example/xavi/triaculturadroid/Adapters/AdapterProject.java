@@ -355,12 +355,14 @@ public class AdapterProject extends BaseAdapter {
                 make_temp_file(fitxer, temp_path);
                 } catch (IOException ex) {
                 }
+
                 popupvideoView.setVideoPath(temp_path);
+                popupvideoView.setMediaController(new MediaController(vidview.getContext()));
                 popupvideoView.setVisibility(View.VISIBLE);
 
-                MediaController vidControl = new MediaController(context);
-                vidControl.setAnchorView(popupvideoView);
-                popupvideoView.setMediaController(vidControl);
+//                MediaController vidControl = new MediaController(vidview.getContext());
+//                vidControl.setAnchorView(popupvideoView);
+//                popupvideoView.setMediaController(vidControl);
                 show_file_window = new PopupWindow(vidview, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
                 show_file_window.setFocusable(true);
                 show_file_window.setBackgroundDrawable(new BitmapDrawable());
