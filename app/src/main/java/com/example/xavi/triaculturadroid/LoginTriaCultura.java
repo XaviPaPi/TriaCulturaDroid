@@ -1,5 +1,6 @@
 package com.example.xavi.triaculturadroid;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,9 @@ public class LoginTriaCultura extends AppCompatActivity {
     String nom;
     SharedPreferences config;
     SharedPreferences.Editor editor;
+    ProgressDialog progressDialog;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,17 +78,21 @@ public class LoginTriaCultura extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!mUserView.getText().toString().isEmpty() && !mPasswordView.getText().toString().isEmpty()) {
+
+
+
                     log_in();
+
                 }else {
                     Toast.makeText(LoginTriaCultura.this, "Els camps estan buits", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
 
     private void log_in() {
         boolean exists = verificarUsuariAndPass(mUserView.getText().toString());
+
         if (exists) {
             Intent intent = new Intent(getApplication(), TabbetsActivity.class);
 //            userTransfer usuari= new userTransfer(retrieved_user);
@@ -97,13 +105,26 @@ public class LoginTriaCultura extends AppCompatActivity {
     }
 
     private boolean verificarUsuariAndPass(String user_dni) {
+
+        progressDialog= new ProgressDialog(LoginTriaCultura.this);
+        progressDialog.setIcon(R.mipmap.ic_launcher);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("Carregant...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         retrieved_user = APIUtils.get_user_by_dni(user_dni);
-
-
+        new Thread(new Runnable() {
+            public void run() {
+                progressDialog.dismiss();
+            }
+        }).start();
         if (retrieved_user != null && retrieved_user.getDni() != null) {
             boolean correct = retrieved_user.getPassword().equals(mPasswordView.getText().toString());
             return correct;
         }
+
+
         return false;
     }
 

@@ -1,5 +1,6 @@
 package com.example.xavi.triaculturadroid.Data.Remote;
 
+import android.app.ProgressDialog;
 import android.util.Log;
 
 import com.example.xavi.triaculturadroid.Data.Model.*;
@@ -129,6 +130,7 @@ public class APIUtils {
         while (!continuar) {
             Log.d(TAG, "get_user_by_dni: QUERY NOT COMPLETED - WAITING FOR RESPONSE FROM SERVER");
         }
+
         return current_user;
     }
 
