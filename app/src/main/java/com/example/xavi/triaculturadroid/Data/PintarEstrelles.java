@@ -49,9 +49,12 @@ public class PintarEstrelles extends View {
 
     public PintarEstrelles(Context context) {
         super(context);
+        estatPosterior=0;
+
     }
     public PintarEstrelles(Context context, AttributeSet attrs) {
         super(context, null);
+        estatPosterior=0;
     }
 
 

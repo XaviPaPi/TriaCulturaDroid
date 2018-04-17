@@ -485,6 +485,7 @@ public class APIUtils {
             }
         });
         while (!continuar) {
+            Log.d(TAG, "Rate: WAITING...");
         }
         return r;
     }
