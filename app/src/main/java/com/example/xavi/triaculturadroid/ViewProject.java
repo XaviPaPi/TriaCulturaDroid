@@ -35,6 +35,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
+import javax.security.auth.login.LoginException;
+
 public class ViewProject extends AppCompatActivity {
     public static int estat;
     Project p;
@@ -44,6 +46,7 @@ public class ViewProject extends AppCompatActivity {
     TextView txt_Author;
     TextView txt_Title;
     TextView txt_Description;
+    private String TAG="ERROR";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +70,16 @@ public class ViewProject extends AppCompatActivity {
         txt_Title = (TextView) findViewById(R.id.P_Title);
         txt_Description = (TextView) findViewById(R.id.P_Description);
 
-        txt_Author.setText(p.getAuthor().getName().toString());
-        txt_Title.setText(p.getTitle().toString());
-        txt_Description.setText(p.getDescript().toString());
-
+        try {
+            if (p.getAuthor().getName() != null)
+                txt_Author.setText(p.getAuthor().getName());
+            if (p.getTitle() != null)
+                txt_Title.setText(p.getTitle());
+            if (p.getDescript() != null)
+                txt_Description.setText(p.getDescript());
+        } catch (NullPointerException error) {
+            Log.i(TAG, "onCreate: " + error);
+        }
     }
 //ViewProject.estat=APIUtils.get_rating_where_user(user.getId(),idProjecte).getRate();
     //38884596J
@@ -91,7 +100,6 @@ public class ViewProject extends AppCompatActivity {
         rating.setRate(estat);
         rating.setUser_id(user.getId());
         APIUtils.update_rate(rating);
-        // Toast.makeText(this,""+estat,Toast.LENGTH_SHORT).show();
     }
 
 }

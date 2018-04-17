@@ -76,29 +76,21 @@ public class TotalVotes extends Fragment {
         super.onCreate(savedInstanceState);
         user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
     }
-
+    LayoutInflater inflater;
+    ViewGroup container;
+    Bundle savedInstanceState;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View viewHistorial = inflater.inflate(R.layout.fragment_total_votes, container,
                 false);
+        this.inflater=inflater;
+        this.container=container;
+        this.savedInstanceState=savedInstanceState;
         historialList = (ListView) viewHistorial.findViewById(R.id.ListVotes);
 
-
-        historial_Projects_List = new ArrayList<>();
-
-        List<Request> request_List = APIUtils.get_winning_requests();
-
-        for (Request r : request_List) {
-            historial = new Historial();
-            historial.setId(r.getProject().getId());
-            historial.setRating(APIUtils.get_project_avg(r.getProject()));
-            historial.setData(r.getData_proposta());
-            historial.setTitle(r.getProject().getTitle());
-
-            historial_Projects_List.add(historial);
-        }
-
+        crearLlistaRatings();
 
         AdapterHistorial adapter = new AdapterHistorial(getActivity(), historial_Projects_List);
 
@@ -118,10 +110,8 @@ public class TotalVotes extends Fragment {
                         break;
                     count++;
                 }
-                Rating rating = new Rating();
                 if (user.getRatings().size() > count) {
                    ViewProject.estat= user.getRatings().get(count).getRate();
-
                 }
                 startActivity(intentProject);
             }
@@ -130,4 +120,29 @@ public class TotalVotes extends Fragment {
         return viewHistorial;
     }
 
+    private void crearLlistaRatings(){
+        historial_Projects_List = new ArrayList<>();
+
+        List<Request> request_List = APIUtils.get_winning_requests();
+
+        for (Request r : request_List) {
+            historial = new Historial();
+            historial.setId(r.getProject().getId());
+            historial.setRating(APIUtils.get_project_avg(r.getProject()));
+            historial.setData(r.getData_proposta());
+            historial.setTitle(r.getProject().getTitle());
+
+            historial_Projects_List.add(historial);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        crearLlistaRatings();
+        AdapterHistorial adapter = new AdapterHistorial(getActivity(), historial_Projects_List);
+        historialList.setItemsCanFocus(true);
+        historialList.setAdapter(adapter);
+        user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
+    }
 }
