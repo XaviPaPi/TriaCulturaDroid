@@ -37,7 +37,7 @@ public class TotalVotes extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
     private ListView historialList;
-
+    private static boolean despres=false;
     int idProjecteWin;
     List<Historial> historial_Projects_List = new ArrayList<Historial>();
     List<Project> project_List;
@@ -96,7 +96,7 @@ public class TotalVotes extends Fragment {
 
         historialList.setItemsCanFocus(true);
         historialList.setAdapter(adapter);
-
+        despres=true;
         historialList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -143,6 +143,7 @@ public class TotalVotes extends Fragment {
         AdapterHistorial adapter = new AdapterHistorial(getActivity(), historial_Projects_List);
         historialList.setItemsCanFocus(true);
         historialList.setAdapter(adapter);
-        user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
+        if (despres)
+            user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
     }
 }
