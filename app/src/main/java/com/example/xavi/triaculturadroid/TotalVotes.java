@@ -15,6 +15,7 @@ import com.example.xavi.triaculturadroid.Adapters.AdapterHistorial;
 import com.example.xavi.triaculturadroid.Adapters.AdapterProject;
 import com.example.xavi.triaculturadroid.Data.Model.Historial;
 import com.example.xavi.triaculturadroid.Data.Model.Project;
+import com.example.xavi.triaculturadroid.Data.Model.Rating;
 import com.example.xavi.triaculturadroid.Data.Model.Request;
 import com.example.xavi.triaculturadroid.Data.Model.userTransfer;
 import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
@@ -111,6 +112,17 @@ public class TotalVotes extends Fragment {
                 idProjecteWin = historial_Projects_List.get(position).getId();
                 intentProject.putExtra("idProject", idProjecteWin);
                 intentProject.putExtra("Usuari", user.getDni());
+                int count = 0;
+                for (int i = 0; i < user.getRatings().size(); i++) {
+                    if (user.getRatings().get(i).getProj_id() == idProjecteWin && user.getRatings().get(count).getId() != 0)
+                        break;
+                    count++;
+                }
+                Rating rating = new Rating();
+                if (user.getRatings().size() > count) {
+                   ViewProject.estat= user.getRatings().get(count).getRate();
+
+                }
                 startActivity(intentProject);
             }
         });

@@ -105,5 +105,7 @@ public interface APIService {
     @GET("api/project/{project_id}")
     Observable<Project> getProjectById(@Path("project_id") int project_id);
 
+    @GET("api/rating/last_id")
+    Observable<Integer> getLastId();
 }
 
