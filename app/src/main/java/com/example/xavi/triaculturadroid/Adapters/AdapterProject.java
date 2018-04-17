@@ -8,7 +8,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -74,6 +78,8 @@ public class AdapterProject extends BaseAdapter {
     ArrayList<Button> arrButons;
     static int id_file;
     List<File> files_from_proj = new ArrayList<>();
+    ProgressBar pb_audio;
+    MediaPlayer mp;
 
     PopupWindow show_file_window;
 
@@ -96,6 +102,7 @@ public class AdapterProject extends BaseAdapter {
         }
         Log.d(TAG, "ADAPTER COUNT: " + model.size());
     }
+
     public AdapterProject(Context context, List<Project> model, String dni) {
         arrButons = new ArrayList<>();
         this.dniUser = dni;
@@ -116,6 +123,7 @@ public class AdapterProject extends BaseAdapter {
         }
         Log.d(TAG, "ADAPTER COUNT: " + model.size());
     }
+
     public AdapterProject(Context context, Project project) {
 
         this.projct = project;
@@ -200,7 +208,7 @@ public class AdapterProject extends BaseAdapter {
 //endregion
         //region set icons on buttons
         //primer file
-      /*  if (file_list_from_project.get(0).getExtension().equalsIgnoreCase(".jpg")
+        if (file_list_from_project.get(0).getExtension().equalsIgnoreCase(".jpg")
                 || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".png")
                 || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".gif")
                 || file_list_from_project.get(0).getExtension().equalsIgnoreCase(".jpeg")
@@ -246,7 +254,7 @@ public class AdapterProject extends BaseAdapter {
                 || file_list_from_project.get(2).getExtension().equalsIgnoreCase(".webm")
                 ) {
             LIP_image3.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_video));
-        }*/
+        }//
 //endregion
         if (votat && idProjecVotat != model.get(position).getId()) {
             LIP_btnVote.setEnabled(false);
@@ -317,7 +325,7 @@ public class AdapterProject extends BaseAdapter {
     public void dl_file(View view) {
         if (id_file >= 0) {
             File f = APIUtils.get_file_by_id(id_file);
-            String temp_path = context.getCacheDir().getPath()+"/FILE";
+            String temp_path = context.getCacheDir().getPath() + "/FILE";
             byte[] fitxer = Base64.decode(f.getFile_content(), Base64.DEFAULT);
             if (f.getExtension().equalsIgnoreCase(".jpg")
                     || f.getExtension().equalsIgnoreCase(".jpeg")
@@ -337,22 +345,67 @@ public class AdapterProject extends BaseAdapter {
                 show_file_window.update();
                 show_file_window.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-            }
-         else if (f.getExtension().equalsIgnoreCase(".mp3")
-                || f.getExtension().equalsIgnoreCase(".ogg")) {
+            } else if (f.getExtension().equalsIgnoreCase(".mp3")
+                    || f.getExtension().equalsIgnoreCase(".ogg")) {
                 // popupwindow becomes audioplayer
-        } else if (f.getExtension().equalsIgnoreCase(".3gp")
-                || f.getExtension().equalsIgnoreCase(".mp4")
-                || f.getExtension().equalsIgnoreCase(".webm")
-                ) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View audview = inflater.inflate(R.layout.audio_view, null);
+                pb_audio = audview.findViewById(R.id.prog_bar_cancion);
+                ImageButton btnplay = audview.findViewById(R.id.btn_play);
+                temp_path += f.getExtension();
+                try {
+                    make_temp_file(fitxer, temp_path);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                Uri uri = Uri.parse(temp_path);
+                mp = MediaPlayer.create(context, uri);
+                mp.seekTo(0);
+                pb_audio.setProgress(0);
+                mp.setLooping(false);
+
+                btnplay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ImageButton esto = (ImageButton) view;
+                        if (!mp.isPlaying()) {
+                            esto.setImageResource(android.R.drawable.ic_media_pause);
+                            play_audio();
+                        } else {
+                            esto.setImageResource(android.R.drawable.ic_media_play);
+                            pause_audio();
+                        }
+
+                    }
+                });
+
+                mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        mediaPlayer.stop();
+                        mediaPlayer.seekTo(0);
+                    }
+                });
+
+                show_file_window = new PopupWindow(audview, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+                show_file_window.setFocusable(true);
+                show_file_window.setBackgroundDrawable(new BitmapDrawable());
+                show_file_window.setOutsideTouchable(true);
+                show_file_window.update();
+                show_file_window.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+            } else if (f.getExtension().equalsIgnoreCase(".3gp")
+                    || f.getExtension().equalsIgnoreCase(".mp4")
+                    || f.getExtension().equalsIgnoreCase(".webm")
+                    ) {
                 //popupwindow becomes mediaplayer
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View vidview = inflater.inflate(R.layout.video_dialog, null);
                 VideoView popupvideoView = vidview.findViewById(R.id.dialog_videoview);
 
-                temp_path +=f.getExtension();
+                temp_path += f.getExtension();
                 try {
-                make_temp_file(fitxer, temp_path);
+                    make_temp_file(fitxer, temp_path);
                 } catch (IOException ex) {
                 }
 
@@ -373,13 +426,36 @@ public class AdapterProject extends BaseAdapter {
             }
         }
     }
-    public void make_temp_file (byte[] buf, String path) throws IOException {
+
+    public void make_temp_file(byte[] buf, String path) throws IOException {
         ByteArrayInputStream bis = new ByteArrayInputStream(buf);
         FileOutputStream fos = new FileOutputStream(path);
         byte[] b = new byte[1024];
 
-        for (int readNum; (readNum = bis.read(b)) != -1;) {
+        for (int readNum; (readNum = bis.read(b)) != -1; ) {
             fos.write(b, 0, readNum);
         }
+    }
+
+    public void pause_audio() {
+        if (mp.isPlaying()) {
+            mp.pause();
+        }
+    }
+
+    public void play_audio() {
+        if (!mp.isPlaying()) {
+            mp.start();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (mp.isPlaying()) {
+                        int cur_step = mp.getCurrentPosition() * 100 / mp.getDuration();
+                        pb_audio.setProgress(cur_step);
+                    }
+                }
+            }).start();
+        }
+
     }
 }
