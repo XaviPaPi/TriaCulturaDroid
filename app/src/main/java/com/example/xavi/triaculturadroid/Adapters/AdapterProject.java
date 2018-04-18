@@ -80,7 +80,7 @@ public class AdapterProject extends BaseAdapter {
     List<File> files_from_proj = new ArrayList<>();
     ProgressBar pb_audio;
     MediaPlayer mp;
-
+    ImageButton  btnplay;
     PopupWindow show_file_window;
 
     public AdapterProject(Context context, List<Project> model, userTransfer user) {
@@ -161,12 +161,15 @@ public class AdapterProject extends BaseAdapter {
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflator = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflator.inflate(R.layout.activity_item_list_projects, parent, false);
+            if (inflator != null) {
+                convertView = inflator.inflate(R.layout.activity_item_list_projects, parent, false);
+            }
         }
 
         final List<File> file_list_from_project = APIUtils.get_files_from_project(model.get(position));
 
-        LIP_textTitle = (TextView) convertView.findViewById(R.id.ILP_Title);
+        if (convertView != null) {
+            LIP_textTitle = (TextView) convertView.findViewById(R.id.ILP_Title);
         LIP_textDescript = (TextView) convertView.findViewById(R.id.ILP_DescriptionLimitat);
         LIP_textDescriptComplert = (TextView) convertView.findViewById(R.id.ILP_DescriptionComplert);
         LIP_textAuthor = (TextView) convertView.findViewById(R.id.ILP_AuthorName);
@@ -174,6 +177,7 @@ public class AdapterProject extends BaseAdapter {
         LIP_image1 = (ImageView) convertView.findViewById(R.id.ILP_imageView1);
         LIP_image2 = (ImageView) convertView.findViewById(R.id.ILP_imageView2);
         LIP_image3 = (ImageView) convertView.findViewById(R.id.ILP_imageView3);
+        }
 
         if (!arrButons.contains(LIP_btnVote))
             arrButons.add(LIP_btnVote);
@@ -268,8 +272,10 @@ public class AdapterProject extends BaseAdapter {
         LIP_textDescript.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LIP_textDescript = (TextView) finalConvertView.findViewById(R.id.ILP_DescriptionLimitat);
-                LIP_textDescriptComplert = (TextView) finalConvertView.findViewById(R.id.ILP_DescriptionComplert);
+                if (finalConvertView != null) {
+                    LIP_textDescript =  finalConvertView.findViewById(R.id.ILP_DescriptionLimitat);
+                LIP_textDescriptComplert =  finalConvertView.findViewById(R.id.ILP_DescriptionComplert);
+                }
                 LIP_textDescript.setVisibility(View.GONE);
                 LIP_textDescriptComplert.setVisibility(View.VISIBLE);
             }
@@ -277,8 +283,10 @@ public class AdapterProject extends BaseAdapter {
         LIP_textDescriptComplert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LIP_textDescript = (TextView) finalConvertView.findViewById(R.id.ILP_DescriptionLimitat);
-                LIP_textDescriptComplert = (TextView) finalConvertView.findViewById(R.id.ILP_DescriptionComplert);
+                if (finalConvertView != null) {
+                    LIP_textDescript =  finalConvertView.findViewById(R.id.ILP_DescriptionLimitat);
+                LIP_textDescriptComplert =  finalConvertView.findViewById(R.id.ILP_DescriptionComplert);
+                }
                 LIP_textDescript.setVisibility(View.VISIBLE);
                 LIP_textDescriptComplert.setVisibility(View.GONE);
             }
@@ -335,9 +343,15 @@ public class AdapterProject extends BaseAdapter {
                 Bitmap image = BitmapFactory.decodeByteArray(fitxer, 0, fitxer.length);
 
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View imgview = inflater.inflate(R.layout.image_dialog, null);
-                ImageView popupimageView = imgview.findViewById(R.id.dialog_imageview);
-                popupimageView.setImageBitmap(image);
+                View imgview = null;
+                if (inflater != null) {
+                    imgview = inflater.inflate(R.layout.image_dialog, null);
+                }
+                ImageView popupimageView = null;
+                if (imgview != null) {
+                    popupimageView = imgview.findViewById(R.id.dialog_imageview);
+                    popupimageView.setImageBitmap(image);
+                }
                 show_file_window = new PopupWindow(imgview, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
                 show_file_window.setFocusable(true);
                 show_file_window.setBackgroundDrawable(new BitmapDrawable());
@@ -351,7 +365,7 @@ public class AdapterProject extends BaseAdapter {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View audview = inflater.inflate(R.layout.audio_view, null);
                 pb_audio = audview.findViewById(R.id.prog_bar_cancion);
-                ImageButton btnplay = audview.findViewById(R.id.btn_play);
+                btnplay = audview.findViewById(R.id.btn_play);
                 temp_path += f.getExtension();
                 try {
                     make_temp_file(fitxer, temp_path);
@@ -375,7 +389,6 @@ public class AdapterProject extends BaseAdapter {
                             esto.setImageResource(android.R.drawable.ic_media_play);
                             pause_audio();
                         }
-
                     }
                 });
 
@@ -384,6 +397,8 @@ public class AdapterProject extends BaseAdapter {
                     public void onCompletion(MediaPlayer mediaPlayer) {
                         mediaPlayer.stop();
                         mediaPlayer.seekTo(0);
+                        btnplay.setImageResource(android.R.drawable.ic_media_play);
+
                     }
                 });
 
@@ -398,7 +413,7 @@ public class AdapterProject extends BaseAdapter {
                     || f.getExtension().equalsIgnoreCase(".mp4")
                     || f.getExtension().equalsIgnoreCase(".webm")
                     ) {
-                //popupwindow becomes mediaplayer
+                //popupwindow becomes videoplayer
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View vidview = inflater.inflate(R.layout.video_dialog, null);
                 VideoView popupvideoView = vidview.findViewById(R.id.dialog_videoview);
@@ -407,6 +422,7 @@ public class AdapterProject extends BaseAdapter {
                 try {
                     make_temp_file(fitxer, temp_path);
                 } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
 
                 popupvideoView.setVideoPath(temp_path);

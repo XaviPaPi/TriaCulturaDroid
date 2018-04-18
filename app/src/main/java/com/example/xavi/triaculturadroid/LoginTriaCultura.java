@@ -31,6 +31,7 @@ public class LoginTriaCultura extends AppCompatActivity {
     SharedPreferences config;
     SharedPreferences.Editor editor;
     ProgressDialog progressDialog;
+    boolean correct;
 
 
     @Override
@@ -103,24 +104,18 @@ public class LoginTriaCultura extends AppCompatActivity {
         }
     }
 
-    private boolean verificarUsuariAndPass(String user_dni) {
+    private boolean verificarUsuariAndPass(final String user_dni) {
 
-        progressDialog = new ProgressDialog(LoginTriaCultura.this);
+        progressDialog = new ProgressDialog(this);
         progressDialog.setIcon(R.mipmap.ic_launcher);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Carregant...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
         retrieved_user = APIUtils.get_user_by_dni(user_dni);
-        new Thread(new Runnable() {
-            public void run() {
-                while (APIUtils.continuar == false) {
-                    retrieved_user = APIUtils.current_user;
-                }
-                progressDialog.dismiss();
-            }
-        }).start();
+        progressDialog.dismiss();
         if (retrieved_user != null && retrieved_user.getDni() != null) {
             boolean correct = retrieved_user.getPassword().equals(mPasswordView.getText().toString());
             return correct;

@@ -104,7 +104,6 @@ public class APIUtils {
 
     public static User get_user_by_dni(String dni) {
         continuar = false;
-
         service.getUserByDni(dni).subscribeOn(
                 Schedulers.io()
         ).subscribe(new Subscriber<User>() {
@@ -127,7 +126,7 @@ public class APIUtils {
                 current_user = user;
             }
         });
-
+        while (!continuar) {}
         return current_user;
     }
 
