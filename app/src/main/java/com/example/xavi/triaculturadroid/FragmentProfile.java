@@ -88,6 +88,7 @@ public class FragmentProfile extends Fragment {
         tv_email.setText(userT.getEmail());
         tv_name.setText(userT.getName());
 
+        UserSearch.tanca_dialog();
         return rootView;
     }
 

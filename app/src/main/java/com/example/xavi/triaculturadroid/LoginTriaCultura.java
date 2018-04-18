@@ -23,16 +23,16 @@ import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
 public class LoginTriaCultura extends AppCompatActivity {
 
     private Button btn_Acces;
-    private AutoCompleteTextView mUserView;
-    private EditText mPasswordView;
-    User retrieved_user;
-    CheckBox cbRememberMe;
+    public static AutoCompleteTextView mUserView;
+    public static EditText mPasswordView;
+    public static User retrieved_user;
+    public static CheckBox cbRememberMe;
     boolean exists;
+    SharedPreferences.Editor editor;
 
+    SharedPreferences config;
     public static final String PREFS_NAME = "SPFile";
     String nom;
-    SharedPreferences config;
-    SharedPreferences.Editor editor;
     ProgressDialog progressDialog;
     boolean correct;
 
@@ -90,56 +90,13 @@ public class LoginTriaCultura extends AppCompatActivity {
                     progressDialog.setMessage("Carregant...");
                     progressDialog.setCancelable(false);
                     progressDialog.show();
-                    UserSearch retrieve = new UserSearch(user_dni);
+                    UserSearch retrieve = new UserSearch(user_dni, progressDialog, view.getContext());
                     retrieve.start();
                 } else {
                     Toast.makeText(LoginTriaCultura.this, "Els camps estan buits", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-    }
-
-    private void log_in() {
-
-        Intent intent = new Intent(getApplication(), TabbetsActivity.class);
-//            userTransfer usuari= new userTransfer(retrieved_user);
-        intent.putExtra("Usuari", "" + retrieved_user.getDni());
-        sharedPreferences();
-        startActivity(intent);
-    }
-
-    private class UserSearch extends Thread {
-        private User user;
-        private String userdni;
-
-        public UserSearch(String userdni) {
-            this.userdni = userdni;
-            handler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    retrieved_user = user;
-                    if (retrieved_user != null && retrieved_user.getDni() != null) {
-                        exists = retrieved_user.getPassword().equals(mPasswordView.getText().toString());
-                        log_in();
-                    } else {
-                        Toast.makeText(getApplication(), R.string.errorPassOrUsrInvalid, Toast.LENGTH_SHORT).show();
-                    }
-                    progressDialog.dismiss();
-                }
-            };
-        }
-
-        @Override
-        public void run() {
-            user = APIUtils.get_user_by_dni(userdni);
-            handler.sendEmptyMessage(0);
-        }
-
-        private Handler handler;
-
-        public User getUser() {
-            return user;
-        }
     }
 
     private void verificarUsuariBuit() {
@@ -154,20 +111,5 @@ public class LoginTriaCultura extends AppCompatActivity {
         }
     }
 
-    private void sharedPreferences() {
-
-        //obtenir fitxer PREFS_NAME al SharedPreferences (SP)
-        config = getSharedPreferences(PREFS_NAME, 0);
-        //creem l'obejcet editor per poder fer canvis al SP
-        editor = config.edit();
-        String etName = mUserView.getText().toString();
-        editor.putString("name", etName);
-        if (cbRememberMe.isChecked()) {
-            editor.putBoolean("checked", true);
-        } else {
-            editor.putBoolean("checked", false);
-        }
-        editor.commit();
-    }
 }
 
