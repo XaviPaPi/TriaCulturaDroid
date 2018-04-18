@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +27,7 @@ public class LoginTriaCultura extends AppCompatActivity {
     private EditText mPasswordView;
     User retrieved_user;
     CheckBox cbRememberMe;
+    boolean exists;
 
     public static final String PREFS_NAME = "SPFile";
     String nom;
@@ -79,10 +82,16 @@ public class LoginTriaCultura extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!mUserView.getText().toString().isEmpty() && !mPasswordView.getText().toString().isEmpty()) {
-
-
-                    log_in();
-
+                    String user_dni = mUserView.getText().toString();
+                    progressDialog = new ProgressDialog(LoginTriaCultura.this);
+                    progressDialog.setIcon(R.mipmap.ic_launcher);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setMessage("Carregant...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    UserSearch retrieve = new UserSearch(user_dni);
+                    retrieve.start();
                 } else {
                     Toast.makeText(LoginTriaCultura.this, "Els camps estan buits", Toast.LENGTH_SHORT).show();
                 }
@@ -91,36 +100,46 @@ public class LoginTriaCultura extends AppCompatActivity {
     }
 
     private void log_in() {
-        boolean exists = verificarUsuariAndPass(mUserView.getText().toString());
 
-        if (exists) {
-            Intent intent = new Intent(getApplication(), TabbetsActivity.class);
+        Intent intent = new Intent(getApplication(), TabbetsActivity.class);
 //            userTransfer usuari= new userTransfer(retrieved_user);
-            intent.putExtra("Usuari", "" + retrieved_user.getDni());
-            sharedPreferences();
-            startActivity(intent);
-        } else {
-            Toast.makeText(getApplication(), R.string.errorPassOrUsrInvalid, Toast.LENGTH_SHORT).show();
-        }
+        intent.putExtra("Usuari", "" + retrieved_user.getDni());
+        sharedPreferences();
+        startActivity(intent);
     }
 
-    private boolean verificarUsuariAndPass(final String user_dni) {
+    private class UserSearch extends Thread {
+        private User user;
+        private String userdni;
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setIcon(R.mipmap.ic_launcher);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Carregant...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
-        retrieved_user = APIUtils.get_user_by_dni(user_dni);
-        progressDialog.dismiss();
-        if (retrieved_user != null && retrieved_user.getDni() != null) {
-            boolean correct = retrieved_user.getPassword().equals(mPasswordView.getText().toString());
-            return correct;
+        public UserSearch(String userdni) {
+            this.userdni = userdni;
+            handler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    retrieved_user = user;
+                    if (retrieved_user != null && retrieved_user.getDni() != null) {
+                        exists = retrieved_user.getPassword().equals(mPasswordView.getText().toString());
+                        log_in();
+                    } else {
+                        Toast.makeText(getApplication(), R.string.errorPassOrUsrInvalid, Toast.LENGTH_SHORT).show();
+                    }
+                    progressDialog.dismiss();
+                }
+            };
         }
-        return false;
+
+        @Override
+        public void run() {
+            user = APIUtils.get_user_by_dni(userdni);
+            handler.sendEmptyMessage(0);
+        }
+
+        private Handler handler;
+
+        public User getUser() {
+            return user;
+        }
     }
 
     private void verificarUsuariBuit() {
