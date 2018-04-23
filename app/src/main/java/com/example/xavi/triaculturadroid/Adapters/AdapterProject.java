@@ -472,6 +472,5 @@ public class AdapterProject extends BaseAdapter {
                 }
             }).start();
         }
-
     }
 }
