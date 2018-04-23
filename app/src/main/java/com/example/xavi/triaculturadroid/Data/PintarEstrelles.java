@@ -49,20 +49,28 @@ public class PintarEstrelles extends View {
 
     public PintarEstrelles(Context context) {
         super(context);
-        estatPosterior=0;
+        estatPosterior=-1;
 
     }
     public PintarEstrelles(Context context, AttributeSet attrs) {
         super(context, null);
-        estatPosterior=0;
+        estatPosterior=-1;
     }
 
 
     Drawable estrella1,estrella2,estrella3,estrella4,estrella5;
     @Override
     protected void onDraw(Canvas canvas) {
-        float llargada = this.getWidth()/2-325/2;
-        int estrella = 65;
+
+        /*
+
+         */
+      /*  float llargada = this.getWidth()/2-375/2;
+        int estrella = 75;*/
+        int estrella = (this.getWidth()/2)/5;
+        float llargada = this.getWidth()/2-(estrella*5)/2;
+
+
         if (tocat) {
             if (primer) {
                 estrella1 = this.getResources().getDrawable(R.drawable.star_grey);
@@ -164,8 +172,8 @@ public class PintarEstrelles extends View {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        float llargada = this.getWidth()/2-325/2;
-        int estrella = 65;
+        int estrella = (this.getWidth()/2)/5;
+        float llargada = this.getWidth()/2-(estrella*5)/2;
         int maskedAction = event.getAction() & MotionEvent.ACTION_MASK;
         switch (maskedAction) {
             case MotionEvent.ACTION_DOWN:

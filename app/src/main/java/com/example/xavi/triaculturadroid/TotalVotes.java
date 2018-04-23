@@ -76,18 +76,12 @@ public class TotalVotes extends Fragment {
         super.onCreate(savedInstanceState);
         user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
     }
-    LayoutInflater inflater;
-    ViewGroup container;
-    Bundle savedInstanceState;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View viewHistorial = inflater.inflate(R.layout.fragment_total_votes, container,
                 false);
-        this.inflater=inflater;
-        this.container=container;
-        this.savedInstanceState=savedInstanceState;
         historialList = (ListView) viewHistorial.findViewById(R.id.ListVotes);
 
         crearLlistaRatings();
