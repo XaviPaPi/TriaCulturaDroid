@@ -35,12 +35,7 @@ public class AdapterHistorial extends BaseAdapter {
         this.list_histo = list_histo;
         mode =1;
     }
-    public AdapterHistorial(Context context, List<Historial> list_histo, userTransfer user){
-        this.context = context;
-        this.list_histo = list_histo;
-        this.user = user;
-        mode =1;
-    }
+
 
     @Override
     public int getCount() {

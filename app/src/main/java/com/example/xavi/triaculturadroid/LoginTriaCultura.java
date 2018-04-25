@@ -105,22 +105,22 @@ public class LoginTriaCultura extends AppCompatActivity {
 
     private boolean verificarUsuariAndPass(String user_dni) {
 
-        progressDialog = new ProgressDialog(LoginTriaCultura.this);
-        progressDialog.setIcon(R.mipmap.ic_launcher);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("Carregant...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+//        progressDialog = new ProgressDialog(LoginTriaCultura.this);
+//        progressDialog.setIcon(R.mipmap.ic_launcher);
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        progressDialog.setMessage("Carregant...");
+//        progressDialog.setCancelable(false);
+//        progressDialog.show();
 
         retrieved_user = APIUtils.get_user_by_dni(user_dni);
-        new Thread(new Runnable() {
-            public void run() {
-                while (APIUtils.continuar == false) {
-                    retrieved_user = APIUtils.current_user;
-                }
-                progressDialog.dismiss();
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            public void run() {
+//                while (APIUtils.continuar == false) {
+//                    retrieved_user = APIUtils.current_user;
+//                }
+//                progressDialog.dismiss();
+//            }
+//        }).start();
         if (retrieved_user != null && retrieved_user.getDni() != null) {
             boolean correct = retrieved_user.getPassword().equals(mPasswordView.getText().toString());
             return correct;

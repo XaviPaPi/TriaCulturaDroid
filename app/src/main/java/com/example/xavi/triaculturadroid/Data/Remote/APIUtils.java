@@ -128,6 +128,10 @@ public class APIUtils {
             }
         });
 
+        while (!continuar) {
+            Log.d(TAG, "get_Project: User Not found - WAITING FOR RESPONSE FROM SERVER");
+        }
+
         return current_user;
     }
 

@@ -32,8 +32,9 @@
             android:label="@string/title_activity_tabbets"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ViewProject" />
-        <activity android:name=".Data.DialogEspera" />
-        <activity android:name=".DialogEspera"></activity>
+        <!--<activity android:name=".Data.DialogEspera" />-->
+        <!--<activity android:name=".DialogEspera" />-->
+        <activity android:name=".ProfileVotes"></activity>
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@ package com.example.xavi.triaculturadroid;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -79,6 +80,8 @@ public class FragmentProfile extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_fragment_profile, container, false);
         rootView.findViewById(R.id.btn_change_mail).setOnClickListener(change_mail_click);
         rootView.findViewById(R.id.btn_change_pass).setOnClickListener(change_pass_click);
+        rootView.findViewById(R.id.btn_see_votes).setOnClickListener(show_profile_votes);
+
         tv_dni = (TextView) rootView.findViewById(R.id.tv_user_dni);
         tv_name = (TextView) rootView.findViewById(R.id.tv_user_nom);
         tv_email = (TextView) rootView.findViewById(R.id.tv_label_mail);
@@ -90,6 +93,16 @@ public class FragmentProfile extends Fragment {
 
         return rootView;
     }
+
+    public View.OnClickListener show_profile_votes = new View.OnClickListener(){
+
+        @Override
+        public void onClick(View v) {
+            Intent profileVotes = new Intent(getActivity() , ProfileVotes.class);
+            profileVotes.putExtra("Usuari", userT.getId());
+            startActivity(profileVotes);
+        }
+    };
 
     public View.OnClickListener change_pass_click = new View.OnClickListener() {
         @Override
@@ -113,9 +126,9 @@ public class FragmentProfile extends Fragment {
             btn_aceptar.setText("Accepta");
             btn_cancel = (Button) passView.findViewById(R.id.DS_btn_cancel_pass);
             btn_cancel.setText("Cancel·la");
-            final TextView tv_oldPass = passView.findViewById(R.id.oldpass);
-            final TextView tv_newPass1 = passView.findViewById(R.id.newpass1);
-            final TextView tv_newPass2 = passView.findViewById(R.id.newpass2);
+            final EditText tv_oldPass = passView.findViewById(R.id.oldpass);
+            final EditText tv_newPass1 = passView.findViewById(R.id.newpass1);
+            final EditText tv_newPass2 = passView.findViewById(R.id.newpass2);
 
             btn_aceptar.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -171,33 +184,57 @@ public class FragmentProfile extends Fragment {
     };
 
     public void show_change_pass_dialog(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-        builder.setTitle("Insereix el nou correu electrònic");
 
-// Set up the input
-        final EditText input = new EditText(v.getContext());
-// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        builder.setView(input);
+        View passView;
+        LayoutInflater inflater;
 
-// Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        passView = inflater.inflate(R.layout.dialogstyle, null);
+        passPopUp = new PopupWindow(passView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+        passPopUp.setFocusable(true);
+        passPopUp.update();
+        //Mostrar PopUpPasswaord
+
+        passPopUp.showAtLocation(v, Gravity.CENTER, 0, 0);
+
+        //Declarar Buttons del PopUp
+
+        btn_aceptar = (Button) passView.findViewById(R.id.DS_btn_aceptar_pass);
+        btn_aceptar.setText("Accepta");
+        btn_cancel = (Button) passView.findViewById(R.id.DS_btn_cancel_pass);
+        btn_cancel.setText("Cancel·la");
+
+
+        final EditText tv_oldEmail= passView.findViewById(R.id.oldpass);
+        final EditText tv_newEmail = passView.findViewById(R.id.newpass1);
+        final EditText tv_newEmail2 = passView.findViewById(R.id.newpass2);
+
+        tv_oldEmail.setHint("Introdueix l'antic mail");
+        tv_newEmail.setHint("Introdueix el nou mail");
+
+        tv_newEmail2.setVisibility(View.GONE);
+        btn_aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                new_mail = input.getText().toString();
-                user.setEmail(new_mail);
-                updateUser(user);
-                tv_email.setText(new_mail);
+            public void onClick(View v) {
+//                boolean changed = check_pass(tv_oldPass.getText().toString(), tv_newPass1.getText().toString(), tv_newPass2.getText().toString());
+
+                // TODO: Pensar si userTransfer es necesario realmente...
+                // Es posible que podamos poner el user como static en la TabbetsActivity y nos sirva para everything
+                // al cargar la TabbetsActivity, guardándonos en SharedPreferences o en el Intent el dni, podemos volver a cargar el usuario
+//                if (changed) {
+//                    passPopUp.dismiss();
+//                }
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
+            public void onClick(View v) {
+                //Tancar el PopUp
+                passPopUp.dismiss();
             }
         });
 
-        builder.show();
     }
 
     private void updateUser(User usuari) {

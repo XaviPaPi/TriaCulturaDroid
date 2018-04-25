@@ -81,12 +81,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/btn_historial_de_vots"/>
-        <Button
-            android:id="@+id/btn_see_ratings"
-            android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_valoracions"/>
     </LinearLayout>
 
 </LinearLayout>
