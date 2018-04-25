@@ -29,7 +29,7 @@ public interface APIService {
     Observable<User> postNewPass(
             @Field("id") int id,
             @Field("password") String password
-          , @Field("email") String email,
+            , @Field("email") String email,
             @Field("name") String name
     );
 
@@ -61,12 +61,12 @@ public interface APIService {
 
     @POST("api/votes/{user_id}/{project_id}")
 //    @FormUrlEncoded
-    Observable<Vote> postNewVote(@Path ("user_id") int user_id,
-                                 @Path ("project_id") int project_id);
+    Observable<Vote> postNewVote(@Path("user_id") int user_id,
+                                 @Path("project_id") int project_id);
 
     @GET("api/vote/{user_id}/{project_id}")
-    Observable<Vote> getSingleVote(@Path ("user_id") int user_id,
-                                   @Path ("project_id") int project_id);
+    Observable<Vote> getSingleVote(@Path("user_id") int user_id,
+                                   @Path("project_id") int project_id);
 
     @DELETE("api/votes/{vote_id}")
     Observable<Vote> deleteVote(@Path("vote_id") int vote_id);
@@ -107,5 +107,8 @@ public interface APIService {
 
     @GET("api/rating/last_id")
     Observable<Integer> getLastId();
+
+    @GET("api/requests/{user_id}")
+    Observable<List<Request>> getVotedRequests(@Path("user_id") int user_id);
 }
 

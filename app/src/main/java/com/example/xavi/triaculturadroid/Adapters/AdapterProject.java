@@ -13,6 +13,8 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.DrawableRes;
@@ -58,6 +60,7 @@ import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 
 import static android.content.ContentValues.TAG;
@@ -90,6 +93,7 @@ public class AdapterProject extends BaseAdapter {
     ImageButton btnplay;
     PopupWindow show_file_window;
     File file;
+    View selected_file_view;
     public AdapterProject(Context context, List<Project> model, userTransfer user) {
         arrButons = new ArrayList<>();
         this.user = user;
@@ -199,21 +203,24 @@ public class AdapterProject extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 id_file = file_list_from_project.get(0).getId();
-                dl_file(view);
+                selected_file_view = view;
+                dl_file();
             }
         });
         LIP_image2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 id_file = file_list_from_project.get(1).getId();
-                dl_file(view);
+                selected_file_view = view;
+                dl_file();
             }
         });
         LIP_image3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 id_file = file_list_from_project.get(2).getId();
-                dl_file(view);
+                selected_file_view = view;
+                dl_file();
             }
         });
 //endregion
@@ -339,8 +346,7 @@ public class AdapterProject extends BaseAdapter {
 
     ProgressDialog pd;
 
-    public void dl_file(View view) {
-        View v = view;
+    public void dl_file() {
         pd = new ProgressDialog(context);
         pd.setIcon(R.mipmap.ic_launcher);
         pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -349,15 +355,20 @@ public class AdapterProject extends BaseAdapter {
         pd.setCancelable(false);
         if (id_file >= 0) {
 //            file = APIUtils.get_file_by_id(id_file, pd);
-            pd.show();
+//            pd.show();
             Observable<File> fileObservable = APIUtils.getApiService().getFileById(id_file);
             fileObservable.subscribeOn(Schedulers.io())
-                    //.doOnSubscribe(pd::show)
+                    .doOnSubscribe(new Action0() {
+                        @Override
+                        public void call() {
+                            pd.dismiss();
+                        }
+                    })
                     .subscribe(new Subscriber<File>() {
                         @Override
                         public void onCompleted() {
                             pd.dismiss();
-                            makepopupwindow(v);
+                            handler.sendEmptyMessage(0);
                         }
 
                         @Override
@@ -375,6 +386,13 @@ public class AdapterProject extends BaseAdapter {
 
         }
     }
+
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            makepopupwindow();
+        }
+    };
 
     public void make_temp_file(byte[] buf, String path) throws IOException {
         ByteArrayInputStream bis = new ByteArrayInputStream(buf);
@@ -408,16 +426,7 @@ public class AdapterProject extends BaseAdapter {
 
     }
 
-private class GetFileAsyn extends AsyncTask<Void, Void, Void> {
-
-    @Override
-    protected Void doInBackground(Void... voids) {
-
-        return null;
-    }
-}
-
-public void makepopupwindow(View view) {
+public void makepopupwindow() {
 
     String temp_path = context.getCacheDir().getPath() + "/FILE";
     byte[] fitxer = Base64.decode(file.getFile_content(), Base64.DEFAULT);
@@ -443,7 +452,7 @@ public void makepopupwindow(View view) {
         show_file_window.setBackgroundDrawable(new BitmapDrawable());
         show_file_window.setOutsideTouchable(true);
         show_file_window.update();
-        show_file_window.showAtLocation(view, Gravity.CENTER, 0, 0);
+        show_file_window.showAtLocation(selected_file_view, Gravity.CENTER, 0, 0);
 
     } else if (file.getExtension().equalsIgnoreCase(".mp3")
             || file.getExtension().equalsIgnoreCase(".ogg")) {
@@ -493,7 +502,15 @@ public void makepopupwindow(View view) {
         show_file_window.setBackgroundDrawable(new BitmapDrawable());
         show_file_window.setOutsideTouchable(true);
         show_file_window.update();
-        show_file_window.showAtLocation(view, Gravity.CENTER, 0, 0);
+        show_file_window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                if (mp!=null) {
+                    mp.release();
+                }
+            }
+        });
+        show_file_window.showAtLocation(selected_file_view, Gravity.CENTER, 0, 0);
 
     } else if (file.getExtension().equalsIgnoreCase(".3gp")
             || file.getExtension().equalsIgnoreCase(".mp4")
@@ -523,7 +540,7 @@ public void makepopupwindow(View view) {
         show_file_window.setBackgroundDrawable(new BitmapDrawable());
         show_file_window.setOutsideTouchable(true);
         show_file_window.update();
-        show_file_window.showAtLocation(view, Gravity.CENTER, 0, 0);
+        show_file_window.showAtLocation(selected_file_view, Gravity.CENTER, 0, 0);
         popupvideoView.requestFocus();
     }
 }
