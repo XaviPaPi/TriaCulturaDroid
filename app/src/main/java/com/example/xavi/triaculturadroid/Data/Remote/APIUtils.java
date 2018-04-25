@@ -12,7 +12,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.PUT;
+import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action;
+import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 
 import static android.content.ContentValues.TAG;
@@ -43,6 +47,7 @@ public class APIUtils {
     public static File seeked_file = new File();
     public static Project selected_project = new Project();
     public static Rating user_rate = new Rating();
+    private static ProgressDialog progressDialog;
 
     public static void init_service() {
         service = RetrofitClient.getClient(BASE_URL).create(APIService.class);
@@ -436,17 +441,23 @@ public class APIUtils {
         return current_place_id;
     }
 
-    public static File get_file_by_id(int id) {
+    public static File get_file_by_id(int id, ProgressDialog pd) {
         continuar = false;
-        service.getFileById(id).subscribeOn(Schedulers.io()).subscribe(new Subscriber<File>() {
+        progressDialog = pd;
+        Observable<File> fileObservable = service.getFileById(id);
+        fileObservable.subscribeOn(Schedulers.io())
+                .doOnSubscribe(progressDialog::show)
+                .subscribe(new Subscriber<File>() {
             @Override
             public void onCompleted() {
                 continuar = true;
+                progressDialog.dismiss();
             }
 
             @Override
             public void onError(Throwable e) {
                 continuar = true;
+                progressDialog.dismiss();
 //                Log.d(TAG, "onError: "+e.toString());
                 e.printStackTrace();
             }
