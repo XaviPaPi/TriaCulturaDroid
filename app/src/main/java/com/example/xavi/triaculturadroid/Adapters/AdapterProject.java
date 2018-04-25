@@ -469,11 +469,6 @@ public void makepopupwindow() {
         }
         Uri uri = Uri.parse(temp_path);
         mp = MediaPlayer.create(context, uri);
-        try {
-            mp.prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         mp.seekTo(0);
         pb_audio.setProgress(0);
         mp.setLooping(false);
@@ -507,6 +502,14 @@ public void makepopupwindow() {
         show_file_window.setBackgroundDrawable(new BitmapDrawable());
         show_file_window.setOutsideTouchable(true);
         show_file_window.update();
+        show_file_window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                if (mp!=null) {
+                    mp.release();
+                }
+            }
+        });
         show_file_window.showAtLocation(selected_file_view, Gravity.CENTER, 0, 0);
 
     } else if (file.getExtension().equalsIgnoreCase(".3gp")
