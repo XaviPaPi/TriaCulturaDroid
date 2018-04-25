@@ -469,6 +469,11 @@ public void makepopupwindow() {
         }
         Uri uri = Uri.parse(temp_path);
         mp = MediaPlayer.create(context, uri);
+        try {
+            mp.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         mp.seekTo(0);
         pb_audio.setProgress(0);
         mp.setLooping(false);
