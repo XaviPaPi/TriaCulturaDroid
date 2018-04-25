@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,16 +23,18 @@ import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
 public class LoginTriaCultura extends AppCompatActivity {
 
     private Button btn_Acces;
-    private AutoCompleteTextView mUserView;
-    private EditText mPasswordView;
-    User retrieved_user;
-    CheckBox cbRememberMe;
+    public static AutoCompleteTextView mUserView;
+    public static EditText mPasswordView;
+    public static User retrieved_user;
+    public static CheckBox cbRememberMe;
+    boolean exists;
+    SharedPreferences.Editor editor;
 
+    SharedPreferences config;
     public static final String PREFS_NAME = "SPFile";
     String nom;
-    SharedPreferences config;
-    SharedPreferences.Editor editor;
     ProgressDialog progressDialog;
+    boolean correct;
 
 
     @Override
@@ -78,54 +82,21 @@ public class LoginTriaCultura extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!mUserView.getText().toString().isEmpty() && !mPasswordView.getText().toString().isEmpty()) {
-
-
-                    log_in();
-
+                    String user_dni = mUserView.getText().toString();
+                    progressDialog = new ProgressDialog(LoginTriaCultura.this);
+                    progressDialog.setIcon(R.mipmap.ic_launcher);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setMessage("Carregant...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    UserSearch retrieve = new UserSearch(user_dni, progressDialog, view.getContext());
+                    retrieve.start();
                 } else {
                     Toast.makeText(LoginTriaCultura.this, "Els camps estan buits", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-    }
-
-    private void log_in() {
-        boolean exists = verificarUsuariAndPass(mUserView.getText().toString());
-
-        if (exists) {
-            Intent intent = new Intent(getApplication(), TabbetsActivity.class);
-//            userTransfer usuari= new userTransfer(retrieved_user);
-            intent.putExtra("Usuari", "" + retrieved_user.getDni());
-            sharedPreferences();
-            startActivity(intent);
-        } else {
-            Toast.makeText(getApplication(), R.string.errorPassOrUsrInvalid, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private boolean verificarUsuariAndPass(String user_dni) {
-
-//        progressDialog = new ProgressDialog(LoginTriaCultura.this);
-//        progressDialog.setIcon(R.mipmap.ic_launcher);
-//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//        progressDialog.setMessage("Carregant...");
-//        progressDialog.setCancelable(false);
-//        progressDialog.show();
-
-        retrieved_user = APIUtils.get_user_by_dni(user_dni);
-//        new Thread(new Runnable() {
-//            public void run() {
-//                while (APIUtils.continuar == false) {
-//                    retrieved_user = APIUtils.current_user;
-//                }
-//                progressDialog.dismiss();
-//            }
-//        }).start();
-        if (retrieved_user != null && retrieved_user.getDni() != null) {
-            boolean correct = retrieved_user.getPassword().equals(mPasswordView.getText().toString());
-            return correct;
-        }
-        return false;
     }
 
     private void verificarUsuariBuit() {
@@ -140,20 +111,5 @@ public class LoginTriaCultura extends AppCompatActivity {
         }
     }
 
-    private void sharedPreferences() {
-
-        //obtenir fitxer PREFS_NAME al SharedPreferences (SP)
-        config = getSharedPreferences(PREFS_NAME, 0);
-        //creem l'obejcet editor per poder fer canvis al SP
-        editor = config.edit();
-        String etName = mUserView.getText().toString();
-        editor.putString("name", etName);
-        if (cbRememberMe.isChecked()) {
-            editor.putBoolean("checked", true);
-        } else {
-            editor.putBoolean("checked", false);
-        }
-        editor.commit();
-    }
 }
 

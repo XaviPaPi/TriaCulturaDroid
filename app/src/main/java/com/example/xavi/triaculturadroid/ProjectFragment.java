@@ -51,6 +51,7 @@ public class ProjectFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     String user;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -86,7 +87,7 @@ public class ProjectFragment extends Fragment {
 
         ad = APIUtils.get_projects_from_place(5);//APIUtils.get_current_place());
 
-        AdapterProject adapter = new AdapterProject(getActivity(), ad,user);
+        AdapterProject adapter = new AdapterProject(getActivity(), ad, user);
 
         listView.setItemsCanFocus(true);
         listView.setAdapter(adapter);

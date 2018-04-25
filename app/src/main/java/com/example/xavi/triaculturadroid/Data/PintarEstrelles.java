@@ -12,7 +12,9 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.SparseArray;
+import android.util.TypedValue;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.inputmethod.EditorInfo;
@@ -43,67 +45,93 @@ public class PintarEstrelles extends View {
     private int estatPosterior=0;
     private boolean tocat = false;
     private boolean primerCop=true;
+    private float HeightReal;
+    private float WidthtReal;
+    float scaledSizeInPixels;
+
     //endregion
 
 
+    //region
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        HeightReal = MeasureSpec.getSize(heightMeasureSpec);
+        WidthtReal = MeasureSpec.getSize(widthMeasureSpec);
+        setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
+        calculTamanyEstrella();
+    }
+    //endregion
+
+    //region Calcular tamany text
+    private void calculTamanyEstrella() {
+        float result = HeightReal;
+        scaledSizeInPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,result, getResources().getDisplayMetrics());
+    }
+
+
+    //endregion
 
     public PintarEstrelles(Context context) {
         super(context);
+        estatPosterior=-1;
+
     }
     public PintarEstrelles(Context context, AttributeSet attrs) {
         super(context, null);
+        estatPosterior=-1;
     }
 
 
     Drawable estrella1,estrella2,estrella3,estrella4,estrella5;
     @Override
     protected void onDraw(Canvas canvas) {
-        float llargada = this.getWidth()/2-325/2;
-        int estrella = 65;
+        int estrella = (int) ((WidthtReal/2)/5);
+        float llargada = WidthtReal/2-(estrella*5)/2;
+
         if (tocat) {
             if (primer) {
                 estrella1 = this.getResources().getDrawable(R.drawable.star_grey);
-                estrella1.setBounds((int) llargada, 0, (int)llargada+estrella, this.getHeight());
+                estrella1.setBounds((int) llargada, 0, (int)llargada+estrella, (int) HeightReal);
                 estrella1.draw(canvas);
             } else {
                 estrella1 = this.getResources().getDrawable(R.drawable.star_grey_hover_yelow);
-                estrella1.setBounds((int) llargada, 0, (int)llargada+estrella, this.getHeight());
+                estrella1.setBounds((int) llargada, 0, (int)llargada+estrella, (int) HeightReal);
                 estrella1.draw(canvas);
             }
             if (segon) {
                 estrella2 = this.getResources().getDrawable(R.drawable.star_grey);
-                estrella2.setBounds((int)llargada+estrella, 0, (int)llargada+estrella*2, this.getHeight());
+                estrella2.setBounds((int)llargada+estrella, 0, (int)llargada+estrella*2,(int) HeightReal);
                 estrella2.draw(canvas);
             } else {
                 estrella2 = this.getResources().getDrawable(R.drawable.star_grey_hover_yelow);
-                estrella2.setBounds((int)llargada+estrella, 0, (int)llargada+estrella*2, this.getHeight());
+                estrella2.setBounds((int)llargada+estrella, 0, (int)llargada+estrella*2, (int) HeightReal);
                 estrella2.draw(canvas);
             }
             if (tercer) {
                 estrella3 = this.getResources().getDrawable(R.drawable.star_grey);
-                estrella3.setBounds((int)llargada+estrella*2, 0, (int)llargada+estrella*3, this.getHeight());
+                estrella3.setBounds((int)llargada+estrella*2, 0, (int)llargada+estrella*3, (int) HeightReal);
                 estrella3.draw(canvas);
             } else {
                 estrella3 = this.getResources().getDrawable(R.drawable.star_grey_hover_yelow);
-                estrella3.setBounds((int)llargada+estrella*2, 0, (int)llargada+estrella*3, this.getHeight());
+                estrella3.setBounds((int)llargada+estrella*2, 0, (int)llargada+estrella*3, (int) HeightReal);
                 estrella3.draw(canvas);
             }
             if (quart) {
                 estrella4 = this.getResources().getDrawable(R.drawable.star_grey);
-                estrella4.setBounds((int)llargada+estrella*3, 0, (int)llargada+estrella*4, this.getHeight());
+                estrella4.setBounds((int)llargada+estrella*3, 0, (int)llargada+estrella*4, (int) HeightReal);
                 estrella4.draw(canvas);
             } else {
                 estrella4 = this.getResources().getDrawable(R.drawable.star_grey_hover_yelow);
-                estrella4.setBounds((int)llargada+estrella*3, 0, (int)llargada+estrella*4, this.getHeight());
+                estrella4.setBounds((int)llargada+estrella*3, 0, (int)llargada+estrella*4, (int) HeightReal);
                 estrella4.draw(canvas);
             }
             if (cinque) {
                 estrella5 = this.getResources().getDrawable(R.drawable.star_grey);
-                estrella5.setBounds((int)llargada+estrella*4, 0, (int)llargada+estrella*5, this.getHeight());
+                estrella5.setBounds((int)llargada+estrella*4, 0, (int)llargada+estrella*5, (int) HeightReal);
                 estrella5.draw(canvas);
             } else {
                 estrella5 = this.getResources().getDrawable(R.drawable.star_grey_hover_yelow);
-                estrella5.setBounds((int)llargada+estrella*4, 0, (int)llargada+estrella*5, this.getHeight());
+                estrella5.setBounds((int)llargada+estrella*4, 0, (int)llargada+estrella*5, (int) HeightReal);
                 estrella5.draw(canvas);
             }
             x = -1;
@@ -111,58 +139,56 @@ public class PintarEstrelles extends View {
         }else{
             if (estatPosterior!=ViewProject.estat&&ViewProject.estat>0) {
                 estrella1 = this.getResources().getDrawable(R.drawable.star_yelow);
-                estrella1.setBounds((int)llargada, 0, (int)llargada+estrella, this.getHeight());
+                estrella1.setBounds((int)llargada, 0, (int)llargada+estrella, (int) HeightReal);
                 estrella1.draw(canvas);
             } else {
                 estrella1 = this.getResources().getDrawable(R.drawable.star_grey);
-                estrella1.setBounds((int)llargada, 0, (int)llargada+estrella, this.getHeight());
+                estrella1.setBounds((int)llargada, 0, (int)llargada+estrella, (int) HeightReal);
                 estrella1.draw(canvas);
             }
            if (estatPosterior!=ViewProject.estat&&ViewProject.estat>1) {
                 estrella2 = this.getResources().getDrawable(R.drawable.star_yelow);
-               estrella2.setBounds((int)llargada+estrella, 0, (int)llargada+estrella*2, this.getHeight());
+               estrella2.setBounds((int)llargada+estrella, 0, (int)llargada+estrella*2, (int) HeightReal);
                estrella2.draw(canvas);
             } else {
                 estrella2 = this.getResources().getDrawable(R.drawable.star_grey);
-               estrella2.setBounds((int)llargada+estrella, 0, (int)llargada+estrella*2, this.getHeight());
+               estrella2.setBounds((int)llargada+estrella, 0, (int)llargada+estrella*2, (int) HeightReal);
                estrella2.draw(canvas);
             }
             if (estatPosterior!=ViewProject.estat&&ViewProject.estat>2) {
                 estrella3 = this.getResources().getDrawable(R.drawable.star_yelow);
-                estrella3.setBounds((int)llargada+estrella*2, 0, (int)llargada+estrella*3, this.getHeight());
+                estrella3.setBounds((int)llargada+estrella*2, 0, (int)llargada+estrella*3, (int) HeightReal);
                 estrella3.draw(canvas);
             } else {
                 estrella3 = this.getResources().getDrawable(R.drawable.star_grey);
-                estrella3.setBounds((int)llargada+estrella*2, 0, (int)llargada+estrella*3, this.getHeight());
+                estrella3.setBounds((int)llargada+estrella*2, 0, (int)llargada+estrella*3,(int) HeightReal);
                 estrella3.draw(canvas);
             }
             if (estatPosterior!=ViewProject.estat&&ViewProject.estat>3) {
                 estrella4 = this.getResources().getDrawable(R.drawable.star_yelow);
-                estrella4.setBounds((int)llargada+estrella*3, 0, (int)llargada+estrella*4, this.getHeight());
+                estrella4.setBounds((int)llargada+estrella*3, 0, (int)llargada+estrella*4, (int) HeightReal);
                 estrella4.draw(canvas);
             } else {
                 estrella4 = this.getResources().getDrawable(R.drawable.star_grey);
-                estrella4.setBounds((int)llargada+estrella*3, 0, (int)llargada+estrella*4, this.getHeight());
+                estrella4.setBounds((int)llargada+estrella*3, 0, (int)llargada+estrella*4,(int) HeightReal);
                 estrella4.draw(canvas);
             }
             if (estatPosterior!=ViewProject.estat&&ViewProject.estat>4) {
                 estrella5 = this.getResources().getDrawable(R.drawable.star_yelow);
-                estrella5.setBounds((int)llargada+estrella*4, 0, (int)llargada+estrella*5, this.getHeight());
+                estrella5.setBounds((int)llargada+estrella*4, 0, (int)llargada+estrella*5, (int) HeightReal);
                 estrella5.draw(canvas);
             } else {
                 estrella5 = this.getResources().getDrawable(R.drawable.star_grey);
-                estrella5.setBounds((int)llargada+estrella*4, 0, (int)llargada+estrella*5, this.getHeight());
+                estrella5.setBounds((int)llargada+estrella*4, 0, (int)llargada+estrella*5,(int) HeightReal);
                 estrella5.draw(canvas);
             }
             tocat=true;
         }
-
-
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        float llargada = this.getWidth()/2-325/2;
-        int estrella = 65;
+        int estrella = (this.getWidth()/2)/5;
+        float llargada = this.getWidth()/2-(estrella*5)/2;
         int maskedAction = event.getAction() & MotionEvent.ACTION_MASK;
         switch (maskedAction) {
             case MotionEvent.ACTION_DOWN:
@@ -382,6 +408,4 @@ public class PintarEstrelles extends View {
         invalidate();
         return true;
     }
-
-
 }
