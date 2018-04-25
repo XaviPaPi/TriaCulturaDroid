@@ -85,18 +85,8 @@ public class PintarEstrelles extends View {
     Drawable estrella1,estrella2,estrella3,estrella4,estrella5;
     @Override
     protected void onDraw(Canvas canvas) {
-
-        /*
-
-         */
-      /*  float llargada = this.getWidth()/2-375/2;
-        int estrella = 75;*/
-        /*int estrella = (this.getWidth()/2)/5;
-        float llargada = this.getWidth()/2-(estrella*5)/2;*/
-
         int estrella = (int) ((WidthtReal/2)/5);
         float llargada = WidthtReal/2-(estrella*5)/2;
-
 
         if (tocat) {
             if (primer) {
@@ -194,8 +184,6 @@ public class PintarEstrelles extends View {
             }
             tocat=true;
         }
-
-
     }
 
     public boolean onTouchEvent(MotionEvent event) {
@@ -420,6 +408,4 @@ public class PintarEstrelles extends View {
         invalidate();
         return true;
     }
-
-
 }
