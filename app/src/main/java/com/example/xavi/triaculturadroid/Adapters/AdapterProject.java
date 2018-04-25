@@ -405,6 +405,7 @@ public class AdapterProject extends BaseAdapter {
                 }
             }).start();
         }
+
     }
 
 private class GetFileAsyn extends AsyncTask<Void, Void, Void> {
