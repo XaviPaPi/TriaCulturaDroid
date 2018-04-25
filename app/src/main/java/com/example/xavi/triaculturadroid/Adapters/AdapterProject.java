@@ -60,6 +60,7 @@ import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 
 import static android.content.ContentValues.TAG;
@@ -357,7 +358,12 @@ public class AdapterProject extends BaseAdapter {
 //            pd.show();
             Observable<File> fileObservable = APIUtils.getApiService().getFileById(id_file);
             fileObservable.subscribeOn(Schedulers.io())
-                    .doOnSubscribe(pd::show)
+                    .doOnSubscribe(new Action0() {
+                        @Override
+                        public void call() {
+                            pd.dismiss();
+                        }
+                    })
                     .subscribe(new Subscriber<File>() {
                         @Override
                         public void onCompleted() {
