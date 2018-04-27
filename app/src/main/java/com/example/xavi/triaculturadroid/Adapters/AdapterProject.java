@@ -12,6 +12,7 @@ import android.media.Image;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -94,11 +95,15 @@ public class AdapterProject extends BaseAdapter {
     PopupWindow show_file_window;
     File file;
     View selected_file_view;
+    View mateix;
+    ViewGroup padre;
+
     public AdapterProject(Context context, List<Project> model, userTransfer user) {
         arrButons = new ArrayList<>();
         this.user = user;
         this.model = model;
         mode = 1;
+        mp = new MediaPlayer();
         this.context = context;
 
         votes = APIUtils.get_votes(user.getId());
@@ -176,6 +181,8 @@ public class AdapterProject extends BaseAdapter {
                 convertView = inflator.inflate(R.layout.activity_item_list_projects, parent, false);
             }
         }
+        mateix = convertView;
+        padre = parent;
 
         final List<File> file_list_from_project = APIUtils.get_files_from_project(model.get(position));
 
@@ -353,22 +360,22 @@ public class AdapterProject extends BaseAdapter {
         pd.setIndeterminate(true);
         pd.setMessage("Carregant...");
         pd.setCancelable(false);
+        pd.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                makepopupwindow();
+            }
+        });
         if (id_file >= 0) {
 //            file = APIUtils.get_file_by_id(id_file, pd);
-//            pd.show();
+            pd.show();
             Observable<File> fileObservable = APIUtils.getApiService().getFileById(id_file);
             fileObservable.subscribeOn(Schedulers.io())
-                    .doOnSubscribe(new Action0() {
-                        @Override
-                        public void call() {
-                            pd.dismiss();
-                        }
-                    })
                     .subscribe(new Subscriber<File>() {
                         @Override
                         public void onCompleted() {
                             pd.dismiss();
-                            handler.sendEmptyMessage(0);
+//                            handler.sendEmptyMessage(0);
                         }
 
                         @Override
@@ -383,11 +390,10 @@ public class AdapterProject extends BaseAdapter {
                             file = f;
                         }
                     });
-
         }
     }
 
-    Handler handler = new Handler(){
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             makepopupwindow();
@@ -426,123 +432,144 @@ public class AdapterProject extends BaseAdapter {
 
     }
 
-public void makepopupwindow() {
+    public void makepopupwindow() {
 
-    String temp_path = context.getCacheDir().getPath() + "/FILE";
-    byte[] fitxer = Base64.decode(file.getFile_content(), Base64.DEFAULT);
-    if (file.getExtension().equalsIgnoreCase(".jpg")
-            || file.getExtension().equalsIgnoreCase(".jpeg")
-            || file.getExtension().equalsIgnoreCase(".gif")
-            || file.getExtension().equalsIgnoreCase(".png")) {
-        // popupwindow becomes image
-        Bitmap image = BitmapFactory.decodeByteArray(fitxer, 0, fitxer.length);
+        String temp_path = context.getCacheDir().getPath() + "/FILE";
+        byte[] fitxer = Base64.decode(file.getFile_content(), Base64.DEFAULT);
+        if (file.getExtension().equalsIgnoreCase(".jpg")
+                || file.getExtension().equalsIgnoreCase(".jpeg")
+                || file.getExtension().equalsIgnoreCase(".gif")
+                || file.getExtension().equalsIgnoreCase(".png")) {
+            // popupwindow becomes image
+            Bitmap image = BitmapFactory.decodeByteArray(fitxer, 0, fitxer.length);
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View imgview = null;
-        if (inflater != null) {
-            imgview = inflater.inflate(R.layout.image_dialog, null);
-        }
-        ImageView popupimageView = null;
-        if (imgview != null) {
-            popupimageView = imgview.findViewById(R.id.dialog_imageview);
-            popupimageView.setImageBitmap(image);
-        }
-        show_file_window = new PopupWindow(imgview, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
-        show_file_window.setFocusable(true);
-        show_file_window.setBackgroundDrawable(new BitmapDrawable());
-        show_file_window.setOutsideTouchable(true);
-        show_file_window.update();
-        show_file_window.showAtLocation(selected_file_view, Gravity.CENTER, 0, 0);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View imgview = null;
+            if (inflater != null) {
+                imgview = inflater.inflate(R.layout.image_dialog, null);
+            }
+            ImageView popupimageView = null;
+            if (imgview != null) {
+                popupimageView = imgview.findViewById(R.id.dialog_imageview);
+                popupimageView.setImageBitmap(image);
+            }
+            show_file_window = new PopupWindow(imgview, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+            show_file_window.setFocusable(true);
+            show_file_window.setBackgroundDrawable(new BitmapDrawable());
+            show_file_window.setOutsideTouchable(true);
+            show_file_window.update();
+            show_file_window.showAtLocation(selected_file_view, Gravity.CENTER, 0, 0);
 
-    } else if (file.getExtension().equalsIgnoreCase(".mp3")
-            || file.getExtension().equalsIgnoreCase(".ogg")) {
-        // popupwindow becomes audioplayer
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View audview = inflater.inflate(R.layout.audio_view, null);
-        pb_audio = audview.findViewById(R.id.prog_bar_cancion);
-        btnplay = audview.findViewById(R.id.btn_play);
-        temp_path += file.getExtension();
-        try {
-            make_temp_file(fitxer, temp_path);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        Uri uri = Uri.parse(temp_path);
-        mp = MediaPlayer.create(context, uri);
-        mp.seekTo(0);
-        pb_audio.setProgress(0);
-        mp.setLooping(false);
-
-        btnplay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ImageButton esto = (ImageButton) view;
-                if (!mp.isPlaying()) {
-                    esto.setImageResource(android.R.drawable.ic_media_pause);
-                    play_audio();
-                } else {
-                    esto.setImageResource(android.R.drawable.ic_media_play);
-                    pause_audio();
+        } else if (file.getExtension().equalsIgnoreCase(".mp3")
+                || file.getExtension().equalsIgnoreCase(".ogg")) {
+            // popupwindow becomes audioplayer
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            final View audview = inflater.inflate(R.layout.audio_view, null);
+            pb_audio = audview.findViewById(R.id.prog_bar_cancion);
+            btnplay = audview.findViewById(R.id.btn_play);
+            temp_path += file.getExtension();
+            try {
+                make_temp_file(fitxer, temp_path);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+//        mp = new MediaPlayer();
+//        try {
+//            mp.setDataSource(temp_path);
+//            mp.prepare();
+//            mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                @Override
+//                public void onPrepared(MediaPlayer mediaPlayer) {
+//                    mp.seekTo(0);
+//                    pb_audio.setProgress(0);
+//                    mp.setLooping(false);
+//                    mediaPlayer.start();
+//                }
+//            });
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+            mp = MediaPlayer.create(context, Uri.parse(temp_path));
+            mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+                    mp.seekTo(0);
+                    pb_audio.setProgress(0);
                 }
-            }
-        });
+            });
+//            mp.setLooping(false);
 
-        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                mediaPlayer.stop();
-                mediaPlayer.seekTo(0);
-                btnplay.setImageResource(android.R.drawable.ic_media_play);
 
-            }
-        });
-
-        show_file_window = new PopupWindow(audview, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
-        show_file_window.setFocusable(true);
-        show_file_window.setBackgroundDrawable(new BitmapDrawable());
-        show_file_window.setOutsideTouchable(true);
-        show_file_window.update();
-        show_file_window.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                if (mp!=null) {
-                    mp.release();
+            btnplay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ImageButton esto = (ImageButton) view;
+                    if (!mp.isPlaying()) {
+                        esto.setImageResource(android.R.drawable.ic_media_pause);
+                        play_audio();
+                    } else {
+                        esto.setImageResource(android.R.drawable.ic_media_play);
+                        pause_audio();
+                    }
                 }
+            });
+
+            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    mediaPlayer.pause();
+                    mediaPlayer.seekTo(0);
+                    btnplay.setImageResource(android.R.drawable.ic_media_play);
+                }
+            });
+
+            show_file_window = new PopupWindow(audview, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+            show_file_window.setFocusable(true);
+            show_file_window.setBackgroundDrawable(new BitmapDrawable());
+            show_file_window.setOutsideTouchable(true);
+            show_file_window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    if (mp != null) {
+                        mp.stop();
+                        mp.release();
+                    }
+                }
+            });
+            show_file_window.update();
+            show_file_window.showAtLocation(selected_file_view, Gravity.CENTER, 0, 0);
+
+        } else if (file.getExtension().equalsIgnoreCase(".3gp")
+                || file.getExtension().equalsIgnoreCase(".mp4")
+                || file.getExtension().equalsIgnoreCase(".webm")
+                ) {
+            //popupwindow becomes videoplayer
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View vidview = inflater.inflate(R.layout.video_dialog, null);
+            VideoView popupvideoView = vidview.findViewById(R.id.dialog_videoview);
+
+            temp_path += file.getExtension();
+            try {
+                make_temp_file(fitxer, temp_path);
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-        });
-        show_file_window.showAtLocation(selected_file_view, Gravity.CENTER, 0, 0);
 
-    } else if (file.getExtension().equalsIgnoreCase(".3gp")
-            || file.getExtension().equalsIgnoreCase(".mp4")
-            || file.getExtension().equalsIgnoreCase(".webm")
-            ) {
-        //popupwindow becomes videoplayer
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View vidview = inflater.inflate(R.layout.video_dialog, null);
-        VideoView popupvideoView = vidview.findViewById(R.id.dialog_videoview);
-
-        temp_path += file.getExtension();
-        try {
-            make_temp_file(fitxer, temp_path);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        popupvideoView.setVideoPath(temp_path);
-        popupvideoView.setMediaController(new MediaController(vidview.getContext()));
-        popupvideoView.setVisibility(View.VISIBLE);
+            popupvideoView.setVideoPath(temp_path);
+            popupvideoView.setMediaController(new MediaController(vidview.getContext()));
+            popupvideoView.setVisibility(View.VISIBLE);
 
 //                MediaController vidControl = new MediaController(vidview.getContext());
 //                vidControl.setAnchorView(popupvideoView);
 //                popupvideoView.setMediaController(vidControl);
-        show_file_window = new PopupWindow(vidview, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
-        show_file_window.setFocusable(true);
-        show_file_window.setBackgroundDrawable(new BitmapDrawable());
-        show_file_window.setOutsideTouchable(true);
-        show_file_window.update();
-        show_file_window.showAtLocation(selected_file_view, Gravity.CENTER, 0, 0);
-        popupvideoView.requestFocus();
+            show_file_window = new PopupWindow(vidview, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+            show_file_window.setFocusable(true);
+            show_file_window.setBackgroundDrawable(new BitmapDrawable());
+            show_file_window.setOutsideTouchable(true);
+            show_file_window.update();
+            show_file_window.showAtLocation(selected_file_view, Gravity.CENTER, 0, 0);
+            popupvideoView.requestFocus();
+        }
     }
-}
 
 }
