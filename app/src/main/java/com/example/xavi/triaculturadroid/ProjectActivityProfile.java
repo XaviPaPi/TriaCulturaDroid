@@ -28,9 +28,15 @@ public class ProjectActivityProfile extends AppCompatActivity {
 
         int id = 0;
 //        getIntent().getIntExtra("Id" ,id);
-        //TODO mirar esto que no se sabe como va
-        Project pro = APIUtils.get_Project(getIntent().getIntExtra("Id" ,id));
-
+        int idpro = getIntent().getIntExtra("Id",0 );
+        if (idpro != 0 ) {
+            Project pro = APIUtils.get_Project(idpro);
+            author.setText(pro.getAuthor().getName() + " " + pro.getAuthor().getSurname());
+            title_project.setText(pro.getTitle());
+            descrip.setText(pro.getDescript());
+        } else {
+            descrip.setText("El projecte no s'ha trobat.");
+        }
 
     }
 }
