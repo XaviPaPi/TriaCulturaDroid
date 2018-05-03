@@ -369,13 +369,13 @@ public class AdapterProject extends BaseAdapter {
         if (id_file >= 0) {
 //            file = APIUtils.get_file_by_id(id_file, pd);
             pd.show();
+
             Observable<File> fileObservable = APIUtils.getApiService().getFileById(id_file);
             fileObservable.subscribeOn(Schedulers.io())
                     .subscribe(new Subscriber<File>() {
                         @Override
                         public void onCompleted() {
                             pd.dismiss();
-//                            handler.sendEmptyMessage(0);
                         }
 
                         @Override
@@ -393,12 +393,6 @@ public class AdapterProject extends BaseAdapter {
         }
     }
 
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            makepopupwindow();
-        }
-    };
 
     public void make_temp_file(byte[] buf, String path) throws IOException {
         ByteArrayInputStream bis = new ByteArrayInputStream(buf);
@@ -434,7 +428,7 @@ public class AdapterProject extends BaseAdapter {
 
     public void makepopupwindow() {
 
-        String temp_path = context.getCacheDir().getPath() + "/FILE";
+        String temp_path = context.getCacheDir().getPath() + "/"+file.getName()+file.getExtension();
         byte[] fitxer = Base64.decode(file.getFile_content(), Base64.DEFAULT);
         if (file.getExtension().equalsIgnoreCase(".jpg")
                 || file.getExtension().equalsIgnoreCase(".jpeg")
@@ -467,7 +461,8 @@ public class AdapterProject extends BaseAdapter {
             final View audview = inflater.inflate(R.layout.audio_view, null);
             pb_audio = audview.findViewById(R.id.prog_bar_cancion);
             btnplay = audview.findViewById(R.id.btn_play);
-            temp_path += file.getExtension();
+//            temp_path += file.getExtension();
+
             try {
                 make_temp_file(fitxer, temp_path);
             } catch (IOException ex) {
@@ -548,7 +543,7 @@ public class AdapterProject extends BaseAdapter {
             View vidview = inflater.inflate(R.layout.video_dialog, null);
             VideoView popupvideoView = vidview.findViewById(R.id.dialog_videoview);
 
-            temp_path += file.getExtension();
+//            temp_path += file.getExtension();
             try {
                 make_temp_file(fitxer, temp_path);
             } catch (IOException ex) {

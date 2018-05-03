@@ -75,7 +75,7 @@ public class AdapterHistorial extends BaseAdapter {
         LHP_data = (TextView) convertView.findViewById(R.id.IHP_data);
         LHP_nom_Projecte = (TextView) convertView.findViewById(R.id.IHP_nom_projecte);
 
-        LHP_data.setText(list_histo.get(position).getData());
+        LHP_data.setText(list_histo.get(position).getData().substring(0,10));
         LHP_nom_Projecte.setText(list_histo.get(position).getTitle());
         double punts =  Math.floor(list_histo.get(position).getRating());
 

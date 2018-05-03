@@ -54,14 +54,15 @@ public class ViewProject extends AppCompatActivity {
 
         Intent intent = new Intent();
         //(UserNormal) getIntent().getExtras().getSerializable("User");
-        user = new userTransfer(APIUtils.get_user_by_dni(this.getIntent().getExtras().getString("Usuari")));
-
+        if (this.getIntent().getStringExtra("Usuari")!= null) {
+            user = new userTransfer(APIUtils.get_user_by_dni(this.getIntent().getExtras().getString("Usuari")));
+            ratingAnterior = APIUtils.get_rating_where_user(user.getId(), idProjecte);
+        }
 
         idProjecte = (int) getIntent().getExtras().getInt("idProject");
         p = APIUtils.get_Project(idProjecte);
 
 
-        ratingAnterior = APIUtils.get_rating_where_user(user.getId(), idProjecte);
 
         if (ratingAnterior != null) {
             estat = ratingAnterior.getRate();
@@ -72,7 +73,7 @@ public class ViewProject extends AppCompatActivity {
 
         try {
             if (p.getAuthor().getName() != null)
-                txt_Author.setText(p.getAuthor().getName());
+                txt_Author.setText(p.getAuthor().getName()+" "+p.getAuthor().getSurname());
             if (p.getTitle() != null)
                 txt_Title.setText(p.getTitle());
             if (p.getDescript() != null)

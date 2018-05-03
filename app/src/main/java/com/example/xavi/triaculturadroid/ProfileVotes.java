@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ListViewCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -44,6 +45,16 @@ public class ProfileVotes extends AppCompatActivity {
         AdapterHistoProfile adapter = new AdapterHistoProfile(ProfileVotes.this, historial_Projects_List);
         list_historial.setItemsCanFocus(true);
         list_historial.setAdapter(adapter);
+        list_historial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(ProfileVotes.this, ViewProject.class); // NO PUEDE SER VIEWPROJECT
+                Log.d("OPEN-EVENT", "onItemClick: Iniciando evento nº"+i);
+                Log.d("idProject", ""+historial_Projects_List.get(i).getId());
+                intent.putExtra("Id",historial_Projects_List.get(i).getId());
+                startActivity(intent);
+            }
+        });
     }
 
 

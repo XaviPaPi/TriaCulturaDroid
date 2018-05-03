@@ -76,7 +76,7 @@ public class AdapterHistoProfile extends BaseAdapter {
 
         LHP_nom_Projecte.setText(p.getTitle());
         //LHP_description.setText(p.getDescript());
-        LHP_data.setText(p.getRequests().get(position).getData_proposta());
+        LHP_data.setText(p.getRequests().get(position).getData_proposta().substring(0,10));
 
 
 //        List<Request> lr = p.getRequests();
