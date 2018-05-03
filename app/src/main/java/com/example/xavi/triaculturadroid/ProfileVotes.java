@@ -48,7 +48,7 @@ public class ProfileVotes extends AppCompatActivity {
         list_historial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(ProfileVotes.this, ViewProject.class); // NO PUEDE SER VIEWPROJECT
+                Intent intent = new Intent(ProfileVotes.this, ProjectActivityProfile.class); // NO PUEDE SER VIEWPROJECT
                 Log.d("OPEN-EVENT", "onItemClick: Iniciando evento nº"+i);
                 Log.d("idProject", ""+historial_Projects_List.get(i).getId());
                 intent.putExtra("Id",historial_Projects_List.get(i).getId());
