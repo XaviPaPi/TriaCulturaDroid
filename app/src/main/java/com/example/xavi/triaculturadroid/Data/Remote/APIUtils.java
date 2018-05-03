@@ -446,7 +446,7 @@ public class APIUtils {
         progressDialog = pd;
         Observable<File> fileObservable = service.getFileById(id);
         fileObservable.subscribeOn(Schedulers.io())
-                .doOnSubscribe(progressDialog::show)
+//                .doOnSubscribe(progressDialog::show)
                 .subscribe(new Subscriber<File>() {
             @Override
             public void onCompleted() {

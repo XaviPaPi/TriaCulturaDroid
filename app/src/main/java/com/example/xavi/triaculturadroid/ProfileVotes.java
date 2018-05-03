@@ -44,6 +44,17 @@ public class ProfileVotes extends AppCompatActivity {
         AdapterHistoProfile adapter = new AdapterHistoProfile(ProfileVotes.this, historial_Projects_List);
         list_historial.setItemsCanFocus(true);
         list_historial.setAdapter(adapter);
+
+        list_historial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                int pro = historial_Projects_List.get(position).getId();
+                Intent project_intent = new Intent(getApplication(), ProjectActivityProfile.class);
+                project_intent.putExtra("Id", pro);
+                startActivity(project_intent);
+            }
+        });
     }
 
 
