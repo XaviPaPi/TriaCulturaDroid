@@ -148,17 +148,20 @@ public class FragmentProfile extends Fragment {
         btn_aceptarPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               check_pass(tv_oldPass.getText().toString(), tv_newPass1.getText().toString(), tv_newPass2.getText().toString());
-               pasword.setVisibility(View.GONE);
+              boolean canviat = check_pass(tv_oldPass.getText().toString(), tv_newPass1.getText().toString(), tv_newPass2.getText().toString());
+              if (canviat) {
+                  pasword.setVisibility(View.GONE);
+              }
             }
         });
         btn_aceptarEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((tv_oldEmail.getText().length()>1&&tv_newEmail.getText().length()>1)&&tv_oldEmail.getText().equals(tv_newEmail.getText()))
-                user.setEmail(tv_newEmail.getText().toString());
-                APIUtils.update_user(user);
-                email.setVisibility(View.GONE);
+                if ((tv_oldEmail.getText().toString().length()>1&&tv_newEmail.getText().toString().length()>1)&&tv_oldEmail.getText().toString().equals(tv_newEmail.getText().toString())) {
+                    user.setEmail(tv_newEmail.getText().toString());
+                    APIUtils.update_user(user);
+                    email.setVisibility(View.GONE);
+                }
             }
         });
 
