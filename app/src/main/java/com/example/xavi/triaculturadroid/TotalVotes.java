@@ -1,8 +1,7 @@
 package com.example.xavi.triaculturadroid;
 
-import android.content.Context;
+
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,10 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.xavi.triaculturadroid.Adapters.AdapterHistorial;
-import com.example.xavi.triaculturadroid.Adapters.AdapterProject;
 import com.example.xavi.triaculturadroid.Data.Model.Historial;
 import com.example.xavi.triaculturadroid.Data.Model.Project;
-import com.example.xavi.triaculturadroid.Data.Model.Rating;
 import com.example.xavi.triaculturadroid.Data.Model.Request;
 import com.example.xavi.triaculturadroid.Data.Model.userTransfer;
 import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;

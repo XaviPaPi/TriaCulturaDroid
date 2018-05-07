@@ -200,11 +200,13 @@ public class AdapterProject extends BaseAdapter {
         if (!arrButons.contains(LIP_btnVote))
             arrButons.add(LIP_btnVote);
 
-
         LIP_textTitle.setText(model.get(position).getTitle());
         LIP_textDescript.setText(model.get(position).getDescript());
+
         LIP_textDescriptComplert.setText(model.get(position).getDescript());
+
         LIP_textAuthor.setText(model.get(position).getAuthor().getName() + " " + model.get(position).getAuthor().getSurname());
+
 //region listeners image_buttons
         LIP_image1.setOnClickListener(new View.OnClickListener() {
             @Override

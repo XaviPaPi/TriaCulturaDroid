@@ -7,21 +7,28 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.example.xavi.triaculturadroid.ViewProject">
+    tools:context="com.example.xavi.triaculturadroid.ViewProject"
+    android:background="@drawable/backgroundlogin">
 
     <TextView
         android:id="@+id/P_Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="TITLE" />
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="TITLE"
+        android:textColor="@android:color/black"/>
 
     <TextView
         android:id="@+id/P_AuthorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="AUTHOR NAME" />
+        android:text="AUTHOR NAME"
+        android:textAlignment="textStart"
+        android:textStyle="italic|bold"
+        android:textColor="@android:color/holo_blue_dark"/>
 
         <com.example.xavi.triaculturadroid.Data.PintarEstrelles
             android:layout_width="wrap_content"
@@ -34,35 +41,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="THIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECT"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@android:color/black"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/P_imageView"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="10dp"
-            app:srcCompat="@mipmap/ic_launcher" />
-
-        <ImageView
-            android:id="@+id/P_imageView2"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="10dp"
-            app:srcCompat="@mipmap/ic_launcher" />
-
-        <ImageView
-            android:id="@+id/P_imageView3"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="10dp"
-            app:srcCompat="@mipmap/ic_launcher" />
-    </LinearLayout>
 
 </android.widget.LinearLayout>

@@ -40,7 +40,7 @@ public class ProfileVotes extends AppCompatActivity {
 
         ListView list_historial = (ListView) findViewById(R.id.ListHistorialProjects);
         id_user = getIntent().getExtras().getInt("Usuari");
-        omplirLlistaJocs();
+        omplirLlistaProjects();
 
         AdapterHistoProfile adapter = new AdapterHistoProfile(ProfileVotes.this, historial_Projects_List);
         list_historial.setItemsCanFocus(true);
@@ -58,7 +58,7 @@ public class ProfileVotes extends AppCompatActivity {
     }
 
 
-    private void omplirLlistaJocs() {
+    private void omplirLlistaProjects() {
 
         List<Vote> historial_List = APIUtils.get_votes(id_user);
         historial_Projects_List = new ArrayList<>();

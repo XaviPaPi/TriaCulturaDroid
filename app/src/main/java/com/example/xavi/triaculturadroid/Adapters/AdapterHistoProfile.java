@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class AdapterHistoProfile extends BaseAdapter {
     //ImageView thumbs;
     Context context;
     Request r;
+    ImageView thumbs;
     userTransfer user;
     List<Profile_Historial> list_histo;
     private Profile_Historial histo;
@@ -68,28 +70,26 @@ public class AdapterHistoProfile extends BaseAdapter {
 
         int id_project = list_histo.get(position).getId();
         Project p = APIUtils.get_Project(id_project);
-//        LHP_valoracio = (ImageView)convertView.findViewById(R.id.IHP_stars);
+
         LHP_data = (TextView) convertView.findViewById(R.id.date_project_profile);
-       // LHP_description = (TextView) convertView.findViewById(R.id.Description_profileVotes);
+
         LHP_nom_Projecte = (TextView) convertView.findViewById(R.id.Title_project_profileVotes);
-//        thumbs = (ImageView) convertView.findViewById((R.id.img_thumb));
+        thumbs = (ImageView) convertView.findViewById((R.id.img_thumbs));
 
         LHP_nom_Projecte.setText(p.getTitle());
-        //LHP_description.setText(p.getDescript());
         LHP_data.setText(p.getRequests().get(position).getData_proposta().substring(0,10));
 
+        List<Request> lr = p.getRequests();
+        for (Request r: lr) {
 
-//        List<Request> lr = p.getRequests();
-//        for (Request r: lr) {
-//
-//            if(r.isEsGuanyador()==1){
-//                thumbs.setImageDrawable(context.getResources().getDrawable(R.drawable.good_thumb));
-//            }
-//
-//            if(r.isEsGuanyador()==0){
-//                thumbs.setImageDrawable(context.getResources().getDrawable(R.drawable.fail_thumb));
-//            }
-//        }
+            if(r.isEsGuanyador()==1){
+                thumbs.setImageDrawable(context.getResources().getDrawable(R.drawable.good_thumb));
+            }
+
+            if(r.isEsGuanyador()==0){
+                thumbs.setImageDrawable(context.getResources().getDrawable(R.drawable.fail_thumb));
+            }
+        }
 
 
 

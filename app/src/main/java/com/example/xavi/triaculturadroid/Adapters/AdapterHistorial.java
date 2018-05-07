@@ -71,7 +71,7 @@ public class AdapterHistorial extends BaseAdapter {
             convertView = inflator.inflate(R.layout.activity_item_historial_projects, parent, false);
         }
         int id_project;
-        LHP_valoracio = (ImageView)convertView.findViewById(R.id.IHP_stars);
+        LHP_valoracio = (ImageView)convertView.findViewById(R.id.img_thumbs);
         LHP_data = (TextView) convertView.findViewById(R.id.IHP_data);
         LHP_nom_Projecte = (TextView) convertView.findViewById(R.id.IHP_nom_projecte);
 

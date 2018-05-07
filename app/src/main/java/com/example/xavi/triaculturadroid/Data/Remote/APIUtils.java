@@ -420,6 +420,7 @@ public class APIUtils {
 
     public static Integer get_current_place() {
         continuar = false;
+
         service.getCurrentPlace().subscribeOn(Schedulers.io()).subscribe(new Subscriber<Integer>() {
             @Override
             public void onCompleted() {

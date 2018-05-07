@@ -50,7 +50,7 @@ public class FragmentProfile extends Fragment {
     }
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-    TextView tv_dni, tv_name, tv_email;
+    TextView tv_name, tv_email;
     EditText tv_oldPass;
     EditText tv_newPass1;
     EditText tv_newPass2;
@@ -93,7 +93,7 @@ public class FragmentProfile extends Fragment {
         rootView.findViewById(R.id.btn_see_votes).setOnClickListener(show_profile_votes);
 
 
-        tv_dni = (TextView) rootView.findViewById(R.id.tv_user_dni);
+
         tv_name = (TextView) rootView.findViewById(R.id.tv_user_nom);
         tv_email = (TextView) rootView.findViewById(R.id.tv_label_mail);
         tv_oldPass = rootView.findViewById(R.id.oldpass);
@@ -165,7 +165,6 @@ public class FragmentProfile extends Fragment {
             }
         });
 
-        tv_dni.setText(userT.getDni());
         tv_email.setText(userT.getEmail());
         tv_name.setText(userT.getName());
 

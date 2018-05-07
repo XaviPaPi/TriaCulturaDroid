@@ -3,34 +3,17 @@ package com.example.xavi.triaculturadroid;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.xavi.triaculturadroid.Adapters.AdapterProject;
 import com.example.xavi.triaculturadroid.Data.Model.Project;
-import com.example.xavi.triaculturadroid.Data.Model.User;
-import com.example.xavi.triaculturadroid.Data.Model.userTransfer;
 import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
-import com.example.xavi.triaculturadroid.Data.Remote.RetrofitClient;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
-
-import static android.content.ContentValues.TAG;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,7 +68,7 @@ public class ProjectFragment extends Fragment {
         listView = (ListView) rootView.findViewById(R.id.ListProjects);
         ad = new ArrayList<>();
 
-        ad = APIUtils.get_projects_from_place(5);//APIUtils.get_current_place());
+        ad = APIUtils.get_projects_from_place(APIUtils.get_current_place());
 
         AdapterProject adapter = new AdapterProject(getActivity(), ad, user);
 
