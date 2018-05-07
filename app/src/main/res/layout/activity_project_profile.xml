@@ -2,9 +2,8 @@
 <android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ProjectActivityProfile"
     android:gravity="center"
     android:orientation="vertical"
     android:background="@drawable/backgroundlogin"
@@ -16,9 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:textSize="20dp"
-        android:layout_weight="1"
-        android:text="TITLE"
         android:textStyle="bold"
+        android:text="TITLE"
         android:textColor="@android:color/black"/>
 
     <TextView
@@ -26,9 +24,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:layout_weight="1"
         android:text="AUTHOR NAME"
-        android:layout_gravity="center_vertical|left"
+        android:textAlignment="textStart"
         android:textStyle="italic|bold"
         android:textColor="@android:color/holo_blue_dark"/>
 
@@ -37,12 +34,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_weight="1"
         android:text="THIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECT"
+        android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:alpha="1"
         />
 
 
