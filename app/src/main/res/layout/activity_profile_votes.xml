@@ -9,6 +9,13 @@
     <ListView
         android:id="@+id/ListHistorialProjects"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:cacheColorHint="@android:color/transparent"
+        android:dividerHeight="12dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:paddingBottom="7dp"
+        android:paddingLeft="9dp"
+        android:paddingRight="9dp"
+        android:paddingTop="10dp"/>
 
 </FrameLayout>
