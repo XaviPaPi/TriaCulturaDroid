@@ -24,7 +24,7 @@
         android:id="@+id/P_AuthorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="15dp"
         android:text="AUTHOR NAME"
         android:textAlignment="textStart"
         android:textStyle="italic|bold"
@@ -34,15 +34,22 @@
             android:layout_width="wrap_content"
             android:id="@+id/P_estrelles"
             android:layout_height="50dp" />
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/P_Description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:padding="25dp"
         android:text="THIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECTTHIS THE DESCRIPTION PROJECT"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        tools:background="#85ffffff" />
 
+
+</ScrollView>
 
 </android.widget.LinearLayout>

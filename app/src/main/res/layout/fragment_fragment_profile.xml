@@ -20,16 +20,10 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_label_nom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="@string/literal_nom" />
-
-        <TextView
             android:id="@+id/tv_user_nom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18pt"
             android:text="" />
 
         <TextView
