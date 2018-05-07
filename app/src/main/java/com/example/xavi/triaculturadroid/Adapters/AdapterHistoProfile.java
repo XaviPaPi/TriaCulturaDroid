@@ -77,7 +77,7 @@ public class AdapterHistoProfile extends BaseAdapter {
         thumbs = (ImageView) convertView.findViewById((R.id.img_thumbs));
 
         LHP_nom_Projecte.setText(p.getTitle());
-        LHP_data.setText(p.getRequests().get(position).getData_proposta().substring(0,10));
+        LHP_data.setText(p.getRequests().get(0).getData_proposta().substring(0,10));
 
         List<Request> lr = p.getRequests();
         for (Request r: lr) {
