@@ -16,11 +16,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_triacultura"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".LoginTriaCultura"
             android:label="@string/title_activity_login_tria_cultura"
-            android:theme="@style/AppTheme.NoActionBar">
+           >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,7 +30,7 @@
         <activity
             android:name=".TabbetsActivity"
             android:label="@string/title_activity_tabbets"
-            android:theme="@style/AppTheme.NoActionBar" />
+             />
         <activity android:name=".ViewProject" />
         <!-- <activity android:name=".Data.DialogEspera" /> -->
         <!-- <activity android:name=".DialogEspera" /> -->
