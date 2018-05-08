@@ -109,8 +109,8 @@ public class FragmentProfile extends Fragment {
         pasword.setVisibility(View.GONE);
 
 
-        tv_oldEmail.setHint("Introdueix l'antic mail");
-        tv_newEmail.setHint("Introdueix el nou mail");
+        tv_oldEmail.setHint("Introdueix el nou mail");
+        tv_newEmail.setHint("Confirma el mail");
 
 
 
@@ -150,6 +150,7 @@ public class FragmentProfile extends Fragment {
             public void onClick(View v) {
               boolean canviat = check_pass(tv_oldPass.getText().toString(), tv_newPass1.getText().toString(), tv_newPass2.getText().toString());
               if (canviat) {
+                  Toast.makeText(v.getContext(), "Paraula de pas canviada!", Toast.LENGTH_SHORT).show();
                   pasword.setVisibility(View.GONE);
               }
             }
@@ -160,6 +161,8 @@ public class FragmentProfile extends Fragment {
                 if ((tv_oldEmail.getText().toString().length()>1&&tv_newEmail.getText().toString().length()>1)&&tv_oldEmail.getText().toString().equals(tv_newEmail.getText().toString())) {
                     user.setEmail(tv_newEmail.getText().toString());
                     APIUtils.update_user(user);
+                    tv_email.setText(tv_newEmail.getText());
+                    Toast.makeText(v.getContext(), "Email canviat!", Toast.LENGTH_SHORT).show();
                     email.setVisibility(View.GONE);
                 }
             }

@@ -20,6 +20,10 @@ import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Subscriber;
+import rx.functions.Action0;
+import rx.schedulers.Schedulers;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,8 +38,9 @@ public class TotalVotes extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
     private ListView historialList;
-    private static boolean despres=false;
+    private static boolean despres = false;
     int idProjecteWin;
+    int count_proj;
     List<Historial> historial_Projects_List = new ArrayList<Historial>();
     List<Project> project_List;
     Historial historial;
@@ -73,6 +78,7 @@ public class TotalVotes extends Fragment {
         super.onCreate(savedInstanceState);
         user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,7 +93,7 @@ public class TotalVotes extends Fragment {
 
         historialList.setItemsCanFocus(true);
         historialList.setAdapter(adapter);
-        despres=true;
+        despres = true;
         historialList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -102,7 +108,7 @@ public class TotalVotes extends Fragment {
                     count++;
                 }
                 if (user.getRatings().size() > count) {
-                   ViewProject.estat= user.getRatings().get(count).getRate();
+                    ViewProject.estat = user.getRatings().get(count).getRate();
                 }
                 startActivity(intentProject);
             }
@@ -111,7 +117,8 @@ public class TotalVotes extends Fragment {
         return viewHistorial;
     }
 
-    private void crearLlistaRatings(){
+    private void crearLlistaRatings() {
+        count_proj = 0;
         historial_Projects_List = new ArrayList<>();
 
         List<Request> request_List = APIUtils.get_winning_requests();
@@ -122,8 +129,32 @@ public class TotalVotes extends Fragment {
             historial.setRating(APIUtils.get_project_avg(r.getProject()));
             historial.setData(r.getData_proposta());
             historial.setTitle(r.getProject().getTitle());
+            APIUtils.getApiService().getCountVotes(r.getProject().getId())
+                    .subscribeOn(Schedulers.io())
+                    .doOnCompleted(new Action0() {
+                        @Override
+                        public void call() {
+                            historial.setCount_votes(count_proj);
+                            historial_Projects_List.add(historial);
+                        }
+                    })
+                    .subscribe(new Subscriber<Integer>() {
+                                   @Override
+                                   public void onCompleted() {
 
-            historial_Projects_List.add(historial);
+                                   }
+
+                                   @Override
+                                   public void onError(Throwable e) {
+
+                                   }
+
+                                   @Override
+                                   public void onNext(Integer integer) {
+                                       count_proj = integer;
+                                   }
+                               }
+            );
         }
     }
 

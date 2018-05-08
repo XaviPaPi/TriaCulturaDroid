@@ -110,5 +110,8 @@ public interface APIService {
 
     @GET("api/requests/{user_id}")
     Observable<List<Request>> getVotedRequests(@Path("user_id") int user_id);
+
+    @GET("api/project/votes/{proj_id}")
+    Observable<Integer> getCountVotes(@Path("proj_id") int project_id);
 }
 

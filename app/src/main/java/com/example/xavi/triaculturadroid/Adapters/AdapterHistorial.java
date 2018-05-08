@@ -22,7 +22,7 @@ import java.util.List;
 
 public class AdapterHistorial extends BaseAdapter {
 
-    TextView LHP_data, LHP_nom_Projecte, LHP_vots;
+    TextView LHP_data, LHP_nom_Projecte, LHP_vots, LHP_count_votes;
     ImageView LHP_valoracio;
     Context context;
     userTransfer user;
@@ -74,10 +74,14 @@ public class AdapterHistorial extends BaseAdapter {
         LHP_valoracio = (ImageView)convertView.findViewById(R.id.img_thumbs);
         LHP_data = (TextView) convertView.findViewById(R.id.IHP_data);
         LHP_nom_Projecte = (TextView) convertView.findViewById(R.id.IHP_nom_projecte);
+        LHP_count_votes = convertView.findViewById(R.id.tv_count_votes);
+
 
         LHP_data.setText(list_histo.get(position).getData().substring(0,10));
         LHP_nom_Projecte.setText(list_histo.get(position).getTitle());
         double punts =  Math.floor(list_histo.get(position).getRating());
+        LHP_count_votes.setText(""+list_histo.get(position).getCount_votes()+" vots.");
+
 
         String puntuacio=String.valueOf(punts);
         switch (puntuacio){
