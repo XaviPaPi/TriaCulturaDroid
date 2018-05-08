@@ -54,13 +54,16 @@ public class ViewProject extends AppCompatActivity {
 
         Intent intent = new Intent();
         //(UserNormal) getIntent().getExtras().getSerializable("User");
+
+        idProjecte = (int) getIntent().getExtras().getInt("idProject");
+        p = APIUtils.get_Project(idProjecte);
+
         if (this.getIntent().getStringExtra("Usuari")!= null) {
             user = new userTransfer(APIUtils.get_user_by_dni(this.getIntent().getExtras().getString("Usuari")));
             ratingAnterior = APIUtils.get_rating_where_user(user.getId(), idProjecte);
         }
 
-        idProjecte = (int) getIntent().getExtras().getInt("idProject");
-        p = APIUtils.get_Project(idProjecte);
+
 
 
 

@@ -59,6 +59,7 @@ public class PintarEstrelles extends View {
         WidthtReal = MeasureSpec.getSize(widthMeasureSpec);
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
         calculTamanyEstrella();
+
     }
     //endregion
 
@@ -182,7 +183,12 @@ public class PintarEstrelles extends View {
                 estrella5.setBounds((int)llargada+estrella*4, 0, (int)llargada+estrella*5,(int) HeightReal);
                 estrella5.draw(canvas);
             }
-            tocat=true;
+
+            if(!primerCop) {
+                tocat=true;
+            }else{
+                primerCop=false;
+            }
         }
     }
 
