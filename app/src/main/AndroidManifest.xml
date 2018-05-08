@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".LoginTriaCultura"
-            android:label="@string/title_activity_login_tria_cultura"
+            android:label="TriaCultura"
            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
