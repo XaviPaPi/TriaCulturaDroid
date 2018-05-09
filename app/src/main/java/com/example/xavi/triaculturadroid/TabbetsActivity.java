@@ -54,7 +54,7 @@ public class TabbetsActivity extends AppCompatActivity {
         fpi.setFragment( TotalVotes.newInstance(0));
         list.add(fpi);
         fpi = new FragmentPagerItem();
-        fpi.setTitle("Main");
+        fpi.setTitle("En concurs");
         fpi.setEnabled(true);
 
         fpi.setFragment( ProjectFragment.newInstance(1));

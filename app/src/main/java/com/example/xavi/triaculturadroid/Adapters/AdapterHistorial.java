@@ -77,7 +77,10 @@ public class AdapterHistorial extends BaseAdapter {
 
         LHP_data.setText(list_histo.get(position).getData().substring(0,10));
         LHP_nom_Projecte.setText(list_histo.get(position).getTitle());
-        double punts =  Math.floor(list_histo.get(position).getRating());
+        double punts =  Math.round(list_histo.get(position).getRating());
+
+
+
 
         String puntuacio=String.valueOf(punts);
         switch (puntuacio){
