@@ -37,6 +37,7 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.xavi.triaculturadroid.Data.Model.File;
@@ -324,6 +325,7 @@ public class AdapterProject extends BaseAdapter {
                 vote.setUser_id(user.getId());
 
                 if (!votat) {
+                    Toast.makeText(v.getContext(), "Gràcies pel teu vot!", Toast.LENGTH_LONG).show();
                     for (int i = 0; i < arrButons.size(); i++) {
                         if (i != position) {
                             arrButons.get(i).setEnabled(false);
@@ -333,6 +335,7 @@ public class AdapterProject extends BaseAdapter {
                     voteUser = APIUtils.post_new_vote(vote);
                     votat = true;
                 } else {
+                    Toast.makeText(v.getContext(), "Petició acceptada", Toast.LENGTH_LONG).show();
                     vote = APIUtils.get_vote(vote.getUser_id(), vote.getProj_id());
                     APIUtils.delete_vote(vote);
                     votat = false;

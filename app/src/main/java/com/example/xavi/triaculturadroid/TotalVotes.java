@@ -4,6 +4,7 @@ package com.example.xavi.triaculturadroid;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,10 @@ import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Subscriber;
+import rx.functions.Action0;
+import rx.schedulers.Schedulers;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,9 +39,10 @@ public class TotalVotes extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
     private ListView historialList;
-    private static boolean despres=false;
+    private static boolean despres = false;
     int idProjecteWin;
-    List<Historial> historial_Projects_List = new ArrayList<Historial>();
+    int count_proj;
+    List<Historial> historial_Projects_List = new ArrayList<>();
     List<Project> project_List;
     Historial historial;
     userTransfer user;
@@ -73,6 +79,7 @@ public class TotalVotes extends Fragment {
         super.onCreate(savedInstanceState);
         user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,7 +94,7 @@ public class TotalVotes extends Fragment {
 
         historialList.setItemsCanFocus(true);
         historialList.setAdapter(adapter);
-        despres=true;
+        despres = true;
         historialList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -102,7 +109,7 @@ public class TotalVotes extends Fragment {
                     count++;
                 }
                 if (user.getRatings().size() > count) {
-                   ViewProject.estat= user.getRatings().get(count).getRate();
+                    ViewProject.estat = user.getRatings().get(count).getRate();
                 }
                 startActivity(intentProject);
             }
@@ -111,30 +118,46 @@ public class TotalVotes extends Fragment {
         return viewHistorial;
     }
 
-    private void crearLlistaRatings(){
-        historial_Projects_List = new ArrayList<>();
+    private void crearLlistaRatings() {
+        count_proj = 0;
 
         List<Request> request_List = APIUtils.get_winning_requests();
 
         for (Request r : request_List) {
             historial = new Historial();
-            historial.setId(r.getProject().getId());
+            historial.setId(r.getProj_id());
             historial.setRating(APIUtils.get_project_avg(r.getProject()));
             historial.setData(r.getData_proposta());
             historial.setTitle(r.getProject().getTitle());
+            historial.setCount_votes(APIUtils.get_count_ratings(r.getProj_id()));
+            add_to_list(historial_Projects_List, historial);
+        }
+        Log.d("END", "crearLlistaRatings: FILLED LIST");
+    }
 
-            historial_Projects_List.add(historial);
+    public void add_to_list(List<Historial> list, Historial o) {
+        boolean isthere = false;
+
+        for (Historial item : list) {
+            if (item.getId() == o.getId()) {
+                isthere = true;
+            }
+        }
+        if (!isthere) {
+            list.add(o);
         }
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        crearLlistaRatings();
-        AdapterHistorial adapter = new AdapterHistorial(getActivity(), historial_Projects_List);
-        historialList.setItemsCanFocus(true);
-        historialList.setAdapter(adapter);
-        if (despres)
+    public void onResume() {
+        super.onResume();
+        if (despres) {
+//            historial_Projects_List = new ArrayList<>();
+//            crearLlistaRatings();
+//            AdapterHistorial adapter = new AdapterHistorial(getActivity(), historial_Projects_List);
+//            historialList.setItemsCanFocus(true);
+//            historialList.setAdapter(adapter);
             user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
+        }
     }
 }
