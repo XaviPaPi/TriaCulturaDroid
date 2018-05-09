@@ -4,6 +4,7 @@ package com.example.xavi.triaculturadroid;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class TotalVotes extends Fragment {
     private static boolean despres = false;
     int idProjecteWin;
     int count_proj;
-    List<Historial> historial_Projects_List = new ArrayList<Historial>();
+    List<Historial> historial_Projects_List = new ArrayList<>();
     List<Project> project_List;
     Historial historial;
     userTransfer user;
@@ -119,53 +120,44 @@ public class TotalVotes extends Fragment {
 
     private void crearLlistaRatings() {
         count_proj = 0;
-        historial_Projects_List = new ArrayList<>();
 
         List<Request> request_List = APIUtils.get_winning_requests();
 
         for (Request r : request_List) {
             historial = new Historial();
-            historial.setId(r.getProject().getId());
+            historial.setId(r.getProj_id());
             historial.setRating(APIUtils.get_project_avg(r.getProject()));
             historial.setData(r.getData_proposta());
             historial.setTitle(r.getProject().getTitle());
-            APIUtils.getApiService().getCountVotes(r.getProject().getId())
-                    .subscribeOn(Schedulers.io())
-                    .doOnCompleted(new Action0() {
-                        @Override
-                        public void call() {
-                            historial.setCount_votes(count_proj);
-                            historial_Projects_List.add(historial);
-                        }
-                    })
-                    .subscribe(new Subscriber<Integer>() {
-                                   @Override
-                                   public void onCompleted() {
+            historial.setCount_votes(APIUtils.get_count_ratings(r.getProj_id()));
+            add_to_list(historial_Projects_List, historial);
+        }
+        Log.d("END", "crearLlistaRatings: FILLED LIST");
+    }
 
-                                   }
+    public void add_to_list(List<Historial> list, Historial o) {
+        boolean isthere = false;
 
-                                   @Override
-                                   public void onError(Throwable e) {
-
-                                   }
-
-                                   @Override
-                                   public void onNext(Integer integer) {
-                                       count_proj = integer;
-                                   }
-                               }
-            );
+        for (Historial item : list) {
+            if (item.getId() == o.getId()) {
+                isthere = true;
+            }
+        }
+        if (!isthere) {
+            list.add(o);
         }
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        crearLlistaRatings();
-        AdapterHistorial adapter = new AdapterHistorial(getActivity(), historial_Projects_List);
-        historialList.setItemsCanFocus(true);
-        historialList.setAdapter(adapter);
-        if (despres)
+    public void onResume() {
+        super.onResume();
+        if (despres) {
+//            historial_Projects_List = new ArrayList<>();
+//            crearLlistaRatings();
+//            AdapterHistorial adapter = new AdapterHistorial(getActivity(), historial_Projects_List);
+//            historialList.setItemsCanFocus(true);
+//            historialList.setAdapter(adapter);
             user = new userTransfer(APIUtils.get_user_by_dni(getActivity().getIntent().getExtras().getString("Usuari")));
+        }
     }
 }

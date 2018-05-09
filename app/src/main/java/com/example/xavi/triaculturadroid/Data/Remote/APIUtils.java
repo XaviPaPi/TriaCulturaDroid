@@ -47,6 +47,7 @@ public class APIUtils {
     public static File seeked_file = new File();
     public static Project selected_project = new Project();
     public static Rating user_rate = new Rating();
+    public static int count;
     private static ProgressDialog progressDialog;
 
     public static void init_service() {
@@ -284,6 +285,33 @@ public class APIUtils {
 
             }
         });
+    }
+
+    public static int get_count_ratings(int project_id) {
+        continuar = false;
+        count = 0;
+        service.getCountVotes(project_id)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Subscriber<Integer>() {
+                                   @Override
+                                   public void onCompleted() {
+                                       continuar = true;
+                                   }
+
+                                   @Override
+                                   public void onError(Throwable e) {
+
+                                       continuar = true;
+                                   }
+
+                                   @Override
+                                   public void onNext(Integer integer) {
+                                       count = integer;
+                                   }
+                               }
+                    );
+        while (!continuar) {}
+        return count;
     }
 
     public static List<Request> get_winning_requests() {

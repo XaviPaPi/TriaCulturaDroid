@@ -79,7 +79,9 @@ public class AdapterHistorial extends BaseAdapter {
 
         LHP_data.setText(list_histo.get(position).getData().substring(0,10));
         LHP_nom_Projecte.setText(list_histo.get(position).getTitle());
-        double punts =  Math.floor(list_histo.get(position).getRating());
+        double punts =  list_histo.get(position).getRating();
+        punts = punts % 1 < 0.5 ? Math.floor(punts) : Math.floor(punts)+0.5;
+
         LHP_count_votes.setText(""+list_histo.get(position).getCount_votes()+" vots.");
 
 
