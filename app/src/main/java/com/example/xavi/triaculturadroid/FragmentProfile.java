@@ -152,8 +152,6 @@ public class FragmentProfile extends Fragment {
               if (canviat) {
                   Toast.makeText(v.getContext(), R.string.pasCanviat, Toast.LENGTH_SHORT).show();
                   pasword.setVisibility(View.GONE);
-              }else{
-                  Toast.makeText(v.getContext(), R.string.pasNocoin, Toast.LENGTH_SHORT).show();
               }
             }
         });
@@ -227,7 +225,7 @@ public class FragmentProfile extends Fragment {
         boolean old_pass_is_correct = false;
         // Check new pass a/b
         new_pass_equals = new_pass_a.equals(new_pass_b);
-        if (new_pass_equals) {
+        if (new_pass_equals&&new_pass_a.length()>0) {
             old_pass_is_correct = user.getPassword().equals(old_pass);
             if (old_pass_is_correct) {
                 user.setPassword(new_pass_a);
