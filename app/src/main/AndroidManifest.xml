@@ -19,6 +19,7 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".LoginTriaCultura"
+            android:screenOrientation="portrait"
             android:label="TriaCultura"
            >
             <intent-filter>
@@ -29,13 +30,17 @@
         </activity>
         <activity
             android:name=".TabbetsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_tabbets"
              />
-        <activity android:name=".ViewProject" />
+        <activity android:name=".ViewProject"
+            android:screenOrientation="portrait"/>
         <!-- <activity android:name=".Data.DialogEspera" /> -->
         <!-- <activity android:name=".DialogEspera" /> -->
-        <activity android:name=".ProfileVotes" />
-        <activity android:name=".ProjectActivityProfile"></activity>
+        <activity android:name=".ProfileVotes"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ProjectActivityProfile"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
