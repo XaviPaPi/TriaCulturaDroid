@@ -49,18 +49,18 @@ public class TabbetsActivity extends AppCompatActivity {
         FragmentPagerItem fpi;
 
         fpi = new FragmentPagerItem();
-        fpi.setTitle("Historial");
+        fpi.setTitle(getString(R.string.Historial));
         fpi.setEnabled(true);
         fpi.setFragment( TotalVotes.newInstance(0));
         list.add(fpi);
         fpi = new FragmentPagerItem();
-        fpi.setTitle("En concurs");
+        fpi.setTitle(getString(R.string.enConcurs));
         fpi.setEnabled(true);
 
         fpi.setFragment( ProjectFragment.newInstance(1));
         list.add(fpi);
         fpi = new FragmentPagerItem();
-        fpi.setTitle("Perfil");
+        fpi.setTitle(getString(R.string.perfil));
         fpi.setEnabled(true);
         fpi.setFragment( FragmentProfile.newInstance(2));
         list.add(fpi);

@@ -150,8 +150,10 @@ public class FragmentProfile extends Fragment {
             public void onClick(View v) {
               boolean canviat = check_pass(tv_oldPass.getText().toString(), tv_newPass1.getText().toString(), tv_newPass2.getText().toString());
               if (canviat) {
-                  Toast.makeText(v.getContext(), "Paraula de pas canviada!", Toast.LENGTH_SHORT).show();
+                  Toast.makeText(v.getContext(), R.string.pasCanviat, Toast.LENGTH_SHORT).show();
                   pasword.setVisibility(View.GONE);
+              }else{
+                  Toast.makeText(v.getContext(), R.string.pasNocoin, Toast.LENGTH_SHORT).show();
               }
             }
         });
@@ -162,8 +164,11 @@ public class FragmentProfile extends Fragment {
                     user.setEmail(tv_newEmail.getText().toString());
                     APIUtils.update_user(user);
                     tv_email.setText(tv_newEmail.getText());
-                    Toast.makeText(v.getContext(), "Email canviat!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), R.string.mailChange, Toast.LENGTH_SHORT).show();
                     email.setVisibility(View.GONE);
+                }else{
+                    Toast.makeText(v.getContext(), R.string.mailNotChange, Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -229,10 +234,10 @@ public class FragmentProfile extends Fragment {
                 updateUser(user);
                 return true;
             } else {
-                Toast.makeText(this.getContext(), "Wrong current password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getContext(), R.string.pasNocoin, Toast.LENGTH_SHORT).show();
             }
         } else {
-        Toast.makeText(this.getContext(), "New Passwords don't match", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getContext(), R.string.NotChangePas , Toast.LENGTH_SHORT).show();
         }
         return false;
 

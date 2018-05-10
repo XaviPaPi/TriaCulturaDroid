@@ -85,7 +85,7 @@
             android:id="@+id/ltc_cb_rememberMe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Recorda'm" />
+            android:text="@string/recorda_m" />
 
     </LinearLayout>
 

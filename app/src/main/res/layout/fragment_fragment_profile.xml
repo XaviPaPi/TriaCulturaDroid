@@ -86,7 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/edittextstyle"
-                    android:hint="Paraula de pas actual"
+                    android:hint="@string/paraula_de_pas_actual"
                     android:inputType="textPassword" />
 
                 <EditText
@@ -96,7 +96,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/edittextstyle"
                     android:fontFamily="sans-serif"
-                    android:hint="Nova paraula de pas"
+                    android:hint="@string/nova_paraula_de_pas"
                     android:inputType="textPassword" />
 
                 <EditText
@@ -106,7 +106,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/edittextstyle"
                     android:fontFamily="sans-serif"
-                    android:hint="Confirma paraula de pas"
+                    android:hint="@string/confirma_paraula_de_pas"
                     android:inputType="textPassword" />
             </LinearLayout>
 
@@ -132,12 +132,13 @@
                 android:id="@+id/newMail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:lines="1"
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/edittextstyle"
-                android:hint="Insertar nou email" />
+                android:hint="@string/insertar_nou_email" />
 
             <EditText
                 android:id="@+id/newMail2"
@@ -145,10 +146,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="25dp"
+                android:lines="1"
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/edittextstyle"
-                android:hint="Confirmar nou email" />
+                android:hint="@string/confirmar_nou_email" />
         </LinearLayout>
 
             <Button

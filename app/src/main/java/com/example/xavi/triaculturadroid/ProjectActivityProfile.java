@@ -35,7 +35,7 @@ public class ProjectActivityProfile extends AppCompatActivity {
             title_project.setText(pro.getTitle());
             descrip.setText(pro.getDescript());
         } else {
-            descrip.setText("El projecte no s'ha trobat.");
+            descrip.setText(R.string.ElProjectNoTrob);
         }
 
     }
