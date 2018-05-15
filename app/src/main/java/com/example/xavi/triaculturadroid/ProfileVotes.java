@@ -60,14 +60,14 @@ public class ProfileVotes extends AppCompatActivity {
 
     private void omplirLlistaProjects() {
 
-        List<Vote> historial_List = APIUtils.get_votes(id_user);
+        List<Request> historial_List = APIUtils.get_voted_projects_by_user(id_user);
         historial_Projects_List = new ArrayList<>();
 
-        for (Vote r : historial_List) {
+        for (Request r : historial_List) {
             historial = new Profile_Historial();
             historial.setId(r.getProj_id());
-//            historial.setData(r.getDateVote());
-            //historial.setTitle(r.getProject().getTitle());
+            historial.setData(r.getData_proposta());
+            historial.setTitle(r.getProject().getTitle());
             historial_Projects_List.add(historial);
         }
 

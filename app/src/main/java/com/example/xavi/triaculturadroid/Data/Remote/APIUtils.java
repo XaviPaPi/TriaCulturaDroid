@@ -39,6 +39,7 @@ public class APIUtils {
     public static List<Vote> user_votes = new ArrayList<>();
     public static Vote aux_vote = new Vote();
     public static List<Request> winning_requests = new ArrayList<>();
+    public static List<Request> user_voted_requests = new ArrayList<>();
     public static List<File> project_files = new ArrayList<>();
     public static Author project_author = new Author();
     public static Double project_avg = 0.0;
@@ -529,5 +530,30 @@ public class APIUtils {
         return r;
     }
 
+    public static List<Request> get_voted_projects_by_user ( int user_id) {
+        continuar = false;
+        service.getVotedRequests(user_id).subscribeOn(Schedulers.io()).subscribe(new Subscriber<List<Request>>() {
+            @Override
+            public void onCompleted() {
+
+                continuar = true;
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+                user_voted_requests = null;
+                continuar = true;
+                Log.d(TAG, "onError:" + e.toString());
+            }
+
+            @Override
+            public void onNext(List<Request> requests) {
+user_voted_requests = requests;
+            }
+        });
+        while (!continuar) {}
+        return user_voted_requests;
+    }
 
 }
