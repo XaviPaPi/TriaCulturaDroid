@@ -421,11 +421,13 @@ public class AdapterProject extends BaseAdapter {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    while (mp.isPlaying()) {
-                        int cur_step = mp.getCurrentPosition() * 100 / mp.getDuration();
-                        pb_audio.setProgress(cur_step);
+                    if(mp !=null) {
+                        while (mp.isPlaying()) {
+                            int cur_step = mp.getCurrentPosition() * 100 / mp.getDuration();
+                            pb_audio.setProgress(cur_step);
+                        }
                     }
-                }
+                    }
             }).start();
         }
 
@@ -532,7 +534,7 @@ public class AdapterProject extends BaseAdapter {
                 public void onDismiss() {
                     if (mp != null) {
                         mp.stop();
-                        mp.release();
+                      //  mp = null;
                     }
                 }
             });

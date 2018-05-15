@@ -65,8 +65,6 @@ public class ViewProject extends AppCompatActivity {
 
 
 
-
-
         if (ratingAnterior != null) {
             estat = ratingAnterior.getRate();
         }
