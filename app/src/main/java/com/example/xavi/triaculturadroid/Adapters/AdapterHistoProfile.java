@@ -14,6 +14,7 @@ import com.example.xavi.triaculturadroid.Data.Model.Project;
 import com.example.xavi.triaculturadroid.Data.Model.Request;
 import com.example.xavi.triaculturadroid.Data.Model.userTransfer;
 import com.example.xavi.triaculturadroid.Data.Remote.APIUtils;
+import com.example.xavi.triaculturadroid.ProfileVotes;
 import com.example.xavi.triaculturadroid.R;
 
 import java.util.List;
@@ -68,28 +69,27 @@ public class AdapterHistoProfile extends BaseAdapter {
             convertView = inflator.inflate(R.layout.activoty_item_historial_profile, parent, false);
         }
 
-        int id_project = list_histo.get(position).getId();
-        Project p = APIUtils.get_Project(id_project);
+//        int id_project = list_histo.get(position).getId();
+//        Project p = APIUtils.get_Project(id_project);
+        Profile_Historial ph = list_histo.get(position);
 
         LHP_data = (TextView) convertView.findViewById(R.id.date_project_profile);
 
         LHP_nom_Projecte = (TextView) convertView.findViewById(R.id.Title_project_profileVotes);
         thumbs = (ImageView) convertView.findViewById((R.id.img_thumbs));
 
-        LHP_nom_Projecte.setText(p.getTitle());
-        LHP_data.setText(p.getRequests().get(0).getData_proposta().substring(0,10));
+        LHP_nom_Projecte.setText(ph.getTitle());
+        LHP_data.setText(ph.getData().substring(0,10));
 
-        List<Request> lr = p.getRequests();
-        for (Request r: lr) {
+//        List<Request> lr = ph.getRequests();
+//        for (Request r: lr) {
 
-            if(r.isEsGuanyador()==1){
+            if(ph.isWinOrLose()){
                 thumbs.setImageDrawable(context.getResources().getDrawable(R.drawable.good_thumb));
-            }
-
-            if(r.isEsGuanyador()==0){
+            } else {
                 thumbs.setImageDrawable(context.getResources().getDrawable(R.drawable.fail_thumb));
             }
-        }
+//        }
 
 
 

@@ -68,6 +68,7 @@ public class ProfileVotes extends AppCompatActivity {
             historial.setId(r.getProj_id());
             historial.setData(r.getData_proposta());
             historial.setTitle(r.getProject().getTitle());
+            historial.setWinOrLose(r.isEsGuanyador()==1);
             historial_Projects_List.add(historial);
         }
 
