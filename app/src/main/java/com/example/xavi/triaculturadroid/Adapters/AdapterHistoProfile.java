@@ -69,8 +69,8 @@ public class AdapterHistoProfile extends BaseAdapter {
             convertView = inflator.inflate(R.layout.activoty_item_historial_profile, parent, false);
         }
 
-//        int id_project = list_histo.get(position).getId();
-//        Project p = APIUtils.get_Project(id_project);
+        int id_project = list_histo.get(position).getId();
+        Project p = APIUtils.get_Project(id_project);
         Profile_Historial ph = list_histo.get(position);
 
         LHP_data = (TextView) convertView.findViewById(R.id.date_project_profile);
@@ -78,7 +78,7 @@ public class AdapterHistoProfile extends BaseAdapter {
         LHP_nom_Projecte = (TextView) convertView.findViewById(R.id.Title_project_profileVotes);
         thumbs = (ImageView) convertView.findViewById((R.id.img_thumbs));
 
-        LHP_nom_Projecte.setText(ph.getTitle());
+        LHP_nom_Projecte.setText(p.getTitle());
         LHP_data.setText(ph.getData().substring(0,10));
 
 //        List<Request> lr = ph.getRequests();
