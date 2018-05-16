@@ -59,6 +59,7 @@
             android:textAlignment="textEnd"
             />
 
+
     </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.LinearLayoutCompat>
