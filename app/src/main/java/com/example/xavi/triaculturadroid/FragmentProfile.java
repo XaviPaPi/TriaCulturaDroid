@@ -171,8 +171,8 @@ public class FragmentProfile extends Fragment {
             }
         });
 
-        tv_email.setText(userT.getEmail());
-        tv_name.setText(userT.getName());
+        tv_email.setText(userT.getEmail()!=null? userT.getEmail() : "<no disponible>");
+        tv_name.setText(userT.getName()!=null? userT.getName() : "<no disponible>");
 
         UserSearch.tanca_dialog();
         return rootView;
